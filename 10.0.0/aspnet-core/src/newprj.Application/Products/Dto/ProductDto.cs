@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
-using Abp.Domain.Entities;
+using Abp.AutoMapper;
 
-namespace newprj.Products
+namespace newprj.Products.Dto
 {
-    
-    public class Product :Entity<int>
+    public class ProductDto : EntityDto<int>
     {
-        public  string Name { get; set; }
+        [AutoMapFrom(typeof(Product))]
+        public string Name { get; set; }
         public int Quantity { get; set; }
     }
 }
