@@ -12,6 +12,12 @@ public class newprjAuthorizationProvider : AuthorizationProvider
         context.CreatePermission(PermissionNames.Pages_Users_Activation, L("UsersActivation"));
         context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
         context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
+       
+        var productsPermission = context.CreatePermission("Pages.Products", L("Products"));
+        productsPermission.CreateChildPermission("Pages.Products.Create", L("CreateProduct"));
+        productsPermission.CreateChildPermission("Pages.Products.Edit", L("EditProduct"));
+        productsPermission.CreateChildPermission("Pages.Products.Delete", L("DeleteProduct"));
+
     }
 
     private static ILocalizableString L(string name)

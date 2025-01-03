@@ -25,5 +25,6 @@ public class newprjApplicationModule : AbpModule
             // Scan the assembly for classes which inherit from AutoMapper.Profile
             cfg => cfg.AddMaps(thisAssembly)
         );
+
     }
 }
