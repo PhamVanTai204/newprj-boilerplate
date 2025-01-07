@@ -10,11 +10,11 @@ using newprj.Entities;
 namespace newprj.Products.Dtos
 {
     [AutoMapFrom(typeof(Product))]
-    public class ProductDto : EntityDto<int>
-    {
+
+    public class ListProductDto: EntityDto<int>
+      {
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int StockQuantity { get; set; }
     }
-   
 }

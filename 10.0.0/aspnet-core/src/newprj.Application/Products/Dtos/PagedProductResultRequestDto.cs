@@ -5,16 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
+using Abp.Runtime.Validation;
 using newprj.Entities;
 
 namespace newprj.Products.Dtos
 {
-    [AutoMapFrom(typeof(Product))]
-    public class ProductDto : EntityDto<int>
+    public class PagedProductResultRequetstDto : PagedAndSortedResultRequestDto
     {
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public int StockQuantity { get; set; }
+        public string Keyword { get; set; }
+     
+       
     }
-   
+
 }

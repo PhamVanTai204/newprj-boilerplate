@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Application.Services;
+using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using newprj.Entities;  // Đảm bảo nhập đúng namespace chứa class Product
 using newprj.Products;
@@ -12,48 +13,27 @@ using NuGet.Protocol.Plugins;
 
 namespace newprj.Products
 {
-    public class ProductAppService : ApplicationService, IProductAppService
+    public class ProductAppService :          // cần kế thừa từ AsyncCrudAppService để trả về đúng kiểu dl  thì mới có thể kết nối bên fe 
+                                              // CUE dto 3 cái này cần phải có map,     [AutoMapTo(typeof(Product))] khi cần  ánh sạ lớp đích sang lớp nguồn
+                                              //  AutoMapFrom khi muốn ánh xạ dữ liệu từ đối tượng của lớp nguồn (source class) vào đối tượng của lớp đích (destination class).
+
+        AsyncCrudAppService<Product,ProductDto,int, PagedProductResultRequetstDto, CreateProductDto, UpdateProductDto>, IProductAppService
     {
         private readonly IRepository<Product, int> _productRepository;
-
-        public ProductAppService(IRepository<Product, int> productRepository)
+        public ProductAppService(IRepository<Product, int> productRepository) : base(productRepository)
         {
             _productRepository = productRepository;
         }
 
-        public async Task<List<ProductDto>> GetAllAsync()
+        public override async Task<PagedResultDto<ProductDto>> GetAllAsync(PagedProductResultRequetstDto input)
         {
-            var products = await _productRepository.GetAllListAsync();
-            return ObjectMapper.Map<List<ProductDto>>(products) ;
+            return await base.GetAllAsync(input);
         }
 
-        public async Task<ProductDto> GetAsync(int id)
+        public override Task<ProductDto> CreateAsync(CreateProductDto input)
         {
-            var product = await _productRepository.GetAsync(id);
-            return ObjectMapper.Map<ProductDto>(product);
+            return base.CreateAsync(input);
         }
 
-        public async Task<ProductDto> CreateAsync(CreateProductDto input)
-        {
-            var product = ObjectMapper.Map<Product>(input);
-            await _productRepository.InsertAsync(product);
-            return new ProductDto();
-        }
-
-        public async Task<ProductDto> UpdateAsync(UpdateProductDto input)
-        {
-            var product = await _productRepository.GetAsync(input.Id);
-            ObjectMapper.Map(input, product);
-            await _productRepository.UpdateAsync(product);
-           
-            return new ProductDto();
-        }
-
-        public async Task DeleteAsync(int id)
-        {
-            await _productRepository.DeleteAsync(id);
-        }
-
- 
     }
 }

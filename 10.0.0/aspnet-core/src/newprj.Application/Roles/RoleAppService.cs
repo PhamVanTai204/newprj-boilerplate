@@ -34,7 +34,6 @@ public class RoleAppService : AsyncCrudAppService<Role, RoleDto, int, PagedRoleR
     public override async Task<RoleDto> CreateAsync(CreateRoleDto input)
     {
         CheckCreatePermission();
-
         var role = ObjectMapper.Map<Role>(input);
         role.SetNormalizedName();
 

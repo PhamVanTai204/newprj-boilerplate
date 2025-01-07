@@ -1043,7 +1043,7 @@ export class TenantServiceProxy {
         return _observableOf(null as any);
     }
 }
-
+ 
 @Injectable()
 export class ProductServiceProxy {
     private http: HttpClient;

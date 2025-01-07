@@ -8,13 +8,9 @@ using newprj.Products.Dtos;
 
 namespace newprj.Products
 {
-    public interface IProductAppService : IApplicationService
+    public interface IProductAppService : IAsyncCrudAppService<ProductDto,int,PagedProductResultRequetstDto,CreateProductDto,UpdateProductDto>
     {
-        Task<List<ProductDto>> GetAllAsync();
-        Task<ProductDto> GetAsync(int id);
-        Task<ProductDto> CreateAsync(CreateProductDto input);
-        Task<ProductDto> UpdateAsync(UpdateProductDto input);
-        Task DeleteAsync(int id);
+        
     }
 
 }

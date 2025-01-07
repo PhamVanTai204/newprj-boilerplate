@@ -1,0 +1,41 @@
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center my-5">
+  <i class="pi pi-spin pi-spinner" style="font-size: 2rem; color: blue;"></i>
+</div>
+
+<div *ngIf="!isLoading">
+  <div *ngIf="products.length > 0;">
+    <table class="table table-striped table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Stock Quantity</th>
+          <th scope="col" class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price }}</td>
+          <td>{{ product.stockQuantity }}</td>
+          <td class="text-center">
+            <!-- Nút sửa -->
+            <button class="btn btn-primary btn-sm me-2" (click)="editProduct(product)">
+              <i class="pi pi-pencil"></i> Edit
+            </button>
+            <!-- Nút xóa -->
+            <button class="btn btn-danger btn-sm" (click)="deleteProduct(product)">
+              <i class="pi pi-trash"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!products.length" class="text-center mt-5">
+    <p>No products available.</p>
+  </div>
+</div>
