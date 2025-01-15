@@ -8,7 +8,11 @@ import { CreateProductDialogComponent } from './create-product-dialog/create-pro
 import { UpdateProductDialogComponent } from './update-product-dialog/update-product-dialog.component';
 import { PagedListingComponentBase } from '@shared/paged-listing-component-base';
 import { ActivatedRoute } from '@node_modules/@angular/router';
-import { Cloudinary } from '@node_modules/@cloudinary/url-gen';
+import { Cloudinary, CloudinaryImage } from '@node_modules/@cloudinary/url-gen';
+import {fill, thumbnail} from "@cloudinary/url-gen/actions/resize";
+import { log } from 'console';
+import { focusOn } from '@node_modules/@cloudinary/transformation-builder-sdk/qualifiers/gravity';
+declare const cloudinary: any;
 
 @Component({
   selector: 'app-products',
@@ -23,6 +27,12 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
   isActive: boolean |null;
   advancedFiltersVisible = false;
   filteredLocationList:ProductDto[]=[];
+  img!: CloudinaryImage;
+  src: string = '';
+  cloudName = "da5wgbt3m";
+  uploadPreset="tpgzin";
+  myWidget;
+
   constructor(
     injector: Injector,
 
@@ -54,9 +64,35 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
 
     this.list();
     console.log("prd khi hết hàm load trong oninit", this.products);
-    // this.doSomethingWithProducts(); 
-    const cld = new Cloudinary({cloud: {cloudName: 'da5wgbt3m'}});
+     
 
+    this.myWidget = cloudinary.createUploadWidget(
+      {
+        cloudName: this.cloudName,
+        uploadPreset: this.uploadPreset,
+      },
+      (error, result) => {
+        if (!error && result && result.event === "success") {
+          console.log("Done! Here is the image info: ", result.info);
+          // Lưu URL của ảnh vào đối tượng sản phẩm
+          this.src = result.info.secure_url;
+          alert("Thêm ảnh thành công!");
+          this.list();
+    
+          // Cập nhật thẻ img trên giao diện (nếu cần)
+          document
+            .getElementById("uploadedimage")
+            .setAttribute("src", result.info.secure_url);
+        }
+      }
+    );
+    
+ 
+
+
+  }
+  openWidget() {
+    this.myWidget.open();
   }
 
   isLoading = true; // Trạng thái tải dữ liệu
@@ -150,3 +186,7 @@ clearFilters(): void {
 
    
 }
+
+
+
+ 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
+using CloudinaryDotNet;
 using newprj.Entities;  // Đảm bảo nhập đúng namespace chứa class Product
 using newprj.Products;
 using newprj.Products.Dtos;
@@ -20,6 +21,7 @@ namespace newprj.Products
         AsyncCrudAppService<Product,ProductDto,int, PagedProductResultRequetstDto, CreateProductDto, UpdateProductDto>, IProductAppService
     {
         private readonly IRepository<Product, int> _productRepository;
+        Cloudinary cloudinary;
         public ProductAppService(IRepository<Product, int> productRepository) : base(productRepository)
         {
             _productRepository = productRepository; 
