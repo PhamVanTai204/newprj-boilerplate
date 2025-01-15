@@ -754,7 +754,7 @@ export class TenantServiceProxy {
     create(body: CreateTenantDto | undefined): Observable<TenantDto> {
         let url_ = this.baseUrl + "/api/services/app/Tenant/Create";
         url_ = url_.replace(/[?&]$/, "");
-
+        debugger
         const content_ = JSON.stringify(body);
 
         let options_: any = {
@@ -1349,8 +1349,6 @@ export class ProductServiceProxy {
     
 }
 
-
-
 @Injectable()
 export class TokenAuthServiceProxy {
     private http: HttpClient;
@@ -1437,7 +1435,7 @@ export class UserServiceProxy {
     create(body: CreateUserDto | undefined): Observable<UserDto> {
         let url_ = this.baseUrl + "/api/services/app/User/Create";
         url_ = url_.replace(/[?&]$/, "");
-
+        debugger
         const content_ = JSON.stringify(body);
 
         let options_: any = {
@@ -2498,13 +2496,12 @@ export class CreateProductDto implements ICreateProductDto {
         data["name"] = this.name;
         data["price"] = this.price;
         data["stockQuantity"] = this.stockQuantity;
+        return data;
     }
     clone(): CreateProductDto {
-        const json = this.toJSON();
-        let result = new CreateProductDto();
-        result.init(json);
-        return result;
+        return CreateProductDto.fromJS(this.toJSON());
     }
+    
 
 }
 export interface ICreateTenantDto {

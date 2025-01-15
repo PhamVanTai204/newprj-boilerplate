@@ -1,41 +1,79 @@
-<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center my-5">
-  <i class="pi pi-spin pi-spinner" style="font-size: 2rem; color: blue;"></i>
-</div>
+<div>
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6">
+          <h1>Danh sách sản phẩm</h1>
+        </div>
+        <div class="col-6 text-right">
+          <button class="btn  btn-Create" (click)="createProduct()">
+            <i class="fa fa-plus-square"></i> Thêm mới sản phẩm
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div *ngIf="!isLoading">
-  <div *ngIf="products.length > 0;">
-    <table class="table table-striped table-hover">
-      <thead class="table-dark">
-        <tr>
-          <th scope="col">ID</th>
-          <th scope="col">Name</th>
-          <th scope="col">Price</th>
-          <th scope="col">Stock Quantity</th>
-          <th scope="col" class="text-center">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let product of products">
-          <td>{{ product.id }}</td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.price }}</td>
-          <td>{{ product.stockQuantity }}</td>
-          <td class="text-center">
-            <!-- Nút sửa -->
-            <button class="btn btn-primary btn-sm me-2" (click)="editProduct(product)">
-              <i class="pi pi-pencil"></i> Edit
-            </button>
-            <!-- Nút xóa -->
-            <button class="btn btn-danger btn-sm" (click)="deleteProduct(product)">
-              <i class="pi pi-trash"></i> Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <section class="content px-2 pb-5">
+    <div class="container-fluid">
+      <div class="card table-wrapper">
+        <div class="card-body table-responsive table-striped table-bordered">
 
-  <div *ngIf="!products.length" class="text-center mt-5">
-    <p>No products available.</p>
-  </div>
+
+
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <button type="button" class="btn bg-red " (click)="searchPRD(filter.value)">
+                <i class="fas fa-search"></i>
+              </button>
+
+            </div>
+            <input type="text" class="form-control" [placeholder]="'Nhập vào tên Sản Phẩm'" #filter
+              (keyup)="searchPRD(filter.value)" />
+
+            <!-- -->
+
+          </div>
+          <table class="table table-hover">
+            <div class="product-list">
+              @for(product of filteredLocationList; track product.id){
+              <div class="product">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTt0-alc_y3E1CCE_vpM5XBZrvnakA2GdwCvw&s"
+                  alt="Product Image">
+                <h2>Tên: {{ product.name }}</h2>
+                <p class="price">
+                  <span class="discounted-price">{{ (product.price * 0.8) | currency:'VND' : true }}</span> <!-- Giá giảm -->
+            
+                  <span class="original-price">{{ product.price | currency:'VND' : true }}</span>
+                  <!-- Giá gốc với định dạng tiền tệ -->
+                </p>
+            
+                <p> Số lượng tồn kho: <strong>{{ product.stockQuantity }}</strong></p>
+                <div class="buttons">
+                  <button class="btn btn-primary btn-sm me-2" (click)="editProduct(product)">
+                    <i class="fas fa-edit"></i>Chỉnh sửa
+                  </button>
+                  <button class="btn btn-danger btn-sm" (click)="delete(product)">
+                    <i class="fas fa-trash"> </i>Xóa
+                  </button>
+                </div>
+              </div>
+              }
+            </div>
+
+          </table>
+
+          <p-table>
+
+          </p-table>
+
+
+
+          <div *ngIf="!products.length" class="text-center mt-5">
+            <p>No products available.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

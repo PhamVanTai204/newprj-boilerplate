@@ -22,7 +22,7 @@ namespace newprj.Products
         private readonly IRepository<Product, int> _productRepository;
         public ProductAppService(IRepository<Product, int> productRepository) : base(productRepository)
         {
-            _productRepository = productRepository;
+            _productRepository = productRepository; 
         }
 
         public override async Task<PagedResultDto<ProductDto>> GetAllAsync(PagedProductResultRequetstDto input)

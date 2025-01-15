@@ -5,10 +5,12 @@
   (ngSubmit)="save()"
 >
   <abp-modal-header
-    [title]="'CreateNewTenant' | localize"
+    [title]="'CreateTenant' | localize"
     (onCloseClick)="bsModalRef.hide()"
   ></abp-modal-header>
+
   <div class="modal-body">
+    <!-- Tên tenant -->
     <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="tenancyName">
         {{ "TenancyName" | localize }}
@@ -32,6 +34,8 @@
         ></abp-validation-summary>
       </div>
     </div>
+
+    <!-- Tên -->
     <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="name">
         {{ "Name" | localize }}
@@ -54,6 +58,8 @@
         ></abp-validation-summary>
       </div>
     </div>
+
+    <!-- Connection String -->
     <div class="form-group row">
       <label class="col-md-3 col-form-label" for="connectionString">
         {{ "DatabaseConnectionString" | localize }}
@@ -69,6 +75,8 @@
         />
       </div>
     </div>
+
+    <!-- Email Admin -->
     <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="adminEmailAddress">
         {{ "AdminEmailAddress" | localize }}
@@ -92,6 +100,8 @@
         ></abp-validation-summary>
       </div>
     </div>
+
+    <!-- Checkbox Is Active -->
     <div class="form-group row mb-0">
       <label class="col-md-3 col-form-label">
         {{ "IsActive" | localize }}
@@ -109,10 +119,12 @@
         </div>
       </div>
     </div>
+
     <p class="text-center text-info mb-0">
       {{ "DefaultPasswordIs" | localize: "123qwe" }}
     </p>
   </div>
+
   <abp-modal-footer
     [cancelDisabled]="saving"
     [saveDisabled]="!createTenantForm.form.valid || saving"
