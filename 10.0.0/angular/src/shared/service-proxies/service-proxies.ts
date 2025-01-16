@@ -2470,6 +2470,8 @@ export class CreateProductDto implements ICreateProductDto {
     name: string;
     price: number;
     stockQuantity: number;
+    description: string;
+    urlImage: string;
     constructor(data?: ICreateProductDto) {
         if (data) {
             for (var property in data) {
@@ -2483,6 +2485,8 @@ export class CreateProductDto implements ICreateProductDto {
             this.name = _data["name"];
             this.price = _data["price"];
             this.stockQuantity = _data["stockQuantity"];
+            this.description = _data["description"];
+            this.urlImage = _data["urlImage"];
         }
     }
     static fromJS(data: any): CreateProductDto {
@@ -2496,6 +2500,8 @@ export class CreateProductDto implements ICreateProductDto {
         data["name"] = this.name;
         data["price"] = this.price;
         data["stockQuantity"] = this.stockQuantity;
+        data["description"]  =this.description;
+        data["urlImage"] = this.urlImage;
         return data;
     }
     clone(): CreateProductDto {
@@ -2518,7 +2524,8 @@ export interface ICreateProductDto {
     name: string;
     price: number;
     stockQuantity: number;
-
+    description: string;
+    urlImage: string;
 }
 
 
@@ -3598,7 +3605,8 @@ export class ProductDto implements IProductDto {
     name: string;
     price: number;
     stockQuantity: number;
-
+    description: string;
+    urlImage: string;
     constructor(data?: IProductDto) {
         if (data) {
             for (var property in data) {
@@ -3613,6 +3621,8 @@ export class ProductDto implements IProductDto {
             this.name = _data["name"];
             this.price = _data["price"];
             this.stockQuantity = _data["stockQuantity"];
+            this.description = _data["description"];
+            this.urlImage = _data["urlImage"];
         }
     }
     static fromJS(data: any): ProductDto {
@@ -3627,6 +3637,8 @@ export class ProductDto implements IProductDto {
         data["name"] = this.name;
         data["price"] = this.price;
         data["stockQuantity"] = this.stockQuantity;
+        data["description"] = this.description;
+        data["urlImage"] = this.urlImage;
         return data;
     }
     clone(): ProductDto {
@@ -3655,6 +3667,8 @@ export interface IProductDto {
     name: string;
     price: number;
     stockQuantity: number;
+    description: string;
+    urlImage: string;
 }
 
 

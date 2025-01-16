@@ -1,5 +1,10 @@
-<form #productForm="ngForm" (ngSubmit)="save()">
-  <div class="modal-body">
+<div class="modal-body">
+  <h1>Thêm sản phẩm</h1>
+  <button id="upload_widget" class="cloudinary-button" (click)="openWidget()">
+    <i class="fa fa-save"></i> Thêm ảnh
+  </button>
+
+  <form #productForm="ngForm" (ngSubmit)="save()">
     <!-- Tên sản phẩm -->
     <div class="form-group row required">
       <label class="col-md-3 col-form-label" for="name">Tên Sản phẩm</label>
@@ -14,7 +19,7 @@
           required
           maxlength="128"
         />
-        <div *ngIf="name.dirty && name.invalid" class="text-danger mt-1">
+        <div *ngIf="name.touched && name.invalid" class="text-danger mt-1">
           Tên sản phẩm là bắt buộc.
         </div>
       </div>
@@ -34,8 +39,28 @@
           required
           step="any"
         />
-        <div *ngIf="price.dirty && (price.invalid || product.price <= 0)" class="text-danger mt-1">
-          Giá phải lớn hơn 0    
+        <div *ngIf="price.touched && (price.invalid || product.price <= 0)" class="text-danger mt-1">
+          Giá phải lớn hơn 0.
+        </div>
+      </div>
+    </div>
+
+    <!-- Mô tả sản phẩm -->
+    <div class="form-group row required">
+      <label class="col-md-3 col-form-label" for="description">Mô tả</label>
+      <div class="col-md-9">
+        <input
+          type="text"
+          class="form-control"
+          id="description"
+          [(ngModel)]="product.description"
+          name="description"
+          #description="ngModel"
+          required
+          maxlength="128"
+        />
+        <div *ngIf="description.touched && description.invalid" class="text-danger mt-1">
+          Mô tả sản phẩm là bắt buộc.
         </div>
       </div>
     </div>
@@ -53,23 +78,26 @@
           #stockQuantity="ngModel"
           required
         />
-        <div *ngIf="stockQuantity.dirty && (stockQuantity.invalid || product.stockQuantity < 0)" class="text-danger mt-1">
-          Số lượng tồn kho phải lớn hơn hoặc bằng 0 
+        <div *ngIf="stockQuantity.touched && (stockQuantity.invalid || product.stockQuantity < 0)" class="text-danger mt-1">
+          Số lượng tồn kho phải lớn hơn hoặc bằng 0.
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">
-      Hủy
-    </button>
-    <button
-      type="submit"
-      class="btn btn-primary"
-      [disabled]="!productForm.valid"
-    >
-      Lưu
-    </button>
-  </div>
-</form>
+    <div class="modal-footer">
+      <img [src]="product.urlImage" alt="" />
+      <div class="btn_create">
+        <button type="button" class="btn btn1 btn-secondary" (click)="bsModalRef.hide()">
+          Hủy
+        </button>
+        <button
+          type="submit"
+          class="btn btn1 btn-primary"
+          [disabled]="!productForm.valid"
+        >
+          Lưu
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

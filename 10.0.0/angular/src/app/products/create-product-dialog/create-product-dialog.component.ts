@@ -4,7 +4,9 @@ import { CreateProductDto, ProductServiceProxy } from '@shared/service-proxies/s
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '@shared/app-component-base';
 import { log } from 'console';
-   
+import { CloudinaryImage } from '@node_modules/@cloudinary/url-gen';
+declare const cloudinary: any;
+
 @Component({
  
   templateUrl: './create-product-dialog.component.html',
@@ -14,7 +16,10 @@ export class CreateProductDialogComponent extends AppComponentBase   implements 
   
    saving = false;
    product: CreateProductDto = new CreateProductDto();
- 
+   img!: CloudinaryImage;
+   cloudName = "da5wgbt3m";
+  uploadPreset = "tpgzin";
+  myWidget;
    @Output() onSave = new EventEmitter<any>();
  
    constructor(
@@ -28,11 +33,55 @@ export class CreateProductDialogComponent extends AppComponentBase   implements 
  
    ngOnInit(): void {
       this.cd.detectChanges();
+      this.myWidget = cloudinary.createUploadWidget(
+        {
+          cloudName: this.cloudName,
+          uploadPreset: this.uploadPreset,
+        },
+        (error, result) => {
+          if (!error && result && result.event === "success") {
+            console.log("Done! Here is the image info: ", result.info);
+            // Lưu URL của ảnh vào đối tượng sản phẩm
+            this.product.urlImage = result.info.secure_url; // Gán URL ảnh vào product.urlImage
+            this.cd.detectChanges(); 
+            alert("Thêm ảnh thành công!");
+    
+            // Cập nhật thẻ img trên giao diện (nếu cần)
+           
+          }
+        }
+      );
    }
- 
+   openWidget() {
+    this.myWidget.open();
+  }
    save(): void {
      this.saving = true;
- 
+     if (!this.product.name || !this.product.price || !this.product.description || !this.product.stockQuantity  ) {
+      alert("Bạn cần nhập đầy đủ thông tin");
+      this.saving = false;
+      return;
+    }
+  
+    // Kiểm tra các điều kiện khác nếu cần
+    if (this.product.price <= 0) {
+      alert("Giá phải lớn hơn 0");
+      this.saving = false;
+      return;
+    }
+    if (this.product.stockQuantity < 0) {
+      alert("Số lượng tồn kho phải lớn hơn hoặc bằng 0");
+      this.saving = false;
+      return;
+    }
+  // Kiểm tra nếu chưa có ảnh
+  if (!this.product.urlImage) {
+    alert("Vui lòng chọn ảnh cho sản phẩm trước khi lưu!");
+    this.saving = false;
+    this.openWidget();
+    return;
+  }
+
      this._productService.create(this.product).subscribe(
        () => {
          this.notify.info(this.l('SavedSuccessfully'));
@@ -42,7 +91,7 @@ export class CreateProductDialogComponent extends AppComponentBase   implements 
          
        },
        () => {
-        
+          
          this.saving = false;
          console.log("không thành  công create", this.product);
 

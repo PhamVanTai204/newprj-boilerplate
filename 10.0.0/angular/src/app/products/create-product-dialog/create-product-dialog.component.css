@@ -1,56 +1,137 @@
+/* Toàn bộ form */
+form {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px #FE3323;
+  max-width: 600px;
+  margin: 0 auto;
+}
+h1{
+  font-weight: bold;
+}
+
+/* Modal body */
 .modal-body {
-    padding: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 1rem;
-  }
-  
-  .required label:after {
-    content: " *";
-    color: red;
-  }
-  
-  .form-control {
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    font-size: 1rem;
-    padding: 0.375rem 0.75rem;
-  }
-  
-  .form-control:focus {
-    border-color: #80bdff;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
-  
-  .text-danger {
-    font-size: 0.875rem;
-  }
-  
-  .modal-footer {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px 20px;
-  }
-  
-  .btn {
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-  }
-  
-  .btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-  }
-  
-  .btn-primary:disabled {
-    background-color: #6c757d;
-    border-color: #6c757d;
-  }
-  
-  .btn-secondary {
-    background-color: #6c757d;
-    border-color: #6c757d;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Nút chọn ảnh */
+.cloudinary-button {
+  background-color:  #FE3323;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.cloudinary-button:hover {
+  background-color:  #FE3323;
+}
+
+.cloudinary-button i {
+  margin-right: 10px;
+}
+
+/* Các phần tử form */
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  font-size: 16px;
+  font-weight: 600;
+  color:  #000000;
+  flex: 1;
+}
+
+.form-group .col-md-9 {
+  flex: 2;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: border 0.3s;
+}
+
+.form-group input:focus {
+  border: 1px solid  #FE3323;
+  outline: none;
+}
+
+/* Thông báo lỗi */
+.text-danger {
+  font-size: 14px;
+  color:  #FE3323;
+  margin-top: 5px;
+}
+
+/* Nút Hủy và Lưu */
+.btn_create {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.btn_create .btn {
+  font-size: 16px;
+   padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.btn1{
+  color: #ccc;
+}
+
+.btn_create .btn-secondary {
+  background-color:  #FE3323;
+  border: 1px solid #ddd;
+  color: #ffffff;
+}
+
+.btn_create .btn-secondary:hover {
+  background-color:  #FE3323;
+}
+
+.btn_create .btn-primary {
+  background-color:  #FE3323;
+  border: 1px solid #360ed3;
+  color: #fff;
+}
+
+.btn_create .btn-primary:disabled {
+  background-color: #ccc;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.btn_create .btn-primary:hover {
+  background-color: #FE3323;
+}
+
+.modal-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Hình ảnh sản phẩm */
+.modal-footer img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
