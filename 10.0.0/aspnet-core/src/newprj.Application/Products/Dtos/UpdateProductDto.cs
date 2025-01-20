@@ -18,5 +18,7 @@ namespace newprj.Products.Dtos
         public string Description { get; set; }
         public string UrlImage { get; set; }
 
+        public int maSP { get; set; }
+ 
     }
 }

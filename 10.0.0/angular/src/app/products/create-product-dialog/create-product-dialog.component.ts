@@ -3,7 +3,7 @@ import { ProductsComponent } from '../products.component';
 import { CreateProductDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '@shared/app-component-base';
-import { log } from 'console';
+import { error, log } from 'console';
 import { CloudinaryImage } from '@node_modules/@cloudinary/url-gen';
 declare const cloudinary: any;
 
@@ -82,20 +82,22 @@ export class CreateProductDialogComponent extends AppComponentBase   implements 
     return;
   }
 
-     this._productService.create(this.product).subscribe(
-       () => {
-         this.notify.info(this.l('SavedSuccessfully'));
-         this.bsModalRef.hide();
-         this.onSave.emit();
-         console.log("thành công create");
+     this._productService.create(this.product).subscribe({
+      
+      next: () => {
+        this.notify.info(this.l('SavedSuccessfully'));
+        this.bsModalRef.hide();
+        this.onSave.emit();
+        console.log("thành công thêm");
+        
+      },
+      error:() => {
          
-       },
-       () => {
-          
-         this.saving = false;
-         console.log("không thành  công create", this.product);
+        this.saving = false;
+        console.log("không thành  công create", this.product);
 
-       }
+      }
+     }
      );
    }
    

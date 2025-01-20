@@ -2472,6 +2472,8 @@ export class CreateProductDto implements ICreateProductDto {
     stockQuantity: number;
     description: string;
     urlImage: string;
+    maSP: number;
+
     constructor(data?: ICreateProductDto) {
         if (data) {
             for (var property in data) {
@@ -2487,6 +2489,8 @@ export class CreateProductDto implements ICreateProductDto {
             this.stockQuantity = _data["stockQuantity"];
             this.description = _data["description"];
             this.urlImage = _data["urlImage"];
+            this.maSP = _data["maSP"];
+
         }
     }
     static fromJS(data: any): CreateProductDto {
@@ -2502,6 +2506,8 @@ export class CreateProductDto implements ICreateProductDto {
         data["stockQuantity"] = this.stockQuantity;
         data["description"]  =this.description;
         data["urlImage"] = this.urlImage;
+        data["maSP"] = this.maSP;
+
         return data;
     }
     clone(): CreateProductDto {
@@ -2526,6 +2532,7 @@ export interface ICreateProductDto {
     stockQuantity: number;
     description: string;
     urlImage: string;
+    maSP: number;
 }
 
 
@@ -3607,6 +3614,8 @@ export class ProductDto implements IProductDto {
     stockQuantity: number;
     description: string;
     urlImage: string;
+    maSP: number;
+
     constructor(data?: IProductDto) {
         if (data) {
             for (var property in data) {
@@ -3623,6 +3632,7 @@ export class ProductDto implements IProductDto {
             this.stockQuantity = _data["stockQuantity"];
             this.description = _data["description"];
             this.urlImage = _data["urlImage"];
+            this.maSP = _data["maSP"];
         }
     }
     static fromJS(data: any): ProductDto {
@@ -3639,6 +3649,7 @@ export class ProductDto implements IProductDto {
         data["stockQuantity"] = this.stockQuantity;
         data["description"] = this.description;
         data["urlImage"] = this.urlImage;
+        data["maSP"] = this.maSP;
         return data;
     }
     clone(): ProductDto {
@@ -3669,6 +3680,7 @@ export interface IProductDto {
     stockQuantity: number;
     description: string;
     urlImage: string;
+    maSP:number;
 }
 
 

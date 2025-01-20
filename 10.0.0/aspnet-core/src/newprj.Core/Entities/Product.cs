@@ -14,6 +14,7 @@ namespace newprj.Entities
         public int StockQuantity { get; set; }
         public string Description { get; set; }
         public string UrlImage { get; set; }
+        public int masp { get; set; }
 
     }
 }

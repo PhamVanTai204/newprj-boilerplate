@@ -38,33 +38,33 @@
           <table class="table table-hover">
             <div class="product-list">
               
-              @for(product of filteredLocationList; track product.id){
-              <div class="product">
-                <div class="khung_prdImg">
-                  <img id="img-product-list" alt="Uploaded Image" [(src)]="product.urlImage" />
-
-                </div>
-                <h2>Tên: {{ product.name }}</h2>
-                <p class="price">
-                  <span class="discounted-price">{{ (product.price * 0.8) | currency:'VND' : true }}</span> <!-- Giá giảm -->
-            
-                  <span class="original-price">{{ product.price | currency:'VND' : true }}</span>
-                  <!-- Giá gốc với định dạng tiền tệ -->
-                </p>
-                <p class="description">Mô tả: {{product.description}}</p>
-            
-                <p> Số lượng tồn kho: <strong>{{ product.stockQuantity }}</strong></p>
-                <div class="buttons">
-                  <button class="btn 
-                  btn-primary btn-sm me-2" (click)="editProduct(product)">
-                    <i class="fas fa-edit"></i> Chỉnh sửa
-                  </button>
-                  <button class="btn btn-danger btn-sm" (click)="delete(product)">
-                    <i class="fas fa-trash"> </i> Xóa
-                  </button>
-                </div>
-              </div>
-              }
+                 @for(product of filteredLocationList ; track product.id){
+                  <div class="product">
+                    <div class="khung_prdImg">
+                      <img id="img-product-list" alt="Uploaded Image" [src]="product.urlImage" />
+                    </div>
+                    <h2> {{ product.name }}</h2>
+                    <p class="price">
+                      <span class="discounted-price">{{ (product.price * 0.8) | currency:'VND' : true }}</span> <!-- Giá giảm -->
+                
+                      <span class="original-price">{{ product.price | currency:'VND' : true }}</span>
+                      <!-- Giá gốc với định dạng tiền tệ -->
+                    </p>
+                    <p class="description">Mô tả: {{product.description}}</p>
+                
+                    <p> Số lượng tồn kho: <strong>{{ product.stockQuantity }}</strong></p>
+                    <div class="buttons">
+                      <button class="btn 
+                      btn-primary btn-sm me-2" (click)="editProduct(product)">
+                        <i class="fas fa-edit"></i> Chỉnh sửa
+                      </button>
+                      <button class="btn btn-danger btn-sm" (click)="delete(product)">
+                        <i class="fas fa-trash"> </i> Xóa
+                      </button>
+                    </div>
+                  </div>
+                  }
+               
              
             </div>
 
@@ -82,6 +82,17 @@
            
   
         </div>
+        <div class="pagination">
+          <button (click)="changePage(1)" [disabled]="currentPage === 1">Trang đầu</button>
+          <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Trang trước</button>
+          <h5>{{currentPage}}<br>
+                số trang
+          </h5>
+          <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Trang sau</button>
+          <button (click)="changePage(totalPages)" [disabled]="currentPage === totalPages">Trang cuối</button>
+        </div>
+        
+        
         
       </div>
     </div>

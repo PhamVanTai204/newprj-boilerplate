@@ -51,6 +51,7 @@
                 #price="ngModel"
                 required
                 step="any"
+                
               />
               <div *ngIf="price.touched && (price.invalid || product.price <= 0)" class="text-danger mt-1">
                 Giá phải lớn hơn 0.

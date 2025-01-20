@@ -12,17 +12,16 @@
   text-align: center;
   outline: none;
 }
-h1{
+h1 {
   font-weight: bold;
-
 }
 .btn-primary, .btn-Create, .bg-red1 {
-  background-color:  #FE3323; /* Màu nền của nút Create */
+  background-color: #FE3323; /* Màu nền của nút Create */
   color: white;
   font-weight: bold;
 }
 .btn-danger {
-  background-color:  #6C757D; /* Màu nền của nút Create */
+  background-color: #6C757D; /* Màu nền của nút Create */
   color: white;
   font-weight: bold;
 }
@@ -33,11 +32,11 @@ h1{
 }
 
 .btn-Create:focus {
-  box-shadow: 0 0 0 2px  #FE3323(22, 3, 5, 0.5);
+  box-shadow: 0 0 0 2px rgba(254, 51, 35, 0.5);
 }
 
 .btn-Create:active {
-  background-color:  #FE3323;
+  background-color: #FE3323;
   transform: scale(0.98);
 }
 
@@ -47,7 +46,7 @@ h1{
 
 /* Cấu trúc bảng */
 .table-hover tbody tr:hover {
-  background-color:  #FE3323;
+  background-color: #FE3323;
 }
 
 .table {
@@ -71,15 +70,13 @@ h1{
 }
 
 .product-list > * {
-  flex: 1 1 calc(18% ); /* Mỗi item chiếm 18% chiều rộng, trừ khoảng cách giữa các item */
-  max-width: calc(20% ); /* Đảm bảo không vượt quá 25% */
-
+  flex: 1 1 calc(18%);
+  max-width: calc(20%);
   box-sizing: border-box;
 }
 
-/* Đảm bảo sản phẩm không thay đổi kích thước khi chỉ có một sản phẩm */
 .product-list > *:only-child {
-  flex: 1 1 calc(20% ); /* Khi chỉ có một sản phẩm, vẫn chiếm 18% */
+  flex: 1 1 calc(20%);
 }
 
 .product {
@@ -90,10 +87,10 @@ h1{
   max-width: 280px;
   height: 380px; /* Cố định chiều cao */
   box-sizing: border-box;
-  border: 1px solid  #FE3323;
+  border: 1px solid #FE3323;
   border-radius: 8px;
   padding: 5px;
-  box-shadow: 0 2px 5px  #FE3323;
+  box-shadow: 0 2px 5px #FE3323;
   margin: 5px;
   overflow: hidden;
 }
@@ -102,7 +99,7 @@ h1{
   height: 150px;
   overflow: hidden;
   border-radius: 5px;
-   display: flex; /* Cần để sử dụng Flexbox */
+  display: flex; /* Cần để sử dụng Flexbox */
   justify-content: center; /* Căn giữa theo chiều ngang */
   align-items: center; /* Căn giữa theo chiều dọc */
 }
@@ -115,7 +112,7 @@ h1{
 }
 
 .product h2 {
-  font-size: 18px;
+  font-size: 28px;
   font-weight: bold;
   margin-top: 3px;
 }
@@ -139,7 +136,7 @@ h1{
 }
 
 .discounted-price {
-  color:  #FE3323;
+  color: #FE3323;
   font-size: 18px;
   font-weight: bold;
 }
@@ -164,7 +161,7 @@ h1{
 .input-group {
   margin-bottom: 3px;
   border-radius: 5px;
-  border: 1px solid  #FE3323;
+  border: 1px solid #FE3323;
 }
 .description {
   display: -webkit-box; /* Để kích hoạt line-clamp */
@@ -181,9 +178,49 @@ h1{
   margin-top: 5px;
 }
 .fas {
-margin-right: 4px;
+  margin-right: 4px;
 }
-.fa-plus-square{
+.fa-plus-square {
   margin-right: 5px;
 }
- 
+
+/* Định dạng cho phân trang */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px; /* Khoảng cách giữa các nút */
+}
+
+.pagination button {
+  background-color: #FE3323; /* Màu nền nút */
+  color: white; /* Màu chữ */
+  border: none; /* Bỏ viền nút */
+  padding: 8px 15px; /* Khoảng cách bên trong nút */
+  font-size: 14px; /* Kích thước chữ */
+  border-radius: 5px; /* Bo góc nút */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Hiệu ứng hover */
+}
+
+.pagination button:disabled {
+  background-color: #cccccc; /* Màu khi nút bị disable */
+  cursor: not-allowed; /* Con trỏ khi nút bị disable */
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #751116; /* Màu nền khi hover */
+}
+
+.pagination h5 {
+  margin: 5;
+  font-size: 22px;
+  color: #FE3323; /* Màu số trang hiện tại */
+  font-weight: bold;
+  border-radius: 5px;
+  padding: 20px;
+  border: 1px solid #FE3323 ;
+  font-weight: bold;
+  text-align: center; /* Căn giữa theo chiều ngang */
+}
