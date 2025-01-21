@@ -2472,7 +2472,7 @@ export class CreateProductDto implements ICreateProductDto {
     stockQuantity: number;
     description: string;
     urlImage: string;
-    maSP: number;
+    maSP: string;
 
     constructor(data?: ICreateProductDto) {
         if (data) {
@@ -2532,7 +2532,7 @@ export interface ICreateProductDto {
     stockQuantity: number;
     description: string;
     urlImage: string;
-    maSP: number;
+    maSP: string;
 }
 
 
@@ -3614,7 +3614,7 @@ export class ProductDto implements IProductDto {
     stockQuantity: number;
     description: string;
     urlImage: string;
-    maSP: number;
+    maSP: string;
 
     constructor(data?: IProductDto) {
         if (data) {
@@ -3680,7 +3680,7 @@ export interface IProductDto {
     stockQuantity: number;
     description: string;
     urlImage: string;
-    maSP:number;
+    maSP:string;
 }
 
 

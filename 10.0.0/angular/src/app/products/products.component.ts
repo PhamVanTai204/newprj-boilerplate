@@ -12,6 +12,7 @@ import { Cloudinary, CloudinaryImage } from '@node_modules/@cloudinary/url-gen';
 import { fill, thumbnail } from "@cloudinary/url-gen/actions/resize";
 import { log } from 'console';
 import { focusOn } from '@node_modules/@cloudinary/transformation-builder-sdk/qualifiers/gravity';
+import { ChitietProductDialogComponent } from './chitiet-product-dialog/chitiet-product-dialog.component';
  
 @Component({
   selector: 'app-products',
@@ -140,6 +141,9 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
     this.showCreateOrEditProductDialog(product.id);
 
   }
+  showProduct(product: ProductDto):void{
+    this.showProductDialog(product.id);
+  }
   delete(product: ProductDto): void {
     const confirmation = window.confirm(`Bạn chắc chắn muốn xóa sản phẩm: ${product.name}?`);
 
@@ -168,8 +172,18 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
   }
 
 
-
-
+  showProductDialog(id?: number): void {
+    let createOrEditProductDialog: BsModalRef;
+    createOrEditProductDialog = this._modalService.show(
+      ChitietProductDialogComponent,
+      {
+        class: "modal-lg",
+        initialState: {
+          id: id,
+        },
+      }
+    )
+  }
   showCreateOrEditProductDialog(id?: number): void {
     let createOrEditProductDialog: BsModalRef;
     if (!id) {
@@ -189,16 +203,17 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
           },
         }
       );
+      
     }
     // Lắng nghe sự kiện lưu từ dialog
     createOrEditProductDialog.content.onSave.subscribe(() => {
-      console.log("hehe");
-      
+       
       if (!id) {
         this.changePage(1);
+        this.list();
       } else {
         this.list();
-      }
+       }
     });
   }
   clearFilters(): void {

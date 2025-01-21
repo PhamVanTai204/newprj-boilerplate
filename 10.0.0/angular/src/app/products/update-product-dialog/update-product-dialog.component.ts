@@ -9,7 +9,7 @@ declare const cloudinary: any;
 @Component({
 
   templateUrl: './update-product-dialog.component.html',
-  styleUrl: './update-product-dialog.component.css'
+  styleUrl: './update-product-dialog.component.scss'
 })
 export class UpdateProductDialogComponent extends AppComponentBase implements OnInit {
   saving = false;
@@ -25,8 +25,7 @@ export class UpdateProductDialogComponent extends AppComponentBase implements On
   ngOnInit(): void {
     this._productService.get(this.id).subscribe((result: ProductDto) => {
       this.product = result;
-      this.oldImagePublicId = this.getPublicIdFromUrl(this.product.urlImage); // Lưu public_id của ảnh cũ
-      this.cd.detectChanges();
+       this.cd.detectChanges();
     });
     this.myWidget = cloudinary.createUploadWidget(
       {
@@ -37,9 +36,7 @@ export class UpdateProductDialogComponent extends AppComponentBase implements On
         if (!error && result && result.event === "success") {
           console.log("Done! Here is the image info: ", result.info);
           // Gọi hàm xóa ảnh cũ trước khi cập nhật ảnh mới
-          if (this.oldImagePublicId) {
-            this.deleteImage(this.oldImagePublicId); // Xóa ảnh cũ
-          }
+           
 
           // Lưu URL của ảnh vào đối tượng sản phẩm
           this.product.urlImage = result.info.secure_url; // Gán URL ảnh vào product.urlImage
@@ -55,36 +52,9 @@ export class UpdateProductDialogComponent extends AppComponentBase implements On
   }
 
   // Lấy public_id từ URL ảnh
-  private getPublicIdFromUrl(url: string): string {
-    const urlParts = url.split('/');
-    const publicIdWithExtension = urlParts[urlParts.length - 1];
-    const publicId = publicIdWithExtension.split('.')[0];
-    return publicId;
-  }
-
+  
   // Xóa ảnh cũ trên Cloudinary
-  private deleteImage(publicId: string): void {
-    const deleteUrl = `https://api.cloudinary.com/v1_1/${this.cloudName}/image/destroy`;
-    const body = {
-      public_id: publicId,
-    };
-
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-
-    fetch(deleteUrl, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(body),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Ảnh cũ đã được xóa:', data);
-      })
-      .catch(error => {
-        console.error('Lỗi khi xóa ảnh cũ:', error);
-      });
-  }
+  
 
   openWidget() {
     this.myWidget.open();

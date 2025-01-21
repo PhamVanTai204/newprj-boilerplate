@@ -1,0 +1,44 @@
+<div class="product-detail">
+  <div class="container">
+    <!-- Header Section -->
+    <div class="product-detail-header">
+      <button class="btn-back" (click)="goBack()">&#8592; Quay lại</button>
+      <h1 class="product-title">Chi tiết sản phẩm: {{ product?.name }}</h1>
+    </div>
+
+    <!-- Product Content Section -->
+    <div class="product-detail-body">
+      <!-- Product Image Section -->
+      <div class="product-image-wrapper">
+        <div class="product-image">
+          <img [src]="product?.urlImage" alt="{{ product?.name }}" />
+        </div>
+      </div>
+
+      <!-- Product Info Section -->
+      <div class="product-info-wrapper">
+        <div class="product-info">
+          <h2 class="product-name">Tên sản phẩm:  {{ product?.name }}</h2>
+          <div class="product-pricing">
+            <strong>Giá:</strong>
+            <span class="discounted-price">
+              {{ (product?.price * 0.8) | currency: 'VND': true }}
+            </span>
+            <span class="original-price">
+              {{ product?.price | currency: 'VND': true }}
+            </span>
+          </div>
+          <p class="product-description">
+            <strong>Mô tả:</strong> {{ product?.description }}
+          </p>
+          <p class="product-stock">
+            <strong>Số lượng tồn kho:</strong> {{ product?.stockQuantity }}
+          </p>
+          <p class="product-code">
+            <strong>Mã sản phẩm:</strong> {{ product?.maSP }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

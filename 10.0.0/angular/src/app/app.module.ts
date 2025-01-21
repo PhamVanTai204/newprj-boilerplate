@@ -23,7 +23,7 @@ import { SidebarLogoComponent } from './layout/sidebar-logo.component';
 import { SidebarUserPanelComponent } from './layout/sidebar-user-panel.component';
 import { SidebarMenuComponent } from './layout/sidebar-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
- 
+import { InputNumberModule } from 'primeng/inputnumber';
 @NgModule({
     declarations: [
         AppComponent,
@@ -52,6 +52,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         ServiceProxyModule,
         NgxPaginationModule,
         SharedModule,
+        InputNumberModule
  
     ],
     providers: []

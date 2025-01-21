@@ -10,7 +10,7 @@ declare const cloudinary: any;
 @Component({
  
   templateUrl: './create-product-dialog.component.html',
-  styleUrl: './create-product-dialog.component.css'
+  styleUrl: './create-product-dialog.component.scss'
 })
 export class CreateProductDialogComponent extends AppComponentBase   implements OnInit {
   
@@ -47,13 +47,15 @@ export class CreateProductDialogComponent extends AppComponentBase   implements 
             alert("Thêm ảnh thành công!");
     
             // Cập nhật thẻ img trên giao diện (nếu cần)
-           
+            document
+            .getElementById("uploadedimage")
+            .setAttribute("src", result.info.secure_url);
           }
         }
       );
    }
    openWidget() {
-    this.myWidget.open();
+     this.myWidget.open();
   }
    save(): void {
      this.saving = true;

@@ -16,7 +16,7 @@ h1 {
   font-weight: bold;
 }
 .btn-primary, .btn-Create, .bg-red1 {
-  background-color: #FE3323; /* Màu nền của nút Create */
+  background-color: #00B2A9; /* Màu nền của nút Create */
   color: white;
   font-weight: bold;
 }
@@ -27,16 +27,16 @@ h1 {
 }
 
 .btn-Create:hover {
-  background-color: #7a2d2d; /* Màu nền khi hover */
+  background-color: #23423c; /* Màu nền khi hover */
   transform: scale(1.05);
 }
 
 .btn-Create:focus {
-  box-shadow: 0 0 0 2px rgba(254, 51, 35, 0.5);
+  box-shadow: 0 0 0 2px rgba(31, 143, 141, 0.5);
 }
 
 .btn-Create:active {
-  background-color: #FE3323;
+  background-color: #00B2A9;
   transform: scale(0.98);
 }
 
@@ -46,7 +46,7 @@ h1 {
 
 /* Cấu trúc bảng */
 .table-hover tbody tr:hover {
-  background-color: #FE3323;
+  background-color: #00B2A9;
 }
 
 .table {
@@ -87,10 +87,10 @@ h1 {
   max-width: 280px;
   height: 380px; /* Cố định chiều cao */
   box-sizing: border-box;
-  border: 1px solid #FE3323;
+  border: 1px solid #00B2A9;
   border-radius: 8px;
   padding: 5px;
-  box-shadow: 0 2px 5px #FE3323;
+  box-shadow: 0 2px 5px #00B2A9;
   margin: 5px;
   overflow: hidden;
 }
@@ -136,7 +136,7 @@ h1 {
 }
 
 .discounted-price {
-  color: #FE3323;
+  color: #00B2A9;
   font-size: 18px;
   font-weight: bold;
 }
@@ -161,7 +161,7 @@ h1 {
 .input-group {
   margin-bottom: 3px;
   border-radius: 5px;
-  border: 1px solid #FE3323;
+  border: 1px solid #00B2A9;
 }
 .description {
   display: -webkit-box; /* Để kích hoạt line-clamp */
@@ -194,7 +194,7 @@ h1 {
 }
 
 .pagination button {
-  background-color: #FE3323; /* Màu nền nút */
+  background-color: #00B2A9; /* Màu nền nút */
   color: white; /* Màu chữ */
   border: none; /* Bỏ viền nút */
   padding: 8px 15px; /* Khoảng cách bên trong nút */
@@ -216,11 +216,11 @@ h1 {
 .pagination h5 {
   margin: 5;
   font-size: 22px;
-  color: #FE3323; /* Màu số trang hiện tại */
+  color: #00B2A9; /* Màu số trang hiện tại */
   font-weight: bold;
   border-radius: 5px;
   padding: 20px;
-  border: 1px solid #FE3323 ;
+  border: 1px solid #00B2A9 ;
   font-weight: bold;
   text-align: center; /* Căn giữa theo chiều ngang */
 }

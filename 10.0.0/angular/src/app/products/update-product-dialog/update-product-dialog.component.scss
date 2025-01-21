@@ -1,34 +1,38 @@
 /* Toàn bộ phần header và section */
 .content-header {
-  background-color:  #ffffff;
+  background-color: #ffffff;
   padding: 20px 0;
-  border-bottom: 1px solid  #FE3323;
+  border-bottom: 1px solid #00B2A9;
 }
 
 .content-header h1 {
   font-size: 24px;
   font-weight: 600;
-  color:  #FE3323;
+  color: #00B2A9;
 }
 
 .container-fluid {
   max-width: 1200px;
 }
+.row{
+  align-items: center;
+}
 
 /* Nút thêm ảnh */
 #upload_widget {
-  background-color:  #FE3323;
+  background-color: #00B2A9;
   color: #fff;
   padding: 10px 20px;
   border-radius: 8px;
   border: none;
-  font-size: 16px;
+  font-weight: bold;
+  font-size: 23px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 #upload_widget:hover {
-  background-color:  #FE3323;
+  background-color: #00B2A9;
 }
 
 #upload_widget i {
@@ -38,7 +42,7 @@
 /* Phần nội dung form */
 .card {
   border-radius: 8px;
-  box-shadow: 0 4px 8px  #FE3323;
+  box-shadow: 0 4px 8px #00B2A9;
   margin-bottom: 20px;
 }
 
@@ -56,7 +60,7 @@
 .form-group label {
   font-size: 16px;
   font-weight: 600;
-  color:  #FE3323;
+  color: #00B2A9;
   flex: 1;
 }
 
@@ -66,32 +70,47 @@
 
 .form-group input {
   width: 100%;
-  padding: 10px;
   border-radius: 8px;
-  border: 1px solid #FE3323;
+  border: 2px solid #00B2A9;
   font-size: 16px;
   transition: border 0.3s;
 }
 
-.form-group input:focus {
-  border-color: #FE3323;
+.form-group input,
+:focus {
+  border-color: #00B2A9;
   outline: none;
+}
+
+::ng-deep {
+  p-inputNumber {
+    .p-inputnumber  {
+      width: 525px  ;
+       border-radius: 6px;
+       border: 2px solid #00B2A9;
+
+    }
+    .p-inputnumber input {
+      width:  525px;
+       border-radius: 5px;
+ 
+    }
+  }
 }
 
 /* Thông báo lỗi */
 .text-danger {
   font-size: 14px;
-  color: #FE3323;
+  color: #00B2A9;
   margin-top: 5px;
 }
 
 /* Khung hình ảnh */
 .khung_prdImg img {
-  max-width: 100%;
+  width: 50%;
   height: auto;
   border-radius: 8px;
-  margin-top: 20px;
-  box-shadow: 0 4px 8px  #FE3323;
+   box-shadow: 0 4px 8px #00B2A9;
 }
 
 .khung_prdImg {
@@ -112,7 +131,8 @@
 }
 
 .khung_btn .btn {
-  font-size: 16px;
+  font-size: 24px;
+  font-weight: bold;
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
@@ -120,7 +140,7 @@
 }
 
 .khung_btn .btn-secondary {
-  background-color:  #FE3323;
+  background-color: #00B2A9;
   border: 1px solid #ddd;
   color: #ffffff;
 }
@@ -130,17 +150,17 @@
 }
 
 .khung_btn .btn-primary {
-  background-color:  #FE3323;
-  border: 1px solid #FE3323;
+  background-color: #00B2A9;
+  border: 1px solid #00B2A9;
   color: #fff;
 }
 
 .khung_btn .btn-primary:disabled {
-  background-color:  #FE3323;
+  background-color: #00B2A9;
   border-color: #ccc;
   cursor: not-allowed;
 }
 
 .khung_btn .btn-primary:hover {
-  background-color:  #FE3323;
+  background-color: #00B2A9;
 }
