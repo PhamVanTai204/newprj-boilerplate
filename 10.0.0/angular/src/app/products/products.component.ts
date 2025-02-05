@@ -90,7 +90,8 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
   list(): void {
     console.log("bắt đầu load");
     this.setLoading(true); // Bật trạng thái loading
-    this._productService.getAll(this.keyword, this.isActive, 'name', 0, 10)
+  
+     this._productService.getAll(this.keyword, this.isActive, 'name', 0, 10)
           .pipe(
             finalize(() => {
               this.primengTableHelper.hideLoadingIndicator();

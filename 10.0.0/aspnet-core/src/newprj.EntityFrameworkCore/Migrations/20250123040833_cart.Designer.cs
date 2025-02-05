@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using newprj.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using newprj.EntityFrameworkCore;
 namespace newprj.Migrations
 {
     [DbContext(typeof(newprjDbContext))]
-    partial class newprjDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250123040833_cart")]
+    partial class cart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1669,7 +1672,7 @@ namespace newprj.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItem");
                 });
 
             modelBuilder.Entity("newprj.Entities.Product", b =>

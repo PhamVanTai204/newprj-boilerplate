@@ -41,7 +41,13 @@ import { AppComponent } from './app.component';
                     {
                         path: 'products',
                         loadChildren: () => import('./products/products.module').then((m) => m.ProductsModule),
-                        data: { permission: 'Pages.Tenants' },
+                        data: { permission: 'Pages.Products' },
+                        canActivate: [AppRouteGuard]
+                    },
+                    {
+                        path: 'cart',
+                        loadChildren: () => import('./cart/cart.module').then((m) => m.CartModule),
+                        data: { permission: 'Pages.Cart' },
                         canActivate: [AppRouteGuard]
                     },
                     {

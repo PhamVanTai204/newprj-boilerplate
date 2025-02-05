@@ -15,6 +15,7 @@ namespace newprj.Entities
         public string Description { get; set; }
         public string UrlImage { get; set; }
         public string masp { get; set; }
+        public virtual ICollection<CartItem> CartItems { get; set; }
 
     }
 }

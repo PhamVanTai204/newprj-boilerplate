@@ -1,0 +1,30 @@
+<div class="cart-container">
+  <div class="cart-header">
+    <h2>Giỏ Hàng</h2>
+    <i class="fas fa-shopping-cart"></i>
+  </div>
+  
+  <div *ngIf="cartItems.length === 0" class="empty-cart">
+    <p>Giỏ hàng của bạn hiện đang trống.</p>
+  </div>
+
+  <div *ngFor="let item of cartItems" class="cart-item">
+    <img [src]="'https://res.cloudinary.com/da5wgbt3m/image/upload/v1737002240/qf5k6vqc6lavhg85bke5.png'" alt="{{ item.name }}" class="cart-item-image">    <div class="cart-item-info">
+      <h4>{{ item.name }}</h4>
+      <p class="price">{{ item.price | currency }}</p>
+      <div class="quantity">
+        <button class="quantity-btn" (click)="decreaseQuantity(item)">-</button>
+        <span>{{ item.quantity }}</span>
+        <button class="quantity-btn" (click)="increaseQuantity(item)">+</button>
+      </div>
+    </div>
+    <div class="item-total">
+      <p>{{ item.price * item.quantity | currency }}</p>
+    </div>
+  </div>
+
+  <div class="cart-summary">
+    <h3>Tổng cộng: {{ totalAmount | currency }}</h3>
+    <button class="checkout-btn">Thanh toán</button>
+  </div>
+</div>

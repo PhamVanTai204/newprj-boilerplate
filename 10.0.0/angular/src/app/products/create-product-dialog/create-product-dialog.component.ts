@@ -83,7 +83,7 @@ export class CreateProductDialogComponent extends AppComponentBase   implements 
     this.openWidget();
     return;
   }
-
+  debugger
      this._productService.create(this.product).subscribe({
       
       next: () => {

@@ -18,6 +18,15 @@ public class newprjAuthorizationProvider : AuthorizationProvider
         productsPermission.CreateChildPermission("Pages.Products.Edit", L("EditProduct"));
         productsPermission.CreateChildPermission("Pages.Products.Delete", L("DeleteProduct"));
 
+        var cartPermission = context.CreatePermission("Pages.Cart", L("Cart"));
+        cartPermission.CreateChildPermission("Pages.Cart.Create", L("CreateCart"));
+        cartPermission.CreateChildPermission("Pages.Cart.Edit", L("EditCart"));
+        cartPermission.CreateChildPermission("Pages.Cart.Delete", L("DeleteCart"));
+
+        var cartItemPermission = context.CreatePermission("Pages.CartItem", L("CartItem"));
+        cartPermission.CreateChildPermission("Pages.Cart.CreateItem", L("CreateCartItem"));
+        cartPermission.CreateChildPermission("Pages.Cart.EditItem", L("EditCartItem"));
+        cartPermission.CreateChildPermission("Pages.Cart.DeleteItem", L("DeleteCartItem"));
     }
 
     private static ILocalizableString L(string name)

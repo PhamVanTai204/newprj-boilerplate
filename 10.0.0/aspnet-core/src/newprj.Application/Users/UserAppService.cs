@@ -21,6 +21,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using newprj.Entities;
+using newprj.Carts;
+using newprj.Carts.Dtos;
 
 namespace newprj.Users;
 
@@ -30,10 +33,11 @@ public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUser
     private readonly UserManager _userManager;
     private readonly RoleManager _roleManager;
     private readonly IRepository<Role> _roleRepository;
+    private readonly IRepository<Cart> _cartRepository;
     private readonly IPasswordHasher<User> _passwordHasher;
     private readonly IAbpSession _abpSession;
     private readonly LogInManager _logInManager;
-
+    private readonly CartAppService _cartAppService;
     public UserAppService(
         IRepository<User, long> repository,
         UserManager userManager,
@@ -41,7 +45,8 @@ public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUser
         IRepository<Role> roleRepository,
         IPasswordHasher<User> passwordHasher,
         IAbpSession abpSession,
-        LogInManager logInManager)
+        LogInManager logInManager,
+        CartAppService cartAppService)
         : base(repository)
     {
         _userManager = userManager;
@@ -50,29 +55,42 @@ public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUser
         _passwordHasher = passwordHasher;
         _abpSession = abpSession;
         _logInManager = logInManager;
+        _cartAppService = cartAppService;
     }
 
     public override async Task<UserDto> CreateAsync(CreateUserDto input)
     {
         CheckCreatePermission();
 
-        var user = ObjectMapper.Map<User>(input);
-
-        user.TenantId = AbpSession.TenantId;
-        user.IsEmailConfirmed = true;
-
-        await _userManager.InitializeOptionsAsync(AbpSession.TenantId);
-
-        CheckErrors(await _userManager.CreateAsync(user, input.Password));
-
-        if (input.RoleNames != null)
+        using (var uow = UnitOfWorkManager.Begin()) // Bắt đầu transaction
         {
-            CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames));
+            // 1️⃣ Tạo user
+            var user = ObjectMapper.Map<User>(input);
+            user.TenantId = AbpSession.TenantId;
+            user.IsEmailConfirmed = true;
+
+            await _userManager.InitializeOptionsAsync(AbpSession.TenantId);
+            CheckErrors(await _userManager.CreateAsync(user, input.Password));
+            await CurrentUnitOfWork.SaveChangesAsync(); // Đảm bảo user.Id đã có giá trị
+
+            // 2️⃣ Gán role nếu có
+            if (input.RoleNames != null)
+            {
+                CheckErrors(await _userManager.SetRolesAsync(user, input.RoleNames));
+            }
+            // 3️⃣ Tạo giỏ hàng cho user
+
+            var cartDto = new CreateCartDto()
+            {
+                UserId = user.Id
+            };
+            _cartAppService.CreateAsync(cartDto);
+ 
+            // 4️⃣ Commit transaction
+            await uow.CompleteAsync();
+
+            return MapToEntityDto(user);
         }
-
-        CurrentUnitOfWork.SaveChanges();
-
-        return MapToEntityDto(user);
     }
 
     public override async Task<UserDto> UpdateAsync(UserDto input)
