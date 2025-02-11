@@ -1,4 +1,4 @@
-/* General Styles */ 
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -24,11 +24,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-   border-bottom: 2px solid #ececec;
-   margin-bottom: 5px;
-   padding: 3px ;
-   
- }
+  border-bottom: 2px solid #ececec;
+  margin-bottom: 5px;
+  padding: 3px;
+
+}
 
 .btn-back {
   background-color: #00B2A9;
@@ -48,7 +48,7 @@ body {
 .product-title {
   font-size: 24px;
   font-weight: bold;
-  color: #333333; 
+  color: #333333;
 }
 
 /* Product Detail Body */
@@ -59,7 +59,8 @@ body {
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 178, 169, 0.3), 0 4px 10px rgba(0, 178, 169, 0.4); /* Updated shadow */
+  box-shadow: 0 4px 6px rgba(0, 178, 169, 0.3), 0 4px 10px rgba(0, 178, 169, 0.4);
+  /* Updated shadow */
 }
 
 
@@ -80,16 +81,19 @@ body {
 
 /* Product Info Section */
 .product-info-wrapper {
+  background-color: #ffffff;
+  border-radius: 8px;
   flex: 2;
-  padding: 2px;
+  padding: 8px;
   box-shadow: 0 4px 8px rgba(0, 178, 169, 0.5);
 }
 
-.product-info {
+.product-btn {
   background-color: #ffffff;
-  border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
 }
 
 .product-name {
@@ -127,4 +131,47 @@ body {
 .product-stock strong,
 .product-code strong {
   color: #333333;
+}
+
+/* Số lượng */
+.quantity {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  gap: 10px;
+}
+
+.quantity-btn {
+  background: #00B2A9;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 20px;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 30px;
+  transition: background 0.3s ease-in-out;
+}
+
+.quantity-btn:hover {
+  background: #008f8a;
+}
+
+/* Nút thanh toán */
+.checkout-btn {
+  padding: 10px 10px;
+  background: #00B2A9;
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.checkout-btn:hover {
+  background: #008f8a;
+  transform: scale(1.05);
 }

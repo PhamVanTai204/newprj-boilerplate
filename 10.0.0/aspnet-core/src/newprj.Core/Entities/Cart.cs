@@ -16,8 +16,7 @@ namespace newprj.Entities
         public long UserId { get; set; } // ID người dùng
         public virtual User User { get; set; } // Navigation property
 
-        [Required, Column(TypeName = "decimal(18,2)")]
-        public decimal TotalPrice { get; set; } // Tổng giá tiền
+       
         public virtual ICollection<CartItem> CartItems { get; set; }
     }
 

@@ -17,7 +17,7 @@ namespace newprj.CartItems
     public class CartItemAppService: AsyncCrudAppService<CartItem, CartItemDto, int, PagedCartItemResultRequestDto, CreateCartItemDto, UpdateCartItemDto>,  ICartItemAppService
     {
         private readonly IRepository<CartItem, int> _cartItemRepository;
-        private readonly ICartAppService _cartAppService;
+      //  private readonly ICartAppService _cartAppService;
         public CartItemAppService(
             IRepository<CartItem, int> cartItemRepository
       //      ICartAppService cartAppService  // Dùng interface thay vì class cụ thể
@@ -48,6 +48,9 @@ namespace newprj.CartItems
                 cartItem = new CartItem
                 {
                     CartId = input.CartId,
+                    Name = input.Name,
+                    Price = input.Price,
+                    UrlImage = input.UrlImage,
                     ProductId = input.ProductId,
                     Quantity = input.Quantity
                 };
@@ -60,9 +63,7 @@ namespace newprj.CartItems
                 );
             }
 
-            // Cập nhật tổng giá tiền của giỏ hàng
-       //     await _cartAppService.UpdateCartTotalPriceAsync(new EntityDto<int> { Id = input.CartId });
-
+           
             // Trả về DTO sau khi thêm/cập nhật
             return ObjectMapper.Map<CartItemDto>(cartItem);
         }

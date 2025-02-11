@@ -14,31 +14,14 @@ public class newprjDbContext : AbpZeroDbContext<Tenant, Role, User, newprjDbCont
     public DbSet<Product> Products { get; set; }
     public DbSet<Cart> Carts { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
+    public DbSet<Invoice> Invoices { get; set; }
+    public DbSet<InvoiceItem> InvoiceItems { get; set; }
+   
     public newprjDbContext(DbContextOptions<newprjDbContext> options)
         : base(options)
     {
     }
-    //protected override void OnModelCreating(ModelBuilder modelBuilder)
-    //{
-    //    // Cart ↔ CartItems (1-n)
-    //    //modelBuilder.Entity<Cart>()
-    //    //    .HasMany(c => c.Items)
-    //    //    .WithOne(ci => ci.Cart)
-    //    //    .HasForeignKey(ci => ci.CartId);
-
-    //    //// Order ↔ OrderItems (1-n)
-        
-    //    //// Product ↔ CartItems (1-n)
-    //    //modelBuilder.Entity<Product>()
-    //    //    .HasMany(p => p.CartItems)
-    //    //    .WithOne(ci => ci.Product)
-    //    //    .HasForeignKey(ci => ci.ProductId);
-
-    //    // Product ↔ OrderItems (1-n)
-        
-
-    //    base.OnModelCreating(modelBuilder);
-    //}
+   
 
 
 

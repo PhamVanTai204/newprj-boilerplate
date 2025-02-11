@@ -40,7 +40,8 @@
               @for(product of filteredLocationList ; track product.id){
               <div class="product">
                 <div class="khung_prdImg">
-                  <img (click)="showProduct(product)" id="img-product-list" alt="Uploaded Image" [src]="product.urlImage" />
+                  <img (click)="showProduct(product)" id="img-product-list" alt="Uploaded Image"
+                    [src]="product.urlImage" />
                 </div>
                 <h2> {{ product.name }}</h2>
                 <p class="price">
@@ -75,9 +76,6 @@
           <p-table>
 
           </p-table>
-
-
-
           <div *ngIf="!products.length" class="text-center mt-5">
             <p>Không có sản phẩm.</p>
           </div>

@@ -1,133 +1,300 @@
+/* ================== Giỏ hàng ================== */
 .cart-container {
-  max-width: 90%;
+  max-width: 80%;
   margin: 40px auto;
-  padding: 25px;
+  padding: 30px;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 178, 169, 0.4);
-  transition: all 0.3s ease;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 178, 169, 0.3);
+  transition: all 0.3s ease-in-out;
 }
 
+.list-item {
+  height: 500px;
+  overflow: auto;
+}
+
+.cart-container:hover {
+  box-shadow: 0 10px 20px rgba(0, 178, 169, 0.5);
+}
+
+/* ================== Header ================== */
 .cart-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-bottom: 20px;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid #ddd;
 }
 
 .cart-header h2 {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: bold;
-  color: #333;
+  color: #222;
 }
 
+/* Checkbox chọn tất cả */
+.cart-summary label {
+  font-size: 20px;
+  /* Phóng to chữ */
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  /* Dãn khoảng cách giữa checkbox và chữ */
+  cursor: pointer;
+}
+
+.cart-summary input[type="checkbox"] {
+  width: 20px;
+  /* Phóng to checkbox */
+  height: 20px;
+  accent-color: #00B2A9;
+  cursor: pointer;
+}
+
+/* ================== Sản phẩm trong giỏ hàng ================== */
 .cart-item {
   display: flex;
   align-items: center;
-  padding: 15px 0;
-  border: 1px solid #51bdc9;
-  box-shadow: 0 4px 8px rgba(0, 178, 169, 0.4);
-  border-radius: 8px;
   padding: 15px;
-  background: #fff;
-  margin: 10px 0;
+  border-radius: 12px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 178, 169, 0.2);
+  margin: 15px 0;
+  transition: transform 0.2s ease-in-out;
 }
 
-.cart-item:last-child {
-  border-bottom: none;
+.cart-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 178, 169, 0.4);
 }
 
+/* Checkbox từng sản phẩm */
+.cart-item input[type="checkbox"] {
+  width: 20px;
+  /* Phóng to checkbox */
+  height: 20px;
+  margin-right: 10px;
+  /* Dãn khoảng cách với ảnh */
+  cursor: pointer;
+}
+
+.cart-item h6 {
+  color: #ba3021;
+  font-size: 12px;
+}
+
+/* Hình ảnh sản phẩm */
 .cart-item-image {
-  width: auto;
-  height: 70%;
-  max-width: 15%;
+  width: 15%;
+  /* Định kích thước cố định */
+  height: 120px;
+  /* Định kích thước cố định */
   object-fit: cover;
+  /* Cắt ảnh vừa với khung */
   border-radius: 10px;
-margin-right: 5%;
+  /* Bo tròn ảnh */
+  margin-right: 10px;
 }
 
-.cart-item-details {
-  display: flex;
-  justify-content: space-between;
-  flex: 1;
-  margin-left: 20px;
-}
 
+
+/* Thông tin sản phẩm */
 .cart-item-info {
   flex: 2;
 }
 
-.cart-actions {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .cart-item-info h4 {
   font-size: 20px;
-  margin-bottom: 5px;
+  font-weight: 600;
   color: #333;
 }
 
+
 .price {
-  font-size: 20px;
+  margin-top: 10px;
+  font-size: 16px;
+  margin: 5px 0;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.original-price {
+  font-weight: normal;
+  color: #999;
+  text-decoration: line-through;
+  margin-right: 10px;
+  opacity: 0.6;
+}
+
+.discounted-price {
   color: #00B2A9;
+  font-size: 18px;
   font-weight: bold;
 }
 
+/* Số lượng */
 .quantity {
   display: flex;
   align-items: center;
+  gap: 10px;
+}
+
+.tonggia {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .quantity-btn {
   background: #00B2A9;
-  border: 1px solid #00B2A9;
+  border: none;
   border-radius: 6px;
   cursor: pointer;
   color: #fff;
-  transition: all 0.3s ease;
+  font-size: 16px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  transition: background 0.3s ease-in-out;
 }
 
 .quantity-btn:hover {
   background: #008f8a;
-  border-color: #008f8a;
 }
 
+/* Tổng giá của sản phẩm */
+.item-total p {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ================== Nút xóa sản phẩm đã chọn ================== */
+.remove-btn {
+  padding: 5px 5px;
+  background: #ff4d4d;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.remove-btn:hover {
+  background: #d63030;
+  transform: scale(1.05);
+}
+
+/* Nếu không có sản phẩm nào được chọn, nút sẽ bị mờ đi */
+.remove-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ================== Tổng tiền & Thanh toán ================== */
 .cart-summary {
   margin-top: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-top: 20px;
-  border-top: 2px solid #eee;
+  border-top: 2px solid #ddd;
 }
 
+.cart-summary h3 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #222;
+}
+
+/* Nút thanh toán */
 .checkout-btn {
-  padding: 12px 24px;
+  padding: 12px 28px;
   background: #00B2A9;
   color: #fff;
   font-size: 18px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease-in-out, transform 0.2s;
 }
 
 .checkout-btn:hover {
   background: #008f8a;
+  transform: scale(1.05);
 }
 
+/* Căn chỉnh các nút trong cart-summary */
+.cart-actions {
+  display: flex;
+  gap: 15px;
+}
+
+/* ================== Giỏ hàng trống ================== */
 .empty-cart {
   text-align: center;
   font-size: 18px;
-  color: #555;
+  color: #777;
   margin-top: 20px;
 }
-span{
-  margin-left: 2%;
-  margin-right: 2%;
-  font-size: 17px;
+
+/* ================== Responsive cho màn hình nhỏ ================== */
+@media (max-width: 768px) {
+  .cart-container {
+    max-width: 95%;
+    padding: 20px;
+  }
+
+  .cart-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    padding: 20px;
+  }
+
+  .cart-item-image {
+    width: 100%;
+    max-height: 140px;
+  }
+
+  .cart-item-info {
+    width: 100%;
+  }
+
+  .cart-summary {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .cart-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .remove-btn,
+  .checkout-btn {
+    width: 100%;
+  }
 }

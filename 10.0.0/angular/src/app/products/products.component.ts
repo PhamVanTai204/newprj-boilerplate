@@ -13,7 +13,7 @@ import { fill, thumbnail } from "@cloudinary/url-gen/actions/resize";
 import { log } from 'console';
 import { focusOn } from '@node_modules/@cloudinary/transformation-builder-sdk/qualifiers/gravity';
 import { ChitietProductDialogComponent } from './chitiet-product-dialog/chitiet-product-dialog.component';
- 
+
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -27,19 +27,17 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
   isActive: boolean | null;
   advancedFiltersVisible = false;
   filteredLocationList: ProductDto[] = [];
- 
+
   currentPage = 1; // Trang hiện tại
   totalPages = 0; // Tổng số trang
-   pageSize: number = 15;
+  pageSize: number = 15;
 
-    ngOnInit(): void {
-    console.log("bắt đầu init");
+  ngOnInit(): void {
 
     this.list();
-    console.log("prd khi hết hàm load trong oninit", this.products);
- 
-   }
-   
+
+  }
+
   constructor(
     injector: Injector,
 
@@ -72,10 +70,10 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
   }
   addtoPageList(): void {
     this.filteredLocationList = [];
-    const startIndex =  (this.currentPage - 1) * 15;
+    const startIndex = (this.currentPage - 1) * 15;
     const endIndex = this.currentPage === 1 ? 15 : this.currentPage * 15;
     this.filteredLocationList = this.products.slice(startIndex, endIndex);
-    
+
     this.cd.detectChanges();
   }
   changePage(page: number): void {
@@ -84,32 +82,25 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
       this.addtoPageList();
     }
   }
-  
-
-
+  // hàm load dữ liệu
   list(): void {
     console.log("bắt đầu load");
     this.setLoading(true); // Bật trạng thái loading
-  
-     this._productService.getAll(this.keyword, this.isActive, 'name', 0, 10)
-          .pipe(
-            finalize(() => {
-              this.primengTableHelper.hideLoadingIndicator();
-            })
-          )
-          .subscribe((result: ProductDtoPagedResultDto) => {
-            this.products = result.items.reverse();
-             this.totalPages = Math.ceil(result.totalCount / this.pageSize);
-            this.addtoPageList();
-             this.setLoading(false);            
-             this.cd.detectChanges();
-          });
-          
 
+    this._productService.getAll(this.keyword, this.isActive, 'name', 0, 10)
+      .pipe(
+        finalize(() => {
+          this.primengTableHelper.hideLoadingIndicator();
+        })
+      )
+      .subscribe((result: ProductDtoPagedResultDto) => {
+        this.products = result.items.reverse();
+        this.totalPages = Math.ceil(result.totalCount / this.pageSize);
+        this.addtoPageList();
+        this.setLoading(false);
+        this.cd.detectChanges();
+      });
   }
-
- 
-  
   // this._productService.getAll(this.keyword, this.isActive, 'name', 0, 10)
   //     .pipe(
   //       map(result => result.items,result.to), // Trả về danh sách sản phẩm
@@ -122,8 +113,8 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
   //    prd.length =n  
   //  trang thì sẽ sang trang tiếp theo với các item của trang đó
   /// tương tự lùi lại cũng thế 14 29 
-//    dùng for 
- 
+  //    dùng for 
+
   //     .subscribe(products => {
   //       // Cập nhật danh sách sản phẩm sau khi nhận được kết quả
   //       this.products = products;
@@ -135,14 +126,14 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
   //   console.log("hết hàm load:", this.products);
   createProduct(): void {
     this.showCreateOrEditProductDialog();
-              
-    
+
+
   }
   editProduct(product: ProductDto): void {
     this.showCreateOrEditProductDialog(product.id);
 
   }
-  showProduct(product: ProductDto):void{
+  showProduct(product: ProductDto): void {
     this.showProductDialog(product.id);
   }
   delete(product: ProductDto): void {
@@ -159,20 +150,18 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
         )
         .subscribe(() => {
           alert("Sản phẩm đã được xóa thành công.");
-          if(this.filteredLocationList.length===1){
-             
-            this.changePage(this.currentPage-1)
+          if (this.filteredLocationList.length === 1) {
+
+            this.changePage(this.currentPage - 1)
           }
-          
+
           this.list(); // Cập nhật danh sách sản phẩm
 
         });
 
     }
- 
+
   }
-
-
   showProductDialog(id?: number): void {
     let createOrEditProductDialog: BsModalRef;
     createOrEditProductDialog = this._modalService.show(
@@ -181,6 +170,7 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
         class: "modal-lg",
         initialState: {
           id: id,
+          screen: true,
         },
       }
     )
@@ -204,17 +194,17 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
           },
         }
       );
-      
+
     }
     // Lắng nghe sự kiện lưu từ dialog
     createOrEditProductDialog.content.onSave.subscribe(() => {
-       
+
       if (!id) {
         this.changePage(1);
         this.list();
       } else {
         this.list();
-       }
+      }
     });
   }
   clearFilters(): void {

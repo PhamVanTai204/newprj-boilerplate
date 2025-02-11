@@ -11,6 +11,5 @@ namespace newprj.Carts.Dtos
     // DTO dùng cho việc cập nhật Cart
     public class UpdateCartDto : EntityDto<int> // ✅ Kế thừa EntityDto<int>
     {
-        public decimal TotalPrice { get; set; } // Tổng giá mới của giỏ hàng
-    }
+     }
 }

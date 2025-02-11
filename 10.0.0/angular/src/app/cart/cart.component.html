@@ -1,30 +1,59 @@
 <div class="cart-container">
   <div class="cart-header">
-    <h2>Giỏ Hàng</h2>
-    <i class="fas fa-shopping-cart"></i>
+    <h2>Giỏ Hàng <i class="fa fa-cart-plus"></i></h2>
+    <!-- Checkbox chọn tất cả -->
+
+
+
   </div>
-  
   <div *ngIf="cartItems.length === 0" class="empty-cart">
     <p>Giỏ hàng của bạn hiện đang trống.</p>
   </div>
+  <div class="list-item">
+    @for(item of cartItems ; track item.id){
 
-  <div *ngFor="let item of cartItems" class="cart-item">
-    <img [src]="'https://res.cloudinary.com/da5wgbt3m/image/upload/v1737002240/qf5k6vqc6lavhg85bke5.png'" alt="{{ item.name }}" class="cart-item-image">    <div class="cart-item-info">
-      <h4>{{ item.name }}</h4>
-      <p class="price">{{ item.price | currency }}</p>
-      <div class="quantity">
-        <button class="quantity-btn" (click)="decreaseQuantity(item)">-</button>
-        <span>{{ item.quantity }}</span>
-        <button class="quantity-btn" (click)="increaseQuantity(item)">+</button>
+    <div class="cart-item">
+      <input type="checkbox" [checked]="isChecked(item.productId)" (change)="toggleProductSelection(item.productId)" />
+
+      <img [src]="item.urlImage" alt="{{ item.name }}" class="cart-item-image" (click)="showProduct(item.productId)">
+      <div class="cart-item-info">
+        <h4>{{ item.name }}</h4>
+        <p class="price">
+          <span class="discounted-price">{{ (item.price * 0.8) | currency:'VND' : true }}</span>
+          <!-- Giá giảm -->
+
+          <span class="original-price">{{ item.price | currency:'VND' : true }}</span>
+          <!-- Giá gốc với định dạng tiền tệ -->
+        </p>
+        <h6>Giảm giá 20% so với giá gốc </h6>
+        <div class="quantity">
+          <button class="quantity-btn" (click)="decreaseQuantity(item)">-</button>
+          <span>{{ item.quantity }}</span>
+          <button class="quantity-btn" (click)="increaseQuantity(item)">+</button>
+          <div class="item-total">
+            <span class="tonggia">Tổng giá:{{(item.price * item.quantity*0.8)| currency:'VND' : true }}</span>
+          </div>
+        </div>
+
       </div>
+      <button class="remove-btn" (click)="deleteCartItemById(item)">Xóa sản phẩm </button>
+
     </div>
-    <div class="item-total">
-      <p>{{ item.price * item.quantity | currency }}</p>
-    </div>
+    }
   </div>
+  <!-- Nút xóa sản phẩm đã chọn -->
+  <button class="remove-btn" (click)="removeSelectedItems()">Xóa sản phẩm đã chọn</button>
 
   <div class="cart-summary">
-    <h3>Tổng cộng: {{ totalAmount | currency }}</h3>
-    <button class="checkout-btn">Thanh toán</button>
+    <label>
+      <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" />
+      Chọn tất cả
+    </label>
+
+    <div class="cart-actions">
+      <h3>Tổng cộng: {{ (totalSelectedAmount*0.8) | currency:'VND': true }}</h3>
+      <button class="checkout-btn">Thanh toán</button>
+    </div>
   </div>
+
 </div>

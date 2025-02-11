@@ -12,6 +12,9 @@ namespace newprj.Entities
     {
         [Required]
         public int ProductId { get; set; } // ID sản phẩm
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string UrlImage { get; set; }
         public virtual Product Product { get; set; } // Navigation property
 
         [Required]

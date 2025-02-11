@@ -13,6 +13,9 @@ namespace newprj.CartItems.Dtos
      public class CartItemDto : EntityDto<int> // ✅ Kế thừa EntityDto<int>
     {
         public int ProductId { get; set; } // ID sản phẩm
+        public string Name { get; set; }
+        public decimal Price { get; set; }
+        public string UrlImage { get; set; }
         public int Quantity { get; set; } // Số lượng sản phẩm
         public int CartId { get; set; } // ID giỏ hàng chứa sản phẩm này
     }

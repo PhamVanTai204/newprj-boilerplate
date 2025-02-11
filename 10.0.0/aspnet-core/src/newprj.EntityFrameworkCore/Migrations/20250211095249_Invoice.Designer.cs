@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using newprj.EntityFrameworkCore;
 
@@ -11,9 +12,11 @@ using newprj.EntityFrameworkCore;
 namespace newprj.Migrations
 {
     [DbContext(typeof(newprjDbContext))]
-    partial class newprjDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250211095249_Invoice")]
+    partial class Invoice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

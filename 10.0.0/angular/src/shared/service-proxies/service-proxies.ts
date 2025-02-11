@@ -8,8 +8,8 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
-import { mergeMap as _observableMergeMap, catchError as _observableCatch } from 'rxjs/operators';
-import { Observable, throwError as _observableThrow, of as _observableOf } from 'rxjs';
+import { mergeMap as _observableMergeMap, catchError as _observableCatch, catchError, map } from 'rxjs/operators';
+import { Observable, throwError as _observableThrow, of as _observableOf, throwError } from 'rxjs';
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 
@@ -22,73 +22,261 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 
 
-export interface CartDto {
+// trong trường hợp trong thực thể có một mảng thì cần phải duyệt qua 
+// danh sách cartItems trong init() và chuyển từng phần tử thành instance
+//  của CartItemDto, giống như cách ProductDtoPagedResultDto xử lý items.
+export class CartDto implements ICartDto {
     id: number;
     userId: number;
-    totalPrice: number;
-    cartItems: CartItem[];
+    cartItems: CartItemDto[];
+
+    constructor(data?: ICartDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.userId = _data["userId"];
+
+            // Kiểm tra nếu cartItems là mảng thì chuyển từng phần tử thành CartItemDto
+            if (Array.isArray(_data["cartItems"])) {
+                this.cartItems = [];
+                for (let item of _data["cartItems"]) {
+                    this.cartItems.push(CartItemDto.fromJS(item));
+                }
+            } else {
+                this.cartItems = [];
+            }
+        }
+    }
+
+    static fromJS(data: any): CartDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CartDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["userId"] = this.userId;
+
+        // Chuyển từng phần tử trong cartItems thành JSON
+        if (Array.isArray(this.cartItems)) {
+            data["cartItems"] = [];
+            for (let item of this.cartItems) {
+                data["cartItems"].push(item.toJSON());
+            }
+        }
+
+        return data;
+    }
+
+    clone(): CartDto {
+        const json = this.toJSON();
+        let result = new CartDto();
+        result.init(json);
+        return result;
+    }
 }
-export interface CartItem {
+
+export interface ICartDto {
+    id: number;
+    userId: number;
+    cartItems: CartItemDto[];
+}
+export class CartItemDto implements ICartItemDto {
     id: number;
     productId: number;
+    name: string;
+    price: number;
+    urlImage: string;
+    quantity: number;
+    cartId: number;
+    constructor(data?: CartItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.productId = _data["productId"];
+            this.name = _data["name"];
+            this.price = _data["price"];
+            this.urlImage = _data["urlImage"]
+            this.quantity = _data["quantity"];
+            this.cartId = _data["cartId"];
+        }
+    }
+    static fromJS(data: any): CartItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CartItemDto();
+        result.init(data);
+        return result;
+    }
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["productId"] = this.productId;
+        data["name"] = this.name;
+        data["price"] = this.price;
+        data["urlImage"] = this.urlImage;
+        data["quantity"] = this.quantity;
+        data["cartId"] = this.cartId;
+
+        return data;
+    }
+    clone(): CartItemDto {
+        const json = this.toJSON();
+        let result = new CartItemDto();
+        result.init(json);
+        return result;
+    }
+}
+export class CreateCartItemDto implements ICreateCartItemDto {
+    productId: number;
+    name: string;
+    price: number;
+    urlImage: string;
+    quantity: number;
+    cartId: number;
+    constructor(data?: CartItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+    init(_data?: any) {
+        if (_data) {
+            this.productId = _data["productId"];
+            this.name = _data["name"];
+            this.price = _data["price"];
+            this.urlImage = _data["urlImage"]
+            this.quantity = _data["quantity"];
+            this.cartId = _data["cartId"];
+        }
+    }
+    static fromJS(data: any): CartItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new CartItemDto();
+        result.init(data);
+        return result;
+    }
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["productId"] = this.productId;
+        data["name"] = this.name;
+        data["price"] = this.price;
+        data["urlImage"] = this.urlImage;
+        data["quantity"] = this.quantity;
+        data["cartId"] = this.cartId;
+
+        return data;
+    }
+    clone(): CartItemDto {
+        const json = this.toJSON();
+        let result = new CartItemDto();
+        result.init(json);
+        return result;
+    }
+}
+export interface ICreateCartItemDto {
+    productId: number;
+    name: string;
+    price: number;
+    urlImage: string;
+    quantity: number;
+    cartId: number;
+}
+export interface ICartItemDto {
+    id: number;
+    productId: number;
+    name: string;
+    price: number;
+    urlImage: string;
     quantity: number;
     cartId: number;
 }
 
+
 @Injectable({
     providedIn: 'root',
-  })
-  export class CartService {
-    private http: HttpClient;
-    private baseUrl: string;
-    protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
+})
+export class CartService {
+    private readonly CART_API: string;
+    private readonly CARTITEM_API: string;
 
-    constructor(@Inject(HttpClient) http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
-        this.http = http;
-        this.baseUrl = baseUrl ?? "";
+    constructor(private http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.CART_API = `${baseUrl ?? ''}/api/services/app/Cart`;
+        this.CARTITEM_API = `${baseUrl ?? ''}/api/services/app/CartItem`;
+
     }
+
     // Tạo giỏ hàng mới
-  createCart(userId: number): Observable<CartDto> {
-    let url_ = this.baseUrl + "/api/services/app/Cart/CreateCart";
-    url_ = url_.replace(/[?&]$/, "");
-    return this.http.post<CartDto>(url_, { userId });
-  }
- 
+    createCart(userId: number): Observable<CartDto> {
+        return this.http.post<CartDto>(`${this.CART_API}/CreateCart`, { userId })
+            .pipe(catchError(this.handleError));
+    }
 
-  // Lấy Cart của người dùng
-  getCart(userId: number): Observable<CartDto> {
-    let url_ = this.baseUrl + "/api/services/app/Cart/GetCart";
-    url_ = url_.replace(/[?&]$/, "");
-    return this.http.get<CartDto>(`${url_}?userId=${userId}`);
-  }
+    // Lấy Cart của người dùng
+    getCart(userId: number): Observable<CartDto> {
+        return this.http.get<any>(`${this.CART_API}/GetCartByUserId?userId=${userId}`)
+            .pipe(
+                map(response => {
+                    // Kiểm tra success để đảm bảo lấy dữ liệu thành công
+                    if (response.success && response.result) {
+                        return CartDto.fromJS(response.result); // Chuyển dữ liệu từ API vào CartDto
+                    } else {
+                        throw new Error('Failed to fetch cart');
+                    }
+                }),
+                catchError(this.handleError)
+            );
+    }
 
-  // Thêm sản phẩm vào giỏ hàng
-  addItemToCart(userId: number, productId: number, quantity: number): Observable<CartDto> {
-    let url_ = this.baseUrl + "/api/services/app/Cart/AddItemToCart";
-    url_ = url_.replace(/[?&]$/, "");
-    return this.http.post<CartDto>(url_, {
-      userId,
-      productId,
-      quantity,
-    });
-  }
 
-  // Xóa sản phẩm khỏi giỏ hàng
-  removeItemFromCart(userId: number, productId: number): Observable<CartDto> {
-    let url_ = this.baseUrl + "/api/services/app/Cart/RemoveItemFromCart";
-    url_ = url_.replace(/[?&]$/, "");
-    return this.http.delete<CartDto>(
-      `${url_}?userId=${userId}&productId=${productId}`
-    );
-  }
+    // Thêm sản phẩm vào giỏ hàng
+    addItemToCart(
+        productId: number,
+        name: string,
+        price: number,
+        urlImage: string,
+        quantity: number,
+        cartId: number): Observable<CreateCartItemDto> {
+        return this.http.post<CreateCartItemDto>(`${this.CARTITEM_API}/Create`, { productId, name, price, urlImage, quantity, cartId })
+            .pipe(catchError(this.handleError));
+    }
+    // cập nhật số lượng trong giỏ hàng
+    updateQuantitiCart(id: number, quantity: number): Observable<CartItemDto> {
+        return this.http.put<CartItemDto>(`${this.CARTITEM_API}/Update`, { id, quantity })
+            .pipe(catchError(this.handleError));
+    }
+    // Xóa sản phẩm khỏi giỏ hàng
+    removeItemFromCart(CartItemId: number): Observable<CartItemDto> {
+        return this.http.delete<CartItemDto>(`${this.CARTITEM_API}/Delete?Id=${CartItemId}`)
+            .pipe(catchError(this.handleError));
+    }
 
-  // Cập nhật tổng geiá của giỏ hàng
-  updateTotalPrice(cartId: number): Observable<CartDto> {
-    let url_ = this.baseUrl + "/api/services/app/Cart/UpdateTotalPrice";
-    url_ = url_.replace(/[?&]$/, "");
-    return this.http.put<CartDto>(url_, { cartId });
-  }
+    // Xử lý lỗi API
+    private handleError(error: any): Observable<never> {
+        console.error('CartService Error:', error);
+        return throwError(() => new Error(error.message || 'Server error'));
+    }
 }
+
 
 @Injectable()
 export class ProductServiceProxy {
@@ -394,7 +582,7 @@ export class ProductServiceProxy {
     }
 
 }
-  
+
 
 
 

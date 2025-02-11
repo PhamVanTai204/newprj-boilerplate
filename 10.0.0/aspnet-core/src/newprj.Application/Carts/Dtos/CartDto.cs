@@ -15,7 +15,6 @@ namespace newprj.Carts.Dtos
     public class CartDto : EntityDto<int> // ✅ Kế thừa EntityDto<int>
     {
         public long UserId { get; set; } // ID người dùng
-        public decimal TotalPrice { get; set; } // Tổng giá giỏ hàng
-        public List<CartItemDto> CartItems { get; set; } // Danh sách sản phẩm trong giỏ hàng
+         public List<CartItemDto> CartItems { get; set; } // Danh sách sản phẩm trong giỏ hàng
     }
 }

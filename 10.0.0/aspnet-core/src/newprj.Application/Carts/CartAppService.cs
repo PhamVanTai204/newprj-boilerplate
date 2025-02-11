@@ -76,8 +76,7 @@ namespace newprj.Carts
             var cart = new Cart
             {
                 UserId = input.UserId,
-                TotalPrice = 0
-            };
+             };
 
             var createdCart = await _cartRepository.InsertAsync(cart);
             return ObjectMapper.Map<CartDto>(createdCart);
@@ -150,45 +149,45 @@ namespace newprj.Carts
         /// <summary>
         /// Cập nhật tổng giá tiền của giỏ hàng
         /// </summary>
-        public async Task UpdateCartTotalPriceAsync(EntityDto<int> cartId)
-{
-    // Lấy thông tin giỏ hàng
-    var cartDto = await GetAsync(cartId);
-    if (cartDto == null)
-    {
-        throw new Exception($"Cart with ID {cartId.Id} not found.");
-    }
+//        public async Task UpdateCartTotalPriceAsync(EntityDto<int> cartId)
+//{
+//    // Lấy thông tin giỏ hàng
+//    var cartDto = await GetAsync(cartId);
+//    if (cartDto == null)
+//    {
+//        throw new Exception($"Cart with ID {cartId.Id} not found.");
+//    }
 
-    // Lấy tất cả cart items thuộc giỏ hàng này
-    var cartItemsResult = await _cartItemAppService.GetAllAsync(new PagedCartItemResultRequestDto());
-    var cartItems = cartItemsResult.Items.Where(ci => ci.CartId == cartId.Id).ToList();
+//    // Lấy tất cả cart items thuộc giỏ hàng này
+//    var cartItemsResult = await _cartItemAppService.GetAllAsync(new PagedCartItemResultRequestDto());
+//    var cartItems = cartItemsResult.Items.Where(ci => ci.CartId == cartId.Id).ToList();
 
-    if (!cartItems.Any())
-    {
-        throw new Exception($"Cart items for cart ID {cartId.Id} not found.");
-    }
+//    if (!cartItems.Any())
+//    {
+//        throw new Exception($"Cart items for cart ID {cartId.Id} not found.");
+//    }
 
-    decimal totalPrice = 0;
+//    decimal totalPrice = 0;
 
-    foreach (var cartItem in cartItems)
-    {
-        // Truy vấn sản phẩm để lấy giá
-        var product = await _cartItemRepository.GetAll()
-            .Where(p => p.ProductId == cartItem.ProductId)
-            .Select(p => new { p.ProductId, p.Product.Price }) // Chỉ lấy thông tin cần thiết
-            .FirstOrDefaultAsync();
+//    foreach (var cartItem in cartItems)
+//    {
+//        // Truy vấn sản phẩm để lấy giá
+//        var product = await _cartItemRepository.GetAll()
+//            .Where(p => p.ProductId == cartItem.ProductId)
+//            .Select(p => new { p.ProductId, p.Product.Price }) // Chỉ lấy thông tin cần thiết
+//            .FirstOrDefaultAsync();
 
-        if (product != null)
-        {
-            totalPrice += cartItem.Quantity * product.Price;
-        }
-    }
+//        if (product != null)
+//        {
+//            totalPrice += cartItem.Quantity * product.Price;
+//        }
+//    }
 
-    // Cập nhật tổng giá tiền vào giỏ hàng
-    var cart = await _cartRepository.GetAsync(cartId.Id);
-    cart.TotalPrice = totalPrice;
-    await _cartRepository.UpdateAsync(cart);
-}
+//    // Cập nhật tổng giá tiền vào giỏ hàng
+//    var cart = await _cartRepository.GetAsync(cartId.Id);
+//    cart.TotalPrice = totalPrice;
+//    await _cartRepository.UpdateAsync(cart);
+//}
 
         internal async Task UpdateCartTotalPriceAsync(int cartId)
         {
