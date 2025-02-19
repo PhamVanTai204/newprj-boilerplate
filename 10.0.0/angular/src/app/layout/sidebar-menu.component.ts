@@ -1,14 +1,14 @@
-import {Component, Injector, OnInit} from '@angular/core';
-import {AppComponentBase} from '@shared/app-component-base';
+import { Component, Injector, OnInit } from '@angular/core';
+import { AppComponentBase } from '@shared/app-component-base';
 import {
     Router,
     RouterEvent,
     NavigationEnd,
     PRIMARY_OUTLET
 } from '@angular/router';
-import {BehaviorSubject} from 'rxjs';
-import {filter} from 'rxjs/operators';
-import {MenuItem} from '@shared/layout/menu-item';
+import { BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { MenuItem } from '@shared/layout/menu-item';
 
 @Component({
     selector: 'sidebar-menu',
@@ -31,11 +31,11 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
 
         this.router.events.subscribe((event: NavigationEnd) => {
             const currentUrl = event.url !== '/' ? event.url : this.homeRoute;
-                const primaryUrlSegmentGroup = this.router.parseUrl(currentUrl).root
-                    .children[PRIMARY_OUTLET];
-                if (primaryUrlSegmentGroup) {
-                    this.activateMenuItems('/' + primaryUrlSegmentGroup.toString());
-                }
+            const primaryUrlSegmentGroup = this.router.parseUrl(currentUrl).root
+                .children[PRIMARY_OUTLET];
+            if (primaryUrlSegmentGroup) {
+                this.activateMenuItems('/' + primaryUrlSegmentGroup.toString());
+            }
         });
     }
 

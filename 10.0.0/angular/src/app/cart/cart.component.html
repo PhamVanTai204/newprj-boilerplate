@@ -1,9 +1,6 @@
 <div class="cart-container">
   <div class="cart-header">
     <h2>Giỏ Hàng <i class="fa fa-cart-plus"></i></h2>
-    <!-- Checkbox chọn tất cả -->
-
-
 
   </div>
   <div *ngIf="cartItems.length === 0" class="empty-cart">
@@ -13,30 +10,30 @@
     @for(item of cartItems ; track item.id){
 
     <div class="cart-item">
-      <input type="checkbox" [checked]="isChecked(item.productId)" (change)="toggleProductSelection(item.productId)" />
+      <input type="checkbox" [checked]="isChecked(item.id)" (change)="toggleProductSelection(item.id)" />
 
       <img [src]="item.urlImage" alt="{{ item.name }}" class="cart-item-image" (click)="showProduct(item.productId)">
       <div class="cart-item-info">
         <h4>{{ item.name }}</h4>
         <p class="price">
-          <span class="discounted-price">{{ (item.price * 0.8) | currency:'VND' : true }}</span>
+          <span class="discounted-price">{{ (item.price ) | currency:'VND' : true }}</span>
           <!-- Giá giảm -->
 
-          <span class="original-price">{{ item.price | currency:'VND' : true }}</span>
-          <!-- Giá gốc với định dạng tiền tệ -->
+          <!-- <span class="original-price">{{ item.price | currency:'VND' : true }}</span>
+          Giá gốc với định dạng tiền tệ -->
         </p>
-        <h6>Giảm giá 20% so với giá gốc </h6>
+        <h6>Sản phẩm chưa có giảm giá </h6>
         <div class="quantity">
           <button class="quantity-btn" (click)="decreaseQuantity(item)">-</button>
           <span>{{ item.quantity }}</span>
           <button class="quantity-btn" (click)="increaseQuantity(item)">+</button>
           <div class="item-total">
-            <span class="tonggia">Tổng giá:{{(item.price * item.quantity*0.8)| currency:'VND' : true }}</span>
+            <span class="tonggia">Tổng giá:{{(item.price * item.quantity)| currency:'VND' : true }}</span>
           </div>
         </div>
 
       </div>
-      <button class="remove-btn" (click)="deleteCartItemById(item)">Xóa sản phẩm </button>
+      <button class="remove-btn" (click)="deleteCartItemById(item)">Xóa <i class="fas fa-trash"> </i> </button>
 
     </div>
     }
@@ -51,8 +48,8 @@
     </label>
 
     <div class="cart-actions">
-      <h3>Tổng cộng: {{ (totalSelectedAmount*0.8) | currency:'VND': true }}</h3>
-      <button class="checkout-btn">Thanh toán</button>
+      <h4>Tổng cộng: {{ (totalSelectedAmount) | currency:'VND': true }}</h4>
+      <button class="checkout-btn" (click)="showPayDialog( )">Mua hàng</button>
     </div>
   </div>
 

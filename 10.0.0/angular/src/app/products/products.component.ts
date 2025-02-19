@@ -15,7 +15,7 @@ import { focusOn } from '@node_modules/@cloudinary/transformation-builder-sdk/qu
 import { ChitietProductDialogComponent } from './chitiet-product-dialog/chitiet-product-dialog.component';
 
 @Component({
-  selector: 'app-products',
+
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
   animations: [appModuleAnimation()],
@@ -126,12 +126,9 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
   //   console.log("hết hàm load:", this.products);
   createProduct(): void {
     this.showCreateOrEditProductDialog();
-
-
   }
   editProduct(product: ProductDto): void {
     this.showCreateOrEditProductDialog(product.id);
-
   }
   showProduct(product: ProductDto): void {
     this.showProductDialog(product.id);

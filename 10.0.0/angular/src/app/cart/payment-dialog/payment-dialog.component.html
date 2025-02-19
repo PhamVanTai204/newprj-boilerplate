@@ -1,0 +1,93 @@
+<!-- checkout.component.html -->
+<div class="checkout-container full-screen">
+    <div class="cart-header">
+        <h1>Thanh toán <i class="fa fa-cart-plus"></i></h1>
+
+    </div>
+
+    <div class="shipping-info">
+        <h3>
+            Địa chỉ nhận hàng <i class="fa-solid fa-location-dot"></i>
+        </h3>
+        <form #shippingForm="ngForm">
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="userName">Tên:</label>
+                    <input type="text" id="userName" placeholder="Nhập tên" [(ngModel)]="userName" name="userName"
+                        required minlength="2" #name="ngModel" />
+                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error-message">
+                        <div *ngIf="name.errors?.['required']">Tên là bắt buộc.</div>
+                        <div *ngIf="name.errors?.['minlength']">Tên phải có ít nhất 2 ký tự.</div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="userPhone">Số điện thoại:</label>
+                    <input type="text" id="userPhone" placeholder="Nhập số điện thoại" [(ngModel)]="userPhone"
+                        name="userPhone" required pattern="[0-9]{10}" #phone="ngModel" />
+                    <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="error-message">
+                        <div *ngIf="phone.errors?.['required']">Số điện thoại là bắt buộc.</div>
+                        <div *ngIf="phone.errors?.['pattern']">Số điện thoại phải là 10 chữ số.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="userAddress">Địa chỉ:</label>
+                <input type="text" id="userAddress" placeholder="Nhập địa chỉ" [(ngModel)]="userAddress"
+                    name="userAddress" required minlength="5" #address="ngModel" />
+                <div *ngIf="address.invalid && (address.dirty || address.touched)" class="error-message">
+                    <div *ngIf="address.errors?.['required']">Địa chỉ là bắt buộc.</div>
+                    <div *ngIf="address.errors?.['minlength']">Địa chỉ phải có ít nhất 5 ký tự.</div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="list-item">
+        <p-table [value]="cartItems" [tableStyle]="{'min-width': '60rem'}">
+            <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-content-between">
+                    Giỏ hàng của bạn
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Hình ảnh</th>
+
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-item>
+                <tr>
+
+                    <td>{{ item.name }}</td>
+                    <td>
+                        <img [src]="item.urlImage" [alt]="item.name" width="100" class="shadow-4" />
+                    </td>
+                    <td>{{ item.price | currency:'VND':true }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{(item.price * item.quantity)| currency:'VND' : true }}</td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    Tổng số sản phẩm: {{ cartItems ? cartItems.length : 0 }}
+                    <h3>Tổng cộng: {{ (totalSelectedAmount) | currency:'VND': true }}</h3>
+
+                </div>
+
+            </ng-template>
+        </p-table>
+
+    </div>
+
+
+    <button class="checkout-button" (click)="thanhtoan()">
+        Thanh toán <i class="fa fa-credit-card"></i>
+    </button>
+
+</div>

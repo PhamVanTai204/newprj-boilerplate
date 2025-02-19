@@ -9,10 +9,6 @@ namespace newprj.Entities
     public class Invoice : FullAuditedEntity<int>
     {
         [Required]
-        public int CartId { get; set; } // Liên kết với giỏ hàng
-        public virtual Cart Cart { get; set; }
-
-        [Required]
         public long UserId { get; set; } // ID của người dùng mua hàng
         public virtual User User { get; set; }
 
@@ -24,7 +20,7 @@ namespace newprj.Entities
 
         [Required]
         public InvoiceStatus Status { get; set; } = InvoiceStatus.Placed; // Trạng thái mặc định là Đã đặt hàng
-
+        public string ShippingAddress { get; set; } // Địa chỉ giao hàng
         public virtual ICollection<InvoiceItem> InvoiceItems { get; set; } // Danh sách sản phẩm trong hóa đơn
     }
 

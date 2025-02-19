@@ -45,10 +45,10 @@
                 </div>
                 <h2> {{ product.name }}</h2>
                 <p class="price">
-                  <span class="discounted-price">{{ (product.price * 0.8) | currency:'VND' : true }}</span>
+                  <span class="discounted-price">{{ (product.price ) | currency:'VND' : true }}</span>
                   <!-- Giá giảm -->
 
-                  <span class="original-price">{{ product.price | currency:'VND' : true }}</span>
+                  <!-- <span class="original-price">{{ product.price | currency:'VND' : true }}</span> -->
                   <!-- Giá gốc với định dạng tiền tệ -->
                 </p>
                 <p class="description">Mô tả: {{product.description}}</p>

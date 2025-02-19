@@ -8,7 +8,7 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
-import { mergeMap as _observableMergeMap, catchError as _observableCatch, catchError, map } from 'rxjs/operators';
+import { mergeMap as _observableMergeMap, catchError as _observableCatch, catchError, map, observeOn } from 'rxjs/operators';
 import { Observable, throwError as _observableThrow, of as _observableOf, throwError } from 'rxjs';
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
@@ -20,11 +20,227 @@ import { url } from 'inspector';
 
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
+@Injectable({
+    providedIn: 'root',
+})
+export class InvoiceService {
+    private readonly INVOICE_API: string;
+    private readonly INVOICEiTEM_API: string;
+
+    constructor(private http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
+        this.INVOICE_API = `${baseUrl ?? ''}/api/services/app/Invoice`;
+        this.INVOICEiTEM_API = `${baseUrl ?? ''}/api/services/app/InvoiceItem`;
+
+    }
+    // chuyển đổi từ cartitem 
+    convertCartItem(cartItems: CartItemDto[], invoiceId: number = 0): Observable<InvoiceItemDto[]> {
+        return new Observable(observer => {
+            try {
+                const invoiceItems = cartItems.map(cartitem => {
+                    const invoiceItem = new InvoiceItemDto();
+                    invoiceItem.init({
+                        id: 0,
+                        invoiceId: invoiceId,
+                        productId: cartitem.productId,
+                        quantity: cartitem.quantity,
+                        name: cartitem.name,
+                        price: cartitem.price,
+                        urlImage: cartitem.urlImage
+                    });
+                    return invoiceItem;
+                });
+
+                observer.next(invoiceItems);
+                observer.complete();
+            } catch (error) {
+                observer.error(error);
+            }
+        });
+    }
+
+    createInvoice(
+        userId: number,
+        totalAmount: number,
+        invoiceDate: Date,
+        status: number,
+        shippingAddress: string,
+        invoiceItems: InvoiceItemDto[]
+    ): Observable<InvoiceDto> {
+        const body = {
+            userId,
+            totalAmount,
+            invoiceDate, // Chuyển Date về chuỗi ISO
+            status,
+            shippingAddress,
+            invoiceItems
+        };
+
+        return this.http.post<InvoiceDto>(`${this.INVOICE_API}/Create`, body).pipe(
+            catchError(this.handleError)
+        );
+    }
+
+    // Xử lý lỗi API
+    private handleError(error: any): Observable<never> {
+        console.error('CartService Error:', error);
+        return throwError(() => new Error(error.message || 'Server error'));
+    }
+}
+
+
+
+export class InvoiceDto implements IInvoiceDto {
+    id: number;
+    userId: number;
+    totalAmount: number;
+    invoiceDate: Date;
+    status: number;
+    shippingAddress: string;
+    invoiceItems: InvoiceItemDto[];
+    constructor(data?: IInvoiceDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.userId = _data["userId"];
+            this.totalAmount = _data["totalAmount"];
+            this.invoiceDate = _data["invoiceDate"];
+            this.status = _data["status"];
+            this.shippingAddress = _data["shippingAddress"];
+
+
+            // Kiểm tra nếu cartItems là mảng thì chuyển từng phần tử thành CartItemDto
+            if (Array.isArray(_data["invoiceItems"])) {
+                this.invoiceItems = [];
+                for (let item of _data["invoiceItems"]) {
+                    this.invoiceItems.push(InvoiceItemDto.fromJS(item));
+                }
+            } else {
+                this.invoiceItems = [];
+            }
+        }
+    }
+    static fromJS(data: any): InvoiceDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InvoiceDto();
+        result.init(data);
+        return result;
+    }
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["userId"] = this.userId;
+        data["totalAmount"] = this.totalAmount;
+        data["invoiceDate"] = this.invoiceDate;
+        data["status"] = this.status;
+        data["shippingAddress"] = this.shippingAddress;
+
+
+        // Chuyển từng phần tử trong cartItems thành JSON
+        if (Array.isArray(this.invoiceItems)) {
+            data["invoiceItems"] = [];
+            for (let item of this.invoiceItems) {
+                data["invoiceItems"].push(item.toJSON());
+            }
+        }
+
+        return data;
+    }
+    clone(): InvoiceDto {
+        const json = this.toJSON();
+        let result = new InvoiceDto();
+        result.init(json);
+        return result;
+    }
+}
+export interface IInvoiceDto {
+    id: number;
+    userId: number;
+    totalAmount: number;
+    invoiceDate: Date;
+    status: number;
+    shippingAddress: string;
+    invoiceItems: InvoiceItemDto[];
+
+}
+
+export class InvoiceItemDto {
+    id: number;
+    invoiceId: number;
+    productId: number;
+    quantity: number;
+    name: string;
+    price: number;
+    urlImage: string;
+
+    constructor(data?: InvoiceItemDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.invoiceId = _data["invoiceId"];
+            this.productId = _data["productId"];
+            this.quantity = _data["quantity"];
+            this.name = _data["name"];
+            this.price = _data["price"];
+            this.urlImage = _data["urlImage"];
+        }
+    }
+    static fromJS(data: any): InvoiceItemDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InvoiceItemDto();
+        result.init(data);
+        return result;
+    }
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["invoiceId"] = this.invoiceId;
+        data["productId"] = this.productId;
+        data["quantity"] = this.quantity;
+        data["name"] = this.name;
+        data["price"] = this.price;
+        data["urlImage"] = this.urlImage;
+        return data;
+    }
+    clone(): InvoiceItemDto {
+        const json = this.toJSON();
+        let result = new InvoiceItemDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IinvoiceItemDto {
+    id: number;
+    invoiceId: number;
+    productId: number;
+    quantity: number;
+    name: string;
+    price: number;
+    urlImage: string;
+}
+
+
 
 
 // trong trường hợp trong thực thể có một mảng thì cần phải duyệt qua 
 // danh sách cartItems trong init() và chuyển từng phần tử thành instance
 //  của CartItemDto, giống như cách ProductDtoPagedResultDto xử lý items.
+// cũng cần phải viết lại cart để có thể lấy được cartitem nếu không custom thì item sẽ không hiện
+
 export class CartDto implements ICartDto {
     id: number;
     userId: number;
@@ -224,13 +440,13 @@ export class CartService {
         this.CARTITEM_API = `${baseUrl ?? ''}/api/services/app/CartItem`;
 
     }
+    // chuyển đổi từ cartitem 
 
     // Tạo giỏ hàng mới
     createCart(userId: number): Observable<CartDto> {
         return this.http.post<CartDto>(`${this.CART_API}/CreateCart`, { userId })
             .pipe(catchError(this.handleError));
     }
-
     // Lấy Cart của người dùng
     getCart(userId: number): Observable<CartDto> {
         return this.http.get<any>(`${this.CART_API}/GetCartByUserId?userId=${userId}`)
@@ -268,6 +484,21 @@ export class CartService {
     removeItemFromCart(CartItemId: number): Observable<CartItemDto> {
         return this.http.delete<CartItemDto>(`${this.CARTITEM_API}/Delete?Id=${CartItemId}`)
             .pipe(catchError(this.handleError));
+    }
+    getCartItemById(CartItemId: number): Observable<CartItemDto> {
+        return this.http.get<{ success: boolean; result: CartItemDto }>(`${this.CARTITEM_API}/Get?Id=${CartItemId}`)
+            .pipe(
+                map(response => {
+                    if (response.success && response.result) {
+                        return response.result; // Chỉ trả về phần dữ liệu cần
+                    }
+                    throw new Error('Lỗi: Không tìm thấy sản phẩm');
+                }),
+                catchError(error => {
+                    console.error('Lỗi API:', error);
+                    return throwError(() => new Error('Lỗi khi lấy dữ liệu giỏ hàng'));
+                })
+            );
     }
 
     // Xử lý lỗi API

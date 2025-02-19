@@ -21,11 +21,11 @@
         <div class="product-pricing">
           <strong>Giá:</strong>
           <span class="discounted-price">
-            {{ (product?.price * 0.8) | currency: 'VND': true }}
+            {{ (product?.price ) | currency: 'VND': true }}
           </span>
-          <span class="original-price">
+          <!-- <span class="original-price">
             {{ product?.price | currency: 'VND': true }}
-          </span>
+          </span> -->
         </div>
         <p class="product-description">
           <strong>Mô tả:</strong> {{ product?.description }}
