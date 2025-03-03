@@ -89,7 +89,7 @@ namespace newprj.Carts
                 .FirstOrDefaultAsync(c => c.Id == input.Id);
 
             if (cart == null)
-            {
+            {   
                 throw new EntityNotFoundException(typeof(Cart), input.Id);
             }
 

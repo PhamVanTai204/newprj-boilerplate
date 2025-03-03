@@ -3,52 +3,71 @@ form {
   background-color: #fff;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 4px 8px #00B2A9;
-  max-width: 600px;
+  max-width: 800px;
+  /* Tăng max-width để phù hợp với bố cục ngang */
+  border: 2px solid #00B2A9;
   margin: 0 auto;
 }
 
+/* Tiêu đề */
 h1 {
   font-weight: bold;
   font-size: 19px;
+  margin-bottom: 20px;
 }
 
+/* Khung ảnh */
+.image-container {
+  flex: 0 0 auto;
+  /* Không co giãn, kích thước theo ảnh */
+  border: 3px solid #00B2A9;
+  border-radius: 10px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8f8f8;
+  margin-right: 20px;
+  /* Khoảng cách giữa ảnh và form */
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  /* Đảm bảo ảnh vừa với khung mà không bị méo */
+}
+
+/* Header */
 .header {
   display: flex;
   justify-content: space-between;
-  /* Chia đều hai thành phần */
   align-items: center;
-  /* Căn giữa theo trục dọc */
   width: 100%;
-  /* Đảm bảo chiếm toàn bộ chiều rộng */
   padding: 0 20px;
-  /* Thêm khoảng cách hai bên nếu cần */
   box-sizing: border-box;
-  /* Bao gồm padding trong chiều rộng tổng */
+  margin-bottom: 20px;
 }
 
+/* Căn giữa nội dung */
+.body-row {
+  display: flex;
+  flex-direction: row;
+  /* Sắp xếp các phần tử theo chiều ngang */
+  align-items: flex-start;
+  /* Căn các phần tử lên trên */
+  width: 100%;
+  gap: 20px;
+  /* Khoảng cách giữa các phần tử */
+}
 
-/* Modal body */
 .modal-body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Căn giữa theo chiều ngang */
-  justify-content: center;
-  /* Căn giữa theo chiều dọc (nếu cần) */
-  gap: 20px;
-  /* Khoảng cách giữa các phần tử con */
+  width: 100%;
 }
-
-.modal-body img {
-  margin: 0 auto;
-  /* Đảm bảo ảnh không bị lệch */
-  max-width: 100%;
-  /* Đảm bảo ảnh không vượt quá chiều rộng khung */
-  height: auto;
-  border-radius: 8px;
-}
-
 
 /* Nút chọn ảnh */
 .cloudinary-button {
@@ -64,37 +83,29 @@ h1 {
 }
 
 .cloudinary-button:hover {
-  background-color: #00B2A9;
+  background-color: #008F8C;
 }
 
-.cloudinary-button i {
-  margin-right: 10px;
-}
-
-/* Các phần tử form */
-.form-group {
+/* Form group */
+.form-group.row {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  margin-bottom: 20px;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
-.form-group label {
+.form-group.row label {
   font-size: 16px;
   font-weight: 600;
-  color: #000000;
+  color: #000;
+  margin-bottom: 0;
+  flex: 0 0 25%;
+}
+
+.form-group.row input,
+.form-group.row p-inputNumber {
   flex: 1;
-}
-
-.form-group .col-md-9 {
-  flex: 2;
-}
-
-.body_create {
-  width: 100%;
-}
-
-.form-group input {
-  width: 100%;
   height: 41.6px;
   padding: 10px;
   border-radius: 8px;
@@ -103,93 +114,62 @@ h1 {
   transition: border 0.3s;
 }
 
-.form-group input:focus {
-  border: 1px solid #00B2A9;
+.form-group.row input:focus,
+.form-group.row p-inputNumber:focus {
+  border-color: #008F8C;
   outline: none;
 }
 
 /* Thông báo lỗi */
 .text-danger {
   font-size: 14px;
-  color: #00B2A9;
+  color: red;
   margin-top: 5px;
 }
 
-/* Nút Hủy và Lưu */
+/* Nút hành động */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 20px;
+}
+
 .btn_create {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
-.btn_create .btn {
+.btn {
   font-size: 16px;
   font-weight: bold;
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.3s;
+  border: none;
 }
 
-.btn1 {
-  color: #ccc;
-}
-
-.btn_create .btn-secondary {
-  background-color: #00B2A9;
-  border: 1px solid #ddd;
-  color: #ffffff;
-}
-
-.btn_create .btn-secondary:hover {
-  background-color: #00B2A9;
-}
-
-.btn_create .btn-primary {
-  background-color: #00B2A9;
-  border: 1px solid #360ed3;
+.btn-secondary {
+  background-color: #ccc;
   color: #fff;
 }
 
-.btn_create .btn-primary:disabled {
-  background-color: #ccc;
-  border-color: #ccc;
-  cursor: not-allowed;
+.btn-secondary:hover {
+  background-color: #aaa;
 }
 
-.btn_create .btn-primary:hover {
+.btn-primary {
   background-color: #00B2A9;
+  color: #fff;
 }
 
-.modal-footer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+.btn-primary:hover {
+  background-color: #008F8C;
 }
 
-/* Hình ảnh sản phẩm */
-.modal-body img {
-  width: 50%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 3px;
-}
-
-::ng-deep {
-  p-inputNumber {
-    .p-inputnumber {
-      width: 416px;
-      border-radius: 8px;
-      border: 2px solid #00B2A9;
-      font-size: 16px;
-      transition: border 0.3s;
-    }
-
-    .p-inputnumber input {
-      width: 100%;
-      border-radius: 5px;
-
-    }
-  }
+.btn-primary:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }

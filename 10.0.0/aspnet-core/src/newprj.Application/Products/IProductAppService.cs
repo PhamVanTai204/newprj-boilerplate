@@ -12,6 +12,8 @@ namespace newprj.Products
     public interface IProductAppService : IAsyncCrudAppService<ProductDto,int,PagedProductResultRequetstDto,CreateProductDto,UpdateProductDto>
     {
         public Task<PagedResultDto<ProductDto>> GetDataSearch(string keyWord);
+
+        Task<bool> UpdateMultipleProductsAsync(List<UpdateProductQuantityDto> products);
     }
 
 }

@@ -25,11 +25,11 @@ export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 })
 export class InvoiceService {
     private readonly INVOICE_API: string;
-    private readonly INVOICEiTEM_API: string;
+    private readonly PRODUCT_API: string;
 
     constructor(private http: HttpClient, @Optional() @Inject(API_BASE_URL) baseUrl?: string) {
         this.INVOICE_API = `${baseUrl ?? ''}/api/services/app/Invoice`;
-        this.INVOICEiTEM_API = `${baseUrl ?? ''}/api/services/app/InvoiceItem`;
+        this.PRODUCT_API = `${baseUrl ?? ''}/api/services/app/Product`;
 
     }
     // chuyển đổi từ cartitem 
@@ -56,6 +56,11 @@ export class InvoiceService {
                 observer.error(error);
             }
         });
+    }
+    updateStockQuantity(listProduct: IUpdateStockQuantityProductDto[]): Observable<void> {
+        return this.http.put<void>(`${this.PRODUCT_API}/UpdateMultipleProducts`, listProduct).pipe(
+            catchError(this.handleError)
+        );
     }
 
     createInvoice(
@@ -507,8 +512,17 @@ export class CartService {
         return throwError(() => new Error(error.message || 'Server error'));
     }
 }
+export class UpdateStockQuantityProductDto implements IUpdateStockQuantityProductDto {
+    constructor(
+        public id: number,
+        public stockQuantity: number
+    ) { }
+}
+export interface IUpdateStockQuantityProductDto {
+    id: number;
+    stockQuantity: number;
 
-
+}
 @Injectable()
 export class ProductServiceProxy {
     private http: HttpClient;
@@ -523,6 +537,10 @@ export class ProductServiceProxy {
        * @param body (optional) 
        * @return OK
        */
+
+
+
+
     create(body: CreateProductDto | undefined): Observable<ProductDto> {
         let url_ = this.baseUrl + "/api/services/app/Product/Create";
         url_ = url_.replace(/[?&]$/, "");

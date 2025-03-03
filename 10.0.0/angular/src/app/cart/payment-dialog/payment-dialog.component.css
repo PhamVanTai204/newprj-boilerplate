@@ -1,137 +1,140 @@
-.full-screen {
-    position: fixed;
-    top: 0;
-    left: 10%;
-    width: 80vw;
-    height: 100vh;
-    background: white;
-    padding: 30px;
-    overflow-y: auto;
-    border-radius: 16px;
-    box-shadow: 0 8px 16px rgba(0, 178, 169, 0.3);
-    transition: all 0.3s ease-in-out;
-}
+    .full-screen {
+        position: fixed;
+        top: 0;
+        left: 10%;
+        width: 80vw;
+        height: 100vh;
+        background: white;
+        padding: 30px;
+        overflow-y: auto;
+        border-radius: 16px;
+        box-shadow: 0 8px 16px rgba(0, 178, 169, 0.3);
+        transition: all 0.3s ease-in-out;
+    }
 
-.full-screen:hover {
-    box-shadow: 0 10px 20px rgba(0, 178, 169, 0.5);
-}
+    .full-screen:hover {
+        box-shadow: 0 10px 20px rgba(0, 178, 169, 0.5);
+    }
 
-.list-item {
-    height: 80%;
-    overflow: auto;
-}
+    .list-item {
+        height: 80%;
+        overflow: auto;
+    }
 
-.cart-header {
-    position: sticky;
-    top: 0;
-    background: white;
-    z-index: 1000;
-    padding-bottom: 5px;
-    border-bottom: 2px solid #ddd;
+    .cart-header {
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 1000;
+        padding-bottom: 5px;
+        border-bottom: 2px solid #ddd;
 
-}
+    }
 
-.shipping-info {
-    position: sticky;
+    .shipping-info {
+        position: sticky;
 
-    top: 60px;
-    /* Đặt ngay dưới header */
-    background: white;
-    z-index: 1000;
-    padding-bottom: 5px;
-    border-bottom: 2px solid #ddd;
-}
+        top: 60px;
+        /* Đặt ngay dưới header */
+        background: white;
+        z-index: 1000;
+        padding-bottom: 5px;
+        border-bottom: 2px solid #ddd;
+    }
 
-.list-item {
-    height: calc(100vh - 250px);
-    /* Điều chỉnh để vừa màn hình */
-    overflow-y: auto;
-}
-
-
-.cart-header h1 {
-    font-size: 28px;
-    font-weight: bold;
-    color: #222;
-}
-
-.error-message {
-    color: red;
-    font-size: 0.8em;
-    margin-top: 5px;
-}
-
-.shipping-info h3 {
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 15px;
-}
-
-.input-row {
-    display: flex;
-    gap: 5px;
-    /* Khoảng cách giữa các input */
-    margin-bottom: 15px;
-}
-
-.input-group {
-    flex: 1;
-    /* Chia đều không gian cho các input */
-}
-
-.input-group label {
-    display: block;
-    font-size: 16px;
-    color: #555;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
-    transition: border-color 0.3s ease-in-out;
-}
-
-.input-group input:focus {
-    border-color: #00B2A9;
-    outline: none;
-}
-
-button {
-    padding: 12px 28px;
-    background: #00B2A9;
-    color: #fff;
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out, transform 0.2s;
-}
-
-button:hover {
-    background: #008f8a;
-    transform: scale(1.05);
-}
+    .list-item {
+        height: calc(100vh - 250px);
+        /* Điều chỉnh để vừa màn hình */
+        overflow-y: auto;
+    }
 
 
-.checkout-button {
-    position: fixed;
-    bottom: 20px;
-    right: 10%;
-    padding: 12px 28px;
-    background: #00B2A9;
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out, transform 0.2s;
-    box-shadow: 0 4px 10px rgba(0, 178, 169, 0.3);
-}
 
-.checkout-button:hover {
-    background: #008f8a;
-    transform: scale(1.05);
-}
+    .cart-header h1 {
+        font-size: 28px;
+        font-weight: bold;
+        color: #222;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 4px;
+    }
+
+
+    .shipping-info h3 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .input-row {
+        display: flex;
+        gap: 5px;
+        /* Khoảng cách giữa các input */
+        margin-bottom: 15px;
+    }
+
+    .input-group {
+        flex: 1;
+        /* Chia đều không gian cho các input */
+    }
+
+    .input-group label {
+        display: block;
+        font-size: 16px;
+        color: #555;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease-in-out;
+    }
+
+    .input-group input:focus {
+        border-color: #00B2A9;
+        outline: none;
+    }
+
+    button {
+        padding: 12px 28px;
+        background: #00B2A9;
+        color: #fff;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out, transform 0.2s;
+    }
+
+    button:hover {
+        background: #008f8a;
+        transform: scale(1.05);
+    }
+
+
+    .checkout-button {
+        position: fixed;
+        bottom: 20px;
+        right: 10%;
+        padding: 12px 28px;
+        background: #00B2A9;
+        color: white;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out, transform 0.2s;
+        box-shadow: 0 4px 10px rgba(0, 178, 169, 0.3);
+    }
+
+    .checkout-button:hover {
+        background: #008f8a;
+        transform: scale(1.05);
+    }

@@ -27,11 +27,10 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
   isActive: boolean | null;
   advancedFiltersVisible = false;
   filteredLocationList: ProductDto[] = [];
-
-  currentPage = 1; // Trang hiện tại
+  first: number = 0; // Vị trí bắt đầu trang
+  totalRecords: number // Tổng số sản phẩm
   totalPages = 0; // Tổng số trang
-  pageSize: number = 15;
-
+  skipCount: number;
   ngOnInit(): void {
 
     this.list();
@@ -53,13 +52,18 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
 
   }
   searchPRD(text: string): void {
-    if (!text) {
-      this.filteredLocationList = this.products;
-    } else {
-      this.filteredLocationList = this.products.filter(
-        product => product?.name.toLowerCase().includes(text.toLowerCase())
-      );
-    }
+    debugger
+
+    this.keyword = text;
+    console.log("fasjhfgjkhase", this.keyword);
+    this.list();
+    // if (!text) {
+    //   this.filteredLocationList = this.products;
+    // } else {
+    //   this.filteredLocationList = this.products.filter(
+    //     product => product?.name.toLowerCase().includes(text.toLowerCase())
+    //   );
+    // }
   }
 
   isLoading = true; // Trạng thái tải dữ liệu
@@ -68,26 +72,28 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
     this.isLoading = loading;
     this.cd.detectChanges(); // Cập nhật lại giao diện khi thay đổi trạng thái loading
   }
-  addtoPageList(): void {
-    this.filteredLocationList = [];
-    const startIndex = (this.currentPage - 1) * 15;
-    const endIndex = this.currentPage === 1 ? 15 : this.currentPage * 15;
-    this.filteredLocationList = this.products.slice(startIndex, endIndex);
 
-    this.cd.detectChanges();
+
+
+  onPageChange(event: any) {
+    this.first = event.first; // Giá trị skipCount
+    this.pageSize = event.rows; // Số sản phẩm trên mỗi trang
+    this.skipCount = this.first;
+    this.list(); // Gọi API để lấy dữ liệu trang mới
   }
-  changePage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-      this.addtoPageList();
-    }
-  }
+
   // hàm load dữ liệu
   list(): void {
     console.log("bắt đầu load");
     this.setLoading(true); // Bật trạng thái loading
 
-    this._productService.getAll(this.keyword, this.isActive, 'name', 0, 10)
+    this._productService.getAll(
+      this.keyword,
+      this.isActive,
+      'name desc',
+      this.skipCount,
+      this.pageSize
+    )
       .pipe(
         finalize(() => {
           this.primengTableHelper.hideLoadingIndicator();
@@ -95,35 +101,12 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
       )
       .subscribe((result: ProductDtoPagedResultDto) => {
         this.products = result.items.reverse();
-        this.totalPages = Math.ceil(result.totalCount / this.pageSize);
-        this.addtoPageList();
+        this.totalRecords = result.totalCount;
+        this.filteredLocationList = this.products;
         this.setLoading(false);
         this.cd.detectChanges();
       });
   }
-  // this._productService.getAll(this.keyword, this.isActive, 'name', 0, 10)
-  //     .pipe(
-  //       map(result => result.items,result.to), // Trả về danh sách sản phẩm
-  //       catchError(err => {
-  //         console.error("Error loading products:", err);
-  //         return of([]); // Trả về mảng rỗng khi có lỗi
-  //       })
-  //     )
-  // phân trang mỗi trang có 15 item  
-  //    prd.length =n  
-  //  trang thì sẽ sang trang tiếp theo với các item của trang đó
-  /// tương tự lùi lại cũng thế 14 29 
-  //    dùng for 
-
-  //     .subscribe(products => {
-  //       // Cập nhật danh sách sản phẩm sau khi nhận được kết quả
-  //       this.products = products;
-  //       console.log("xong hàm get:", this.products);
-  //       this.filteredLocationList = products; // Cập nhật filteredLocationList
-  //       this.setLoading(false); // Tắt trạng thái loading sau khi dữ liệu đã được tải        
-  //       this.cd.detectChanges();
-  //     });
-  //   console.log("hết hàm load:", this.products);
   createProduct(): void {
     this.showCreateOrEditProductDialog();
   }
@@ -149,7 +132,6 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
           alert("Sản phẩm đã được xóa thành công.");
           if (this.filteredLocationList.length === 1) {
 
-            this.changePage(this.currentPage - 1)
           }
 
           this.list(); // Cập nhật danh sách sản phẩm
@@ -197,7 +179,8 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
     createOrEditProductDialog.content.onSave.subscribe(() => {
 
       if (!id) {
-        this.changePage(1);
+        this.first = 0;
+        this.skipCount = 0
         this.list();
       } else {
         this.list();

@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-
 @Component({
   selector: 'app-invoices',
-  standalone: true,
-  imports: [],
+  standalone: false,
   templateUrl: './invoices.component.html',
   styleUrl: './invoices.component.css'
 })

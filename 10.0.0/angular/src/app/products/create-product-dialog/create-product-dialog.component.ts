@@ -20,6 +20,7 @@ export class CreateProductDialogComponent extends AppComponentBase implements On
   cloudName = "da5wgbt3m";
   uploadPreset = "tpgzin";
   myWidget;
+  defaultImage: string = 'https://via.placeholder.com/150';
   @Output() onSave = new EventEmitter<any>();
 
   constructor(

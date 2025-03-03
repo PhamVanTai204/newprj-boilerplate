@@ -16,16 +16,16 @@
                     <input type="text" id="userName" placeholder="Nhập tên" [(ngModel)]="userName" name="userName"
                         required minlength="2" #name="ngModel" />
                     <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error-message">
-                        <div *ngIf="name.errors?.['required']">Tên là bắt buộc.</div>
+                        <div *ngIf="name.errors?.['required']">Bạn chưa nhập tên.</div>
                         <div *ngIf="name.errors?.['minlength']">Tên phải có ít nhất 2 ký tự.</div>
                     </div>
                 </div>
                 <div class="input-group">
                     <label for="userPhone">Số điện thoại:</label>
-                    <input type="text" id="userPhone" placeholder="Nhập số điện thoại" [(ngModel)]="userPhone"
+                    <input type="number" id="userPhone" placeholder="Nhập số điện thoại" [(ngModel)]="userPhone"
                         name="userPhone" required pattern="[0-9]{10}" #phone="ngModel" />
                     <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="error-message">
-                        <div *ngIf="phone.errors?.['required']">Số điện thoại là bắt buộc.</div>
+                        <div *ngIf="phone.errors?.['required']">Bạn chưa nhập số điện thoạt.</div>
                         <div *ngIf="phone.errors?.['pattern']">Số điện thoại phải là 10 chữ số.</div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                 <input type="text" id="userAddress" placeholder="Nhập địa chỉ" [(ngModel)]="userAddress"
                     name="userAddress" required minlength="5" #address="ngModel" />
                 <div *ngIf="address.invalid && (address.dirty || address.touched)" class="error-message">
-                    <div *ngIf="address.errors?.['required']">Địa chỉ là bắt buộc.</div>
+                    <div *ngIf="address.errors?.['required']">Bạn chưa nhập địa chỉ .</div>
                     <div *ngIf="address.errors?.['minlength']">Địa chỉ phải có ít nhất 5 ký tự.</div>
                 </div>
             </div>

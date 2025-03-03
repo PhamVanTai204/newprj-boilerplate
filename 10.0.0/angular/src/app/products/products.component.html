@@ -14,86 +14,74 @@
     </div>
   </section>
 
-  <section class="content px-2 pb-5">
-    <div class="container-fluid">
-      <div class="card table-wrapper">
-        <div class="card-body table-responsive table-striped table-bordered">
-
-
-
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <button type="button" class="btn bg-red1 " (click)="searchPRD(filter.value)">
-                <i class="fas fa-search"></i>
-              </button>
-
-            </div>
-            <input type="text" class="form-control" [placeholder]="'Nhập vào tên Sản Phẩm'" #filter
-              (keyup)="searchPRD(filter.value)" />
-
-            <!-- -->
+  <section class="content px-2  ">
+    <div class=" table-wrapper">
+      <div class="card-body table-responsive table-striped table-bordered">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <button type="button" class="btn bg-red1 " (click)="searchPRD(filter.value)">
+              <i class="fas fa-search"></i>
+            </button>
 
           </div>
-          <table class="table table-hover">
-            <div class="product-list">
+          <input type="text" class="form-control" [placeholder]="'Nhập vào tên Sản Phẩm'" #filter />
+          <!-- <input type="text" class="form-control" [placeholder]="'Nhập vào tên Sản Phẩm'" #filter
+            (keyup)="searchPRD(filter.value)" /> -->
 
-              @for(product of filteredLocationList ; track product.id){
-              <div class="product">
-                <div class="khung_prdImg">
-                  <img (click)="showProduct(product)" id="img-product-list" alt="Uploaded Image"
-                    [src]="product.urlImage" />
-                </div>
-                <h2> {{ product.name }}</h2>
-                <p class="price">
-                  <span class="discounted-price">{{ (product.price ) | currency:'VND' : true }}</span>
-                  <!-- Giá giảm -->
+          <!-- -->
 
-                  <!-- <span class="original-price">{{ product.price | currency:'VND' : true }}</span> -->
-                  <!-- Giá gốc với định dạng tiền tệ -->
-                </p>
-                <p class="description">Mô tả: {{product.description}}</p>
+        </div>
+        <table class="table table-hover">
+          <div class="product-list">
 
-                <p> Số lượng tồn kho: <strong>{{ product.stockQuantity }}</strong></p>
-                <p> Mã sản phẩm : <strong>{{ product.maSP }}</strong></p>
-
-                <div class="buttons">
-                  <button class="btn 
-                      btn-primary btn-sm me-2" (click)="editProduct(product)">
-                    <i class="fas fa-edit"></i> Chỉnh sửa
-                  </button>
-                  <button class="btn btn-danger btn-sm" (click)="delete(product)">
-                    <i class="fas fa-trash"> </i> Xóa
-                  </button>
-                </div>
+            @for(product of filteredLocationList ; track product.id){
+            <div class="product">
+              <div class="khung_prdImg">
+                <img (click)="showProduct(product)" id="img-product-list" alt="Uploaded Image"
+                  [src]="product.urlImage" />
               </div>
-              }
+              <h2> {{ product.name }}</h2>
+              <p class="price">
+                <span class="discounted-price">{{ (product.price ) | currency:'VND' : true }}</span>
+                <!-- Giá giảm -->
+
+                <!-- <span class="original-price">{{ product.price | currency:'VND' : true }}</span> -->
+                <!-- Giá gốc với định dạng tiền tệ -->
+              </p>
+              <p class="description">Mô tả: {{product.description}}</p>
 
 
+
+              <div class="buttons">
+                <button class="btn 
+                    btn-primary btn-sm me-2" (click)="editProduct(product)">
+                  <i class="fas fa-edit"></i> Chỉnh sửa
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="delete(product)">
+                  <i class="fas fa-trash"> </i> Xóa
+                </button>
+              </div>
             </div>
+            }
 
-          </table>
 
-          <p-table>
-
-          </p-table>
-          <div *ngIf="!products.length" class="text-center mt-5">
-            <p>Không có sản phẩm.</p>
           </div>
 
+        </table>
 
-        </div>
-        <div class="pagination">
-          <button (click)="changePage(1)" [disabled]="currentPage === 1">Trang đầu</button>
-          <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Trang trước</button>
-          <h5>{{currentPage}}<br>
-            số trang
-          </h5>
-          <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Trang sau</button>
-          <button (click)="changePage(totalPages)" [disabled]="currentPage === totalPages">Trang cuối</button>
+
+        <div *ngIf="!products.length" class="text-center mt-5">
+          <p>Không có sản phẩm.</p>
         </div>
 
 
+      </div>
 
+
+      <div class="card flex justify-content-center">
+        <p-paginator [first]="first" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 15, 20]"
+          (onPageChange)="onPageChange($event)">
+        </p-paginator>
       </div>
     </div>
   </section>

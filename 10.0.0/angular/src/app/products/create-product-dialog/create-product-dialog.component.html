@@ -2,89 +2,91 @@
   <div class="header">
     <h1>Thêm sản phẩm</h1>
     <button id="upload_widget" class="cloudinary-button" (click)="openWidget()">
-      <i class="fa fa-save"></i> Thêm ảnh   
+      <i class="fa fa-save"></i> Thêm ảnh
     </button>
   </div>
-  <img [src]="product.urlImage" alt="" />
+  <div class="body-row">
+    <div class="image-container">
+      <img [src]="product.urlImage || defaultImage" alt="Product Image" />
+    </div>
 
- <div class="body_create">
-   <form #productForm="ngForm" (ngSubmit)="save()">
-    <!-- Tên sản phẩm -->
-    <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="name">Tên Sản phẩm</label>
-      <div class="col-md-9">
-        <input type="text" class="form-control" id="name" [(ngModel)]="product.name" name="name" #name="ngModel"
-          required maxlength="128" />
-        <div *ngIf="name.touched && name.invalid" class="text-danger mt-1">
-          Tên sản phẩm là bắt buộc.
+
+    <div class="body_create">
+      <form #productForm="ngForm" (ngSubmit)="save()">
+        <!-- Tên sản phẩm -->
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="name">Tên Sản phẩm</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" id="name" [(ngModel)]="product.name" name="name" #name="ngModel"
+              required maxlength="128" />
+            <div *ngIf="name.touched && name.invalid" class="text-danger mt-1">
+              Tên sản phẩm là bắt buộc.
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Giá -->
-    <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="price">Giá</label>
-      <div class="col-md-9">
-        <p-inputNumber id="price" [(ngModel)]="product.price" name="price" #price="ngModel" mode="currency"
-          inputId="currency-vietnam" currency="VND" locale="vi-VN" required step="any" 
-            />
+        <!-- Giá -->
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="price">Giá</label>
+          <div class="col-md-9">
+            <p-inputNumber id="price" [(ngModel)]="product.price" name="price" #price="ngModel" mode="currency"
+              inputId="currency-vietnam" currency="VND" locale="vi-VN" required step="any" />
 
-        <div *ngIf="price.touched && (price.invalid || product.price <= 0)" class="text-danger mt-1">
-          Giá phải lớn hơn 0.
+            <div *ngIf="price.touched && (price.invalid || product.price <= 0)" class="text-danger mt-1">
+              Giá phải lớn hơn 0.
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Mô tả sản phẩm -->
-    <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="description">Mô tả</label>
-      <div class="col-md-9">
-        <input type="text" class="form-control" id="description" [(ngModel)]="product.description" name="description"
-          #description="ngModel" required maxlength="128" />
-        <div *ngIf="description.touched && description.invalid" class="text-danger mt-1">
-          Mô tả sản phẩm là bắt buộc.
+        <!-- Mô tả sản phẩm -->
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="description">Mô tả</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" id="description" [(ngModel)]="product.description"
+              name="description" #description="ngModel" required maxlength="128" />
+            <div *ngIf="description.touched && description.invalid" class="text-danger mt-1">
+              Mô tả sản phẩm là bắt buộc.
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Số lượng tồn kho -->
-    <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="stockQuantity">Số lượng tồn kho</label>
-      <div class="col-md-9">
-        <input type="number" class="form-control" id="stockQuantity" [(ngModel)]="product.stockQuantity"
-          name="stockQuantity" #stockQuantity="ngModel" required />
-        <div *ngIf="stockQuantity.touched && (stockQuantity.invalid || product.stockQuantity < 0)"
-          class="text-danger mt-1">
-          Số lượng tồn kho phải lớn hơn hoặc bằng 0.
+        <!-- Số lượng tồn kho -->
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="stockQuantity">Số lượng tồn kho</label>
+          <div class="col-md-9">
+            <input type="number" class="form-control" id="stockQuantity" [(ngModel)]="product.stockQuantity"
+              name="stockQuantity" #stockQuantity="ngModel" required />
+            <div *ngIf="stockQuantity.touched && (stockQuantity.invalid || product.stockQuantity < 0)"
+              class="text-danger mt-1">
+              Số lượng tồn kho phải lớn hơn hoặc bằng 0.
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <!--Mã sản phẩm  -->
-    <div class="form-group row required">
-      <label class="col-md-3 col-form-label" for="maSP">Mã sản phẩm</label>
-      <div class="col-md-9">
-        <input type="text" class="form-control" id="maSP" [(ngModel)]="product.maSP"
-          name="maSP" #maSP="ngModel" required />
-        <div *ngIf="maSP.touched && (maSP.invalid )"
-          class="text-danger mt-1">
-          Mã sản phẩm không được để trống
+        <!--Mã sản phẩm  -->
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="maSP">Mã sản phẩm</label>
+          <div class="col-md-9">
+            <input type="text" class="form-control" id="maSP" [(ngModel)]="product.maSP" name="maSP" #maSP="ngModel"
+              required />
+            <div *ngIf="maSP.touched && (maSP.invalid )" class="text-danger mt-1">
+              Mã sản phẩm không được để trống
+            </div>
+          </div>
         </div>
-      </div>
+
+
+        <div class="modal-footer">
+
+          <div class="btn_create">
+            <button type="button" class="btn btn1 btn-secondary" (click)="bsModalRef.hide()">
+              Hủy
+            </button>
+            <button type="submit" class="btn btn1 btn-primary" [disabled]="!productForm.valid">
+              Lưu
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-
-
-    <div class="modal-footer">
-
-      <div class="btn_create">
-        <button type="button" class="btn btn1 btn-secondary" (click)="bsModalRef.hide()">
-          Hủy
-        </button>
-        <button type="submit" class="btn btn1 btn-primary" [disabled]="!productForm.valid">
-          Lưu
-        </button>
-      </div>
-    </div>
-  </form>
- </div>
+  </div>
 </div>
- 

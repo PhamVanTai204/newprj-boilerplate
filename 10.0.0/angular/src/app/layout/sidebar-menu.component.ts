@@ -68,6 +68,12 @@ export class SidebarMenuComponent extends AppComponentBase implements OnInit {
                 'Pages.Cart'
             ),
             new MenuItem(
+                this.l('Invoices'),
+                '/app/invoices',
+                'fas fa-shopping-cart',
+                'Pages.Invoices'
+            ),
+            new MenuItem(
                 this.l('Users'),
                 '/app/users',
                 'fas fa-users',

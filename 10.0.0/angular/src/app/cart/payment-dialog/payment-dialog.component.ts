@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { CartItemDto, CartService, InvoiceItemDto, InvoiceService } from '@shared/service-proxies/service-proxies';
+import { CartItemDto, CartService, InvoiceItemDto, InvoiceService, UpdateStockQuantityProductDto } from '@shared/service-proxies/service-proxies';
 
 @Component({
   selector: 'app-payment-dialog',
@@ -53,6 +53,18 @@ export class PaymentDialogComponent implements OnInit {
 
   ) {
   }
+  updateStockQuantity() {
+    const updatedProducts = this.cartItems.map(item => ({
+      id: item.productId,
+      stockQuantity: item.quantity - item.quantity
+    }));
+
+    this._invoiceAppService.updateStockQuantity(updatedProducts).subscribe({
+      next: () => console.log('Cập nhật số lượng sản phẩm thành công!'),
+      error: (err) => console.error('Lỗi cập nhật số lượng sản phẩm:', err)
+    });
+  }
+
 
   thanhtoan() {
     try {
@@ -60,36 +72,43 @@ export class PaymentDialogComponent implements OnInit {
       if (!this.userName || !this.userPhone || !this.userAddress) {
         throw new Error('Vui lòng nhập đầy đủ thông tin trước khi thanh toán!');
       }
-      debugger
+
+      debugger;
+
       // Gọi dịch vụ để tạo hóa đơn
       this._invoiceAppService
         .createInvoice(
           this.userId,
           this.totalSelectedAmount,
           this.invoiceDate,
-          0, // Trạng thái (thêm mã trạng thái tùy thuộc vào yêu cầu)
+          0, // Trạng thái đơn hàng
           this.shippingAddress,
           this.invoiceItems
         )
         .subscribe(
           (response) => {
             console.log('Hóa đơn đã tạo:', response);
+
+            // **Cập nhật số lượng sản phẩm sau khi tạo hóa đơn thành công**
+            this.updateStockQuantity();
+
             alert('Thanh toán thành công!');
             this.bsModalRef.hide();
+
             this.onSave.emit();
+
           },
           (error) => {
-            // Xử lý lỗi nếu có
             console.error('Lỗi khi tạo hóa đơn:', error);
             alert('Thanh toán thất bại!');
           }
         );
     } catch (error) {
-      // Bắt lỗi và thông báo cho người dùng
       console.error('Lỗi hệ thống:', error);
       alert(error.message || 'Có lỗi xảy ra, vui lòng thử lại!');
     }
   }
+
 
   async list() {
     this.setLoading(true);

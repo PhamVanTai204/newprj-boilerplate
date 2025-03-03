@@ -11,5 +11,6 @@ public static class PermissionNames
     public const string Pages_Products = "Pages.Products";
     public const string Pages_Cart = "Pages.Cart";
     public const string Pages_CartItem = "Pages.CartItem";
+    public const string Pages_Invoices = "Pages.Invoices";
 
 }

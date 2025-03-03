@@ -27,6 +27,10 @@ public class newprjAuthorizationProvider : AuthorizationProvider
         cartPermission.CreateChildPermission("Pages.Cart.CreateItem", L("CreateCartItem"));
         cartPermission.CreateChildPermission("Pages.Cart.EditItem", L("EditCartItem"));
         cartPermission.CreateChildPermission("Pages.Cart.DeleteItem", L("DeleteCartItem"));
+        var invoicesPermission = context.CreatePermission("Pages.Invoices", L("Invoices"));
+        invoicesPermission.CreateChildPermission("Pages.Invoices.Create", L("CreateInvoice"));
+
+
     }
 
     private static ILocalizableString L(string name)

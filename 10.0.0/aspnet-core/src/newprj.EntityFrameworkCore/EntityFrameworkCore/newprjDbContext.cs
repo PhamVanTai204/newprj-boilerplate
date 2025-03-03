@@ -16,7 +16,7 @@ public class newprjDbContext : AbpZeroDbContext<Tenant, Role, User, newprjDbCont
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<InvoiceItem> InvoiceItems { get; set; }
-   
+
     public newprjDbContext(DbContextOptions<newprjDbContext> options)
         : base(options)
     {

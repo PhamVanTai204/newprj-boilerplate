@@ -12,15 +12,16 @@ import { TableModule } from 'primeng/table';  // Sửa lại
 import { LocalizePipe } from '@shared/pipes/localize.pipe';
 import { PaginatorModule } from 'primeng/paginator';  // Sửa lại đường dẫn import
 import { HttpClient } from '@angular/common/http'; // Sửa lại đường dẫn import
-import {CloudinaryModule} from '@cloudinary/ng';
-import { InputNumberModule } from 'primeng/inputnumber'; 
+import { CloudinaryModule } from '@cloudinary/ng';
+import { InputNumberModule } from 'primeng/inputnumber';
+
 @NgModule({
   declarations: [
     CreateProductDialogComponent,
     UpdateProductDialogComponent,
     ProductsComponent,
     ChitietProductDialogComponent
-     
+
   ],
   imports: [
     SharedModule,
@@ -32,6 +33,6 @@ import { InputNumberModule } from 'primeng/inputnumber';
     CloudinaryModule,
     InputNumberModule
   ],
-  
+
 })
-export class ProductsModule {}
+export class ProductsModule { }

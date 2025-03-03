@@ -12,22 +12,41 @@
   text-align: center;
   outline: none;
 }
+
+.card-body {
+  background-color: white;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.content-header {
+  margin: 3px;
+  padding: 3px;
+}
+
 h1 {
   font-weight: bold;
 }
-.btn-primary, .btn-Create, .bg-red1 {
-  background-color: #00B2A9; /* Màu nền của nút Create */
+
+.btn-primary,
+.btn-Create,
+.bg-red1 {
+  background-color: #00B2A9;
+  /* Màu nền của nút Create */
   color: white;
   font-weight: bold;
 }
+
 .btn-danger {
-  background-color: #6C757D; /* Màu nền của nút Create */
+  background-color: #6C757D;
+  /* Màu nền của nút Create */
   color: white;
   font-weight: bold;
 }
 
 .btn-Create:hover {
-  background-color: #23423c; /* Màu nền khi hover */
+  background-color: #23423c;
+  /* Màu nền khi hover */
   transform: scale(1.05);
 }
 
@@ -52,10 +71,12 @@ h1 {
 .table {
   width: 100%;
   max-height: 400px;
-  overflow-y: auto; /* Cuộn dọc nếu số lượng sản phẩm lớn */
+  overflow-y: auto;
+  /* Cuộn dọc nếu số lượng sản phẩm lớn */
 }
 
-.table th, .table td {
+.table th,
+.table td {
   text-align: center;
   vertical-align: middle;
 }
@@ -63,19 +84,25 @@ h1 {
 /* Định dạng cho danh sách sản phẩm */
 .product-list {
   display: flex;
+  height: 520px;
   gap: 10px;
-  align-items: flex-start; /* Đảm bảo các phần tử căn lên trên khi có ít sản phẩm */
+  overflow: auto;
+  align-items: flex-start;
+  /* Đảm bảo các phần tử căn lên trên khi có ít sản phẩm */
   flex-wrap: wrap;
-  justify-content: flex-start; /* Đảm bảo sản phẩm chiếm 18% chiều rộng */
+  overflow: auto;
+
+  justify-content: flex-start;
+  /* Đảm bảo sản phẩm chiếm 18% chiều rộng */
 }
 
-.product-list > * {
+.product-list>* {
   flex: 1 1 calc(18%);
   max-width: calc(20%);
   box-sizing: border-box;
 }
 
-.product-list > *:only-child {
+.product-list>*:only-child {
   flex: 1 1 calc(20%);
 }
 
@@ -84,8 +111,8 @@ h1 {
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  max-width: 280px;
-  height: 380px; /* Cố định chiều cao */
+  height: 300px;
+  /* Cố định chiều cao */
   box-sizing: border-box;
   border: 1px solid #00B2A9;
   border-radius: 8px;
@@ -94,14 +121,18 @@ h1 {
   margin: 5px;
   overflow: hidden;
 }
+
 .khung_prdImg {
   width: 100%;
   height: 150px;
   overflow: hidden;
   border-radius: 5px;
-  display: flex; /* Cần để sử dụng Flexbox */
-  justify-content: center; /* Căn giữa theo chiều ngang */
-  align-items: center; /* Căn giữa theo chiều dọc */
+  display: flex;
+  /* Cần để sử dụng Flexbox */
+  justify-content: center;
+  /* Căn giữa theo chiều ngang */
+  align-items: center;
+  /* Căn giữa theo chiều dọc */
 }
 
 .khung_prdImg img {
@@ -118,7 +149,7 @@ h1 {
 }
 
 .price {
-  margin-top: 10px;
+  margin-top: 2px;
   font-size: 16px;
   margin: 5px 0;
   font-weight: bold;
@@ -143,14 +174,15 @@ h1 {
 
 .product p {
   font-size: 14px;
-  margin: 5px 0;
+  margin: 2px 0;
 }
 
 /* Cấu trúc nút trong sản phẩm */
 .buttons {
   display: flex;
   justify-content: space-between;
-  margin: 10px; /* Cố định các nút xuống dưới */
+  margin: 10px;
+  /* Cố định các nút xuống dưới */
 }
 
 .buttons button {
@@ -159,27 +191,45 @@ h1 {
 }
 
 .input-group {
-  margin-bottom: 3px;
+  margin-bottom: 5px;
   border-radius: 5px;
+  width: 600px;
   border: 1px solid #00B2A9;
+  margin-left: auto;
+  /* Đẩy input-group sang bên phải */
+  display: flex;
+  /* Đảm bảo nó có thể căn chỉnh */
 }
+
 .description {
-  display: -webkit-box; /* Để kích hoạt line-clamp */
-  -webkit-line-clamp: 2; /* Giới hạn số dòng */
-  -webkit-box-orient: vertical; /* Đặt hướng box */
-  overflow: hidden; /* Ẩn phần nội dung thừa */
-  text-overflow: ellipsis; /* Hiển thị dấu ... */
-  background-color: #f5f5f5; /* Màu xám nhạt */
-  padding: 5px; /* Khoảng cách bên trong khung */
-  border-radius: 5px; /* Bo tròn góc khung */
+  display: -webkit-box;
+  /* Để kích hoạt line-clamp */
+  -webkit-line-clamp: 2;
+  /* Giới hạn số dòng */
+  -webkit-box-orient: vertical;
+  /* Đặt hướng box */
+  overflow: hidden;
+  /* Ẩn phần nội dung thừa */
+  text-overflow: ellipsis;
+  /* Hiển thị dấu ... */
+  background-color: #f5f5f5;
+  /* Màu xám nhạt */
+  padding: 5px;
+  /* Khoảng cách bên trong khung */
+  border-radius: 5px;
+  /* Bo tròn góc khung */
   font-size: 14px;
-  line-height: 1.5; /* Khoảng cách giữa các dòng */
-  max-height: calc(1.5em * 2); /* Đảm bảo không vượt quá chiều cao 2 dòng */
+  line-height: 1.5;
+  /* Khoảng cách giữa các dòng */
+  max-height: calc(1.5em * 2);
+  /* Đảm bảo không vượt quá chiều cao 2 dòng */
   margin-top: 5px;
 }
+
 .fas {
   margin-right: 4px;
 }
+
 .fa-plus-square {
   margin-right: 5px;
 }
@@ -190,37 +240,50 @@ h1 {
   justify-content: center;
   align-items: center;
   margin-top: 20px;
-  gap: 10px; /* Khoảng cách giữa các nút */
+  gap: 10px;
+  /* Khoảng cách giữa các nút */
 }
 
 .pagination button {
-  background-color: #00B2A9; /* Màu nền nút */
-  color: white; /* Màu chữ */
-  border: none; /* Bỏ viền nút */
-  padding: 8px 15px; /* Khoảng cách bên trong nút */
-  font-size: 14px; /* Kích thước chữ */
-  border-radius: 5px; /* Bo góc nút */
+  background-color: #00B2A9;
+  /* Màu nền nút */
+  color: white;
+  /* Màu chữ */
+  border: none;
+  /* Bỏ viền nút */
+  padding: 8px 15px;
+  /* Khoảng cách bên trong nút */
+  font-size: 14px;
+  /* Kích thước chữ */
+  border-radius: 5px;
+  /* Bo góc nút */
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Hiệu ứng hover */
+  transition: background-color 0.3s ease;
+  /* Hiệu ứng hover */
 }
 
 .pagination button:disabled {
-  background-color: #cccccc; /* Màu khi nút bị disable */
-  cursor: not-allowed; /* Con trỏ khi nút bị disable */
+  background-color: #cccccc;
+  /* Màu khi nút bị disable */
+  cursor: not-allowed;
+  /* Con trỏ khi nút bị disable */
 }
 
 .pagination button:hover:not(:disabled) {
-  background-color: #751116; /* Màu nền khi hover */
+  background-color: #751116;
+  /* Màu nền khi hover */
 }
 
 .pagination h5 {
   margin: 5;
   font-size: 22px;
-  color: #00B2A9; /* Màu số trang hiện tại */
+  color: #00B2A9;
+  /* Màu số trang hiện tại */
   font-weight: bold;
   border-radius: 5px;
   padding: 20px;
-  border: 1px solid #00B2A9 ;
+  border: 1px solid #00B2A9;
   font-weight: bold;
-  text-align: center; /* Căn giữa theo chiều ngang */
+  text-align: center;
+  /* Căn giữa theo chiều ngang */
 }

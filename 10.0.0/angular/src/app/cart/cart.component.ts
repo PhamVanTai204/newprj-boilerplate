@@ -84,7 +84,6 @@ export class CartComponent extends PagedListingComponentBase<CartDto> implements
       if (!id) {
 
         this.removeSelectedItems();
-        this.list();
       } else {
         this.list();
       }
@@ -96,6 +95,16 @@ export class CartComponent extends PagedListingComponentBase<CartDto> implements
   }
   isChecked(id: number): boolean {
     return this.selectedProductIds.includes(id);
+  }
+  cleanUpInvalidSelectedProducts() {
+    // Lấy danh sách ID trong giỏ hàng
+    const cartItemIds = this.cartItems.map(item => item.id);
+
+    // Lọc ra những ID không có trong cartItems
+    this.selectedProductIds = this.selectedProductIds.filter(id => cartItemIds.includes(id));
+
+    // Cập nhật lại Local Storage
+    this.saveSelectedProductsToLocal();
   }
 
 
@@ -143,6 +152,7 @@ export class CartComponent extends PagedListingComponentBase<CartDto> implements
     this.selectedProductIds = [];
     this.saveSelectedProductsToLocal();
     this.updateSelectedProducts();
+    this.list();
   }
 
   // Tính tổng số tiền trong giỏ cho những sản phẩm đã được chọn
@@ -259,6 +269,7 @@ export class CartComponent extends PagedListingComponentBase<CartDto> implements
       console.log('Cart:', this.cart); // Log giỏ hàng
       console.log("cartItem là:", this.cartItems, "ĐỘ DÀI", this.cartItems.length);
       this.updateSelectedProducts();
+      this.cleanUpInvalidSelectedProducts();
     } catch (error) {
       console.error('Error fetching cart:', error);
     } finally {
