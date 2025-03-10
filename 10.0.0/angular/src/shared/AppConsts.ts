@@ -19,4 +19,20 @@ export class AppConsts {
     static readonly authorization = {
         encryptedAuthTokenName: 'enc_auth_token'
     };
+
+
+
+    static readonly permissions = {
+        //  Products
+        productCreate: 'Pages.Products.Create',
+        productUpdate: 'Pages.Products.Update',
+
+        // CartItem 
+        cartItemCreate: 'Pages.Cart.CreateItem',
+
+
+        //invoice
+        invoiceAdin: 'Pages.Invoices.Admin',
+        invoiceUpdate: 'Pages.Invoices.Update'
+    }
 }

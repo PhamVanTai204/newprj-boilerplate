@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
+using Abp.Linq.Extensions;
 using Microsoft.EntityFrameworkCore;
 using newprj.Entities;
 using newprj.Invoices.Dtos;
@@ -27,10 +29,25 @@ namespace newprj.Invoices
         }
         public override async Task<PagedResultDto<InvoiceDto>> GetAllAsync(PagedInvoiceResultRequestDto input)
         {
-            var allInvoice = await _invoiceRepository.GetAllIncluding(c => c.InvoiceItems).ToListAsync();
-            // ánh sạ dữ liệu qua dto 
-            var invoiceDtos = ObjectMapper.Map<List<InvoiceDto>>(allInvoice);
-            return new PagedResultDto<InvoiceDto>(invoiceDtos.Count, invoiceDtos);
+            input.Normalize();
+
+            var query = _invoiceRepository.GetAll()
+                .Include(i => i.InvoiceItems)
+                .Include(i => i.User)
+                .WhereIf(!string.IsNullOrWhiteSpace(input.Keyword),
+                    i => i.Id.ToString().Contains(input.Keyword) || i.ShippingAddress.Contains(input.Keyword));
+
+            var totalCount = await query.CountAsync();
+            var invoices = await query
+                .OrderBy(input.Sorting)
+                .Skip(input.SkipCount)
+                .Take(input.MaxResultCount)
+                .ToListAsync();
+
+            return new PagedResultDto<InvoiceDto>(
+                totalCount,
+                ObjectMapper.Map<List<InvoiceDto>>(invoices)
+            );
         }
         public override async Task<InvoiceDto> GetAsync(EntityDto<int> input )
         {
@@ -45,16 +62,27 @@ namespace newprj.Invoices
             return invoiceDto;
         }
         //lấy hóa đơn by UserId 
-        public async Task<List<InvoiceDto>> GetInvoiceByUserID (long userId)
+        public async Task<PagedResultDto<InvoiceDto>> GetInvoiceByUserID(long userId, int skipCount = 0, int maxResultCount = 10)
         {
-            var allinvoice = await _invoiceRepository
-                .GetAllIncluding(c=> c.InvoiceItems)
-                 
-                .Where(x => x.UserId == userId)  // Điều kiện cần tìm
-                .ToListAsync();  // Lấy tất cả các phần tử thỏa mãn điều kiện
-            // ánh sạ như get all 
-            var invoiceDtos = ObjectMapper.Map<List<InvoiceDto>>(allinvoice);
-            return invoiceDtos;
-         }
+            var query = _invoiceRepository
+                .GetAllIncluding(c => c.InvoiceItems)
+                .Where(x => x.UserId == userId); // Điều kiện tìm theo UserId
+
+            // Đếm tổng số hóa đơn
+            var totalCount = await query.CountAsync();
+
+            // Lấy danh sách hóa đơn có phân trang
+            var allInvoices = await query
+                .OrderByDescending(x => x.CreationTime) // Sắp xếp theo thời gian tạo
+                .Skip(skipCount)
+                .Take(maxResultCount)
+                .ToListAsync();
+
+            // Ánh xạ sang DTO
+            var invoiceDtos = ObjectMapper.Map<List<InvoiceDto>>(allInvoices);
+
+            return new PagedResultDto<InvoiceDto>(totalCount, invoiceDtos);
+        }
+
     }
 }

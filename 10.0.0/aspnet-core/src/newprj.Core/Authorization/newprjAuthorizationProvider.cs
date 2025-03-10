@@ -15,7 +15,7 @@ public class newprjAuthorizationProvider : AuthorizationProvider
        
         var productsPermission = context.CreatePermission("Pages.Products", L("Products"));
         productsPermission.CreateChildPermission("Pages.Products.Create", L("CreateProduct"));
-        productsPermission.CreateChildPermission("Pages.Products.Edit", L("EditProduct"));
+        productsPermission.CreateChildPermission("Pages.Products.Update", L("UpdateProduct"));
         productsPermission.CreateChildPermission("Pages.Products.Delete", L("DeleteProduct"));
 
         var cartPermission = context.CreatePermission("Pages.Cart", L("Cart"));
@@ -26,9 +26,12 @@ public class newprjAuthorizationProvider : AuthorizationProvider
         var cartItemPermission = context.CreatePermission("Pages.CartItem", L("CartItem"));
         cartPermission.CreateChildPermission("Pages.Cart.CreateItem", L("CreateCartItem"));
         cartPermission.CreateChildPermission("Pages.Cart.EditItem", L("EditCartItem"));
-        cartPermission.CreateChildPermission("Pages.Cart.DeleteItem", L("DeleteCartItem"));
+        cartPermission.CreateChildPermission("Pages.Cart.DeleteItem", L("DeleteCartItem")); 
+
         var invoicesPermission = context.CreatePermission("Pages.Invoices", L("Invoices"));
         invoicesPermission.CreateChildPermission("Pages.Invoices.Create", L("CreateInvoice"));
+        invoicesPermission.CreateChildPermission("Pages.Invoices.Update", L("UpdateInvoice"));
+        invoicesPermission.CreateChildPermission("Pages.Invoices.Admin", L("AdminInvoice"));
 
 
     }

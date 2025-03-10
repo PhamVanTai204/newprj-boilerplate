@@ -84,6 +84,8 @@ export class CartComponent extends PagedListingComponentBase<CartDto> implements
       if (!id) {
 
         this.removeSelectedItems();
+        this.cd.detectChanges();
+
       } else {
         this.list();
       }

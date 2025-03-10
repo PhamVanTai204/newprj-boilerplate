@@ -1,1 +1,68 @@
-<p>invoices works!</p>
+<div class="invoice-container ">
+    <div class="invoice_Title    ">
+        <h3>Quản lý Hóa đơn <i class="fa fa-file-invoice"></i></h3>
+
+    </div>
+
+    <div class="list-item">
+        <p-table [value]="invoices" [tableStyle]="{'min-width': '60rem'}">
+            <ng-template pTemplate="caption">
+                <div class="table_header">
+                    <h1>Danh sách hóa đơn</h1>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn bg-red1 search-button" (click)="searchPRD(filter.value)">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <input type="text" class="form-control search-input"
+                            placeholder="Nhập vào tên khách hàng hoặc mã đơn" #filter />
+                    </div>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Ngày tạo đơn</th>
+                    <th>Tên khách hàng</th>
+                    <th>Giá tiền</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td class="buttonID" (click)="showInvoiceDialog(product)">
+                        #{{product.id}}
+                    </td>
+                    <td>{{product.invoiceDate}}</td>
+                    <td>{{product.userName}}</td>
+                    <td>{{product.totalAmount | currency:'VND'}}</td>
+                    <td>
+                        <span class="status-label" [ngClass]="getStatusClass(product.status)">
+                            {{ getStatusText(product.status) }}
+                        </span>
+                    </td>
+                </tr>
+
+
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="card flex justify-content-center bg-white">
+                    <p-paginator [first]="first" [rows]="pageSize" [totalRecords]="totalRecords"
+                        [rowsPerPageOptions]="[10, 15, 20]" (onPageChange)="onPageChange($event)">
+                    </p-paginator>
+
+                </div>
+                <div class="flex align-items-center justify-content-between">
+                    Hiện có tổng {{ invoices ? invoices.length : 0 }} hóa đơn.
+                </div>
+            </ng-template>
+
+
+
+        </p-table>
+    </div>
+
+
+</div>

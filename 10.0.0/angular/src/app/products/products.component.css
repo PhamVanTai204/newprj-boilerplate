@@ -84,7 +84,7 @@ h1 {
 /* Định dạng cho danh sách sản phẩm */
 .product-list {
   display: flex;
-  height: 520px;
+  height: 590px;
   gap: 10px;
   overflow: auto;
   align-items: flex-start;
@@ -190,6 +190,30 @@ h1 {
   padding: 6px 12px;
 }
 
+/* Phần tiêu đề */
+.invoice-header {
+  display: flex;
+  /* Sử dụng Flexbox */
+  align-items: center;
+  /* Căn giữa theo chiều dọc */
+  justify-content: space-between;
+  /* Cách đều hai thành phần */
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.invoice-header h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #00B2A9;
+  margin: 0;
+  /* Loại bỏ margin mặc định của h1 */
+}
+
+/* Nhóm input */
 .input-group {
   margin-bottom: 5px;
   border-radius: 5px;
@@ -199,6 +223,40 @@ h1 {
   /* Đẩy input-group sang bên phải */
   display: flex;
   /* Đảm bảo nó có thể căn chỉnh */
+}
+
+/* Nút tìm kiếm */
+.search-button {
+  padding: 10px 15px;
+  background-color: #00B2A9;
+  color: white;
+  border: none;
+  border-radius: 8px 0 0 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.search-button:hover {
+  background-color: #008f8a;
+  transform: scale(1.05);
+}
+
+.search-button:active {
+  transform: scale(0.95);
+}
+
+/* Input tìm kiếm */
+.search-input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  transition: box-shadow 0.3s ease;
+}
+
+.search-input:focus {
+  box-shadow: 0 0 0 2px rgba(0, 178, 169, 0.3);
 }
 
 .description {
@@ -286,4 +344,72 @@ h1 {
   font-weight: bold;
   text-align: center;
   /* Căn giữa theo chiều ngang */
+}
+
+
+.product-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  padding: 5px 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.quantity-btn {
+  background-color: #00B2A9;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.quantity-btn:hover {
+  background-color: #008d86;
+  transform: scale(1.1);
+}
+
+.quantity-btn:active {
+  transform: scale(0.95);
+}
+
+.quantity span {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  min-width: 30px;
+  text-align: center;
+}
+
+.checkout-btn {
+  background-color: #00B2A9;
+  color: white;
+  font-size: 14px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.checkout-btn:hover {
+  background-color: #008d86;
+  transform: scale(1.05);
+}
+
+.checkout-btn:active {
+  transform: scale(0.95);
 }

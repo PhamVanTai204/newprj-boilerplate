@@ -5,11 +5,14 @@
         <div class="col-6">
           <h1>Danh sách sản phẩm</h1>
         </div>
+        @if( isGranted(permissions.productCreate)){
         <div class="col-6 text-right">
           <button class="btn  btn-Create" (click)="createProduct()">
             <i class="fa fa-plus-square"></i> Thêm mới sản phẩm
           </button>
         </div>
+        }
+
       </div>
     </div>
   </section>
@@ -53,6 +56,7 @@
 
 
               <div class="buttons">
+                @if (isGranted(permissions.cartItemCreate)) {
                 <button class="btn 
                     btn-primary btn-sm me-2" (click)="editProduct(product)">
                   <i class="fas fa-edit"></i> Chỉnh sửa
@@ -60,6 +64,19 @@
                 <button class="btn btn-danger btn-sm" (click)="delete(product)">
                   <i class="fas fa-trash"> </i> Xóa
                 </button>
+                }
+                @else {
+                <div class="product-btn">
+                  <div class="quantity">
+                    <button class="quantity-btn" (click)="decrease()">-</button>
+                    <span>{{ quantity }}</span>
+                    <button class="quantity-btn" (click)="increase()">+</button>
+                  </div>
+                  <button class="checkout-btn" (click)="addProductToCart(product)">Thêm vào giỏ </button>
+
+                </div>
+                }
+
               </div>
             </div>
             }
@@ -75,9 +92,8 @@
         </div>
 
 
+
       </div>
-
-
       <div class="card flex justify-content-center">
         <p-paginator [first]="first" [rows]="pageSize" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10, 15, 20]"
           (onPageChange)="onPageChange($event)">

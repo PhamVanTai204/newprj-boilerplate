@@ -1,0 +1,230 @@
+/* Khung bao quanh toàn màn hình */
+.full-screen {
+
+    top: 0;
+    left: 10%;
+    width: 80vw;
+    height: 100vh;
+    background: white;
+    padding: 30px;
+    overflow-y: auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0, 178, 169, 0.3);
+    transition: all 0.3s ease-in-out;
+}
+
+.invoice_Title>h3 {
+    font-weight: bold;
+    font-size: 30px;
+    padding-top: 10px;
+}
+
+.full-screen:hover {
+    box-shadow: 0 10px 20px rgba(0, 178, 169, 0.5);
+}
+
+/* Phần tiêu đề */
+.invoice-header {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1000;
+}
+
+.invoice-header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.invoice-header p {
+    font-size: 16px;
+    color: #666;
+}
+
+.table_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #ddd;
+}
+
+.table_header h1 {
+    font-size: 24px;
+    color: #000000;
+    margin: 0;
+}
+
+.buttonID {
+    color: #00B2A9;
+    font-size: 20px;
+
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.search-button {
+    border: none;
+    background-color: #008f8a;
+    color: white;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-button:hover {
+    background-color: #008080;
+}
+
+.search-input {
+    border: none;
+    padding: 8px;
+    width: 250px;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: #aaa;
+}
+
+/* Danh sách hóa đơn */
+.list-item {
+    overflow-y: auto;
+    margin-top: 20px;
+    height: 80%;
+    overflow: auto;
+}
+
+/* Bảng */
+.p-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.p-table th,
+.p-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.p-table th {
+    background-color: #00B2A9;
+    color: white;
+    font-weight: bold;
+}
+
+.p-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Nhãn trạng thái */
+.status-label {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status-label.pending {
+    background-color: #ffcc00;
+    color: #333;
+}
+
+.status-label.completed {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-label.cancelled {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Nút thanh toán */
+.checkout-button {
+    position: fixed;
+    bottom: 20px;
+    right: 10%;
+    padding: 12px 28px;
+    background: #00B2A9;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 178, 169, 0.3);
+}
+
+
+.checkout-button:hover {
+    background: #008f8a;
+    transform: scale(1.05);
+}
+
+.input-group {
+    border-radius: 5px;
+    width: 600px;
+    border: 1px solid #000000;
+    margin-left: auto;
+    /* Đẩy input-group sang bên phải */
+    display: flex;
+    /* Đảm bảo nó có thể căn chỉnh */
+}
+
+.status-label {
+    padding: 5px 10px;
+    border-radius: 20px;
+    /* Làm bo tròn nhiều hơn */
+    font-weight: bold;
+    display: inline-block;
+    font-size: 14px;
+}
+
+.status-pending {
+    background-color: rgba(255, 255, 0, 0.2);
+    /* Màu vàng nhạt */
+    color: #d4a017;
+    /* Màu vàng đậm */
+}
+
+.status-confirmed {
+    background-color: rgba(0, 128, 0, 0.2);
+    /* Màu xanh lá nhạt */
+    color: #2e8b57;
+    /* Màu xanh lá đậm */
+}
+
+.status-shipping {
+    background-color: rgba(0, 0, 255, 0.2);
+    /* Màu xanh dương nhạt */
+    color: #1e3a8a;
+    /* Màu xanh dương đậm */
+}
+
+.status-paid {
+    background-color: rgba(0, 128, 128, 0.2);
+    /* Màu teal nhạt */
+    color: #008080;
+    /* Màu teal đậm */
+}
+
+.status-cancelled {
+    background-color: rgba(255, 0, 0, 0.2);
+    /* Màu đỏ nhạt */
+    color: #b22222;
+    /* Màu đỏ đậm */
+}

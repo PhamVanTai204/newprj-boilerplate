@@ -79,6 +79,7 @@ export class PaymentDialogComponent implements OnInit {
       this._invoiceAppService
         .createInvoice(
           this.userId,
+          this.userName,
           this.totalSelectedAmount,
           this.invoiceDate,
           0, // Trạng thái đơn hàng

@@ -14,6 +14,7 @@ namespace newprj.Invoices.Dtos
     public class CreateInvoiceDto
     {
         public long UserId { get; set; } // ID của người dùng mua hàng
+        public string UserName { get; set; }
 
         
          public decimal TotalAmount { get; set; } // Tổng tiền của hóa đơn

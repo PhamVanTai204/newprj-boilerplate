@@ -1,0 +1,86 @@
+<div class="full-screen">
+    <div class="order-header">
+        <button class="back-button" (click)="closeDialog()">
+            <i class="fas fa-arrow-left"></i> Trở lại
+        </button>
+        <div class="order-info">
+            <span class="order-id">Mã đơn: #{{invoice.id}}</span>
+            <span class="status-label" [ngClass]="getStatusClass(status)">
+                {{ getStatusText(invoice.status) }}
+            </span>
+        </div>
+    </div>
+    <div class="no-bootstrap">
+        @if (isGranted(permissions.invoiceUpdate)) {
+        <div class="button-container">
+            <button class="circle-button" (click)="setActive(0)" [ngClass]="{'active': status === 0}">1</button>
+            <button class="circle-button" (click)="setActive(1)" [ngClass]="{'active': status === 1}">2</button>
+            <button class="circle-button" (click)="setActive(2)" [ngClass]="{'active': status === 2}">3</button>
+            <button class="circle-button" (click)="setActive(3)" [ngClass]="{'active': status === 3}">4</button>
+            <button class="circle-button" (click)="setActive(4)" [ngClass]="{'active': status === 4}">5</button>
+
+        </div>
+        } @else {
+        <div class="cancel-btn-container">
+            <button class="cancel-btn" (click)="setActive(4)" [disabled]="status === 2 || status === 3 || status === 4"
+                [ngClass]="{
+                        'active': status === 4, 
+                        'disabled-btn': status === 2 || status === 3 || status === 4
+                    }">
+                Hủy đơn hàng
+            </button>
+        </div>
+
+
+        }
+        <p-steps [activeIndex]="status" [model]="items" />
+
+    </div>
+    <div class="list-item">
+        <p-table [value]="invoice.invoiceItems" [tableStyle]="{'min-width': '60rem'}">
+            <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-content-between">
+                    Danh sách sản phẩm
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Tên sản phẩm</th>
+                    <th>Hình ảnh</th>
+
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-item>
+                <tr>
+
+                    <td>{{ item.name }}</td>
+                    <td>
+                        <img [src]="item.urlImage" [alt]="item.name" width="100" class="shadow-4" />
+                    </td>
+                    <td>{{ item.price | currency:'VND':true }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{(item.price * item.quantity)| currency:'VND' : true }}</td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    Tổng số sản phẩm: {{ invoice.invoiceItems ? invoice.invoiceItems.length : 0 }}
+                    <!-- <h3>Tổng cộng: {{ (totalSelectedAmount) | currency:'VND': true }}</h3> -->
+
+                </div>
+
+            </ng-template>
+        </p-table>
+
+    </div>
+    <div class="shipping-address">
+        <h2>Địa chỉ nhận hàng</h2>
+        <p>{{invoice.shippingAddress}}</p>
+    </div>
+</div>

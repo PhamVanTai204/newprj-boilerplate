@@ -10,7 +10,10 @@ namespace newprj.Entities
     {
         [Required]
         public long UserId { get; set; } // ID của người dùng mua hàng
+        public string userName { get; set; }
         public virtual User User { get; set; }
+        
+
 
         [Required]
         public decimal TotalAmount { get; set; } // Tổng tiền của hóa đơn

@@ -7,11 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
+using Abp.Authorization;
 using Abp.Domain.Repositories;
 using Abp.Linq.Extensions;
 using Abp.UI;
 using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
+using newprj.Authorization;
 using newprj.Entities;  // Đảm bảo nhập đúng namespace chứa class Product
 using newprj.Products;
 using newprj.Products.Dtos;
@@ -83,9 +85,10 @@ namespace newprj.Products
         //    var productDtos = ObjectMapper.Map<List<ProductDto>>(allProduct);
         //    return new PagedResultDto<ProductDto>(productDtos.Count, productDtos);
         //}
-
+        [AbpAuthorize(PermissionNames.Pages_Products_Create)]
         public override Task<ProductDto> CreateAsync(CreateProductDto input)
         {
+
             return base.CreateAsync(input);
         }
 

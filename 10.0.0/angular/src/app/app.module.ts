@@ -53,8 +53,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
         NgxPaginationModule,
         SharedModule,
         InputNumberModule
- 
+
     ],
     providers: []
 })
-export class AppModule {}
+export class AppModule { }

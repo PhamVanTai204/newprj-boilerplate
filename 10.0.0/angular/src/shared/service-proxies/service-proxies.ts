@@ -62,9 +62,48 @@ export class InvoiceService {
             catchError(this.handleError)
         );
     }
+    getAll(keyword: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<InvoiceDtoPagedResultDto> {
+        return this.http.get<any>(`${this.INVOICE_API}/GetAll?Keyword=${keyword}&SkipCount=${skipCount}&MaxResultCount=${maxResultCount}`).pipe(
+            map(response => {
+                // Kiểm tra success để đảm bảo lấy dữ liệu thành công
+                if (response.success && response.result) {
+                    return InvoiceDtoPagedResultDto.fromJS(response.result); // Chuyển dữ liệu từ API vào CartDto
+                } else {
+                    throw new Error('Failed to fetch cart');
+                }
+            }),
 
+            catchError(this.handleError)
+        )
+    }
+    getById(id: Number): Observable<InvoiceDto> {
+        return this.http.get<InvoiceDto>(`${this.INVOICE_API}/Get?Id=${id}`).pipe(
+            catchError(this.handleError)
+        )
+    }
+    updateInvoice(id: number, status: Number): Observable<InvoiceDto> {
+        return this.http.put<InvoiceDto>(
+            `${this.INVOICE_API}/Update`, { id, status }
+        ).pipe(catchError(this.handleError))
+    }
+    getInvoiceByUserID(userId: number, skipCount: number, maxResultCount: number): Observable<InvoiceDtoPagedResultDto> {
+        return this.http.get<any>(`${this.INVOICE_API}/GetInvoiceByUserID?userId=${userId}&skipCount=${skipCount}&maxResultCount=${maxResultCount}`)
+            .pipe(map(response => {
+                // Kiểm tra success để đảm bảo lấy dữ liệu thành công
+                if (response.success && response.result) {
+                    return InvoiceDtoPagedResultDto.fromJS(response.result); // Chuyển dữ liệu từ API vào CartDto
+                } else {
+                    throw new Error('Failed to fetch cart');
+                }
+            }), catchError(this.handleError))
+    }
+    deleteInvoice(id: Number): Observable<InvoiceDto> {
+        return this.http.get<InvoiceDto>(`${this.INVOICE_API}/Delete?Id=${id}`)
+            .pipe(catchError(this.handleError))
+    }
     createInvoice(
         userId: number,
+        userName: string,
         totalAmount: number,
         invoiceDate: Date,
         status: number,
@@ -73,6 +112,7 @@ export class InvoiceService {
     ): Observable<InvoiceDto> {
         const body = {
             userId,
+            userName,
             totalAmount,
             invoiceDate, // Chuyển Date về chuỗi ISO
             status,
@@ -93,10 +133,63 @@ export class InvoiceService {
 }
 
 
+export class InvoiceDtoPagedResultDto implements IInvoiceDtoPagedResultDto {
+    items: InvoiceDto[] = [];
+    totalCount: number = 0;
+    constructor(data?: InvoiceDtoPagedResultDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(InvoiceDto.fromJS(item));
+            }
+            this.totalCount = _data["totalCount"];
+        }
+    }
+
+    static fromJS(data: any): InvoiceDtoPagedResultDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new InvoiceDtoPagedResultDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        data["totalCount"] = this.totalCount;
+        return data;
+    }
+
+    clone(): InvoiceDtoPagedResultDto {
+        const json = this.toJSON();
+        let result = new InvoiceDtoPagedResultDto();
+        result.init(json);
+        return result;
+    }
+
+}
+export interface IInvoiceDtoPagedResultDto {
+    items: InvoiceDto[];
+    totalCount: number;
+}//
 
 export class InvoiceDto implements IInvoiceDto {
     id: number;
     userId: number;
+    userName: string;
     totalAmount: number;
     invoiceDate: Date;
     status: number;
@@ -114,6 +207,8 @@ export class InvoiceDto implements IInvoiceDto {
         if (_data) {
             this.id = _data["id"];
             this.userId = _data["userId"];
+            this.userName = _data["userName"];
+
             this.totalAmount = _data["totalAmount"];
             this.invoiceDate = _data["invoiceDate"];
             this.status = _data["status"];
@@ -141,6 +236,8 @@ export class InvoiceDto implements IInvoiceDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["userId"] = this.userId;
+        data["userName"] = this.userName;
+
         data["totalAmount"] = this.totalAmount;
         data["invoiceDate"] = this.invoiceDate;
         data["status"] = this.status;
@@ -167,6 +264,7 @@ export class InvoiceDto implements IInvoiceDto {
 export interface IInvoiceDto {
     id: number;
     userId: number;
+    userName: string;
     totalAmount: number;
     invoiceDate: Date;
     status: number;
@@ -537,10 +635,6 @@ export class ProductServiceProxy {
        * @param body (optional) 
        * @return OK
        */
-
-
-
-
     create(body: CreateProductDto | undefined): Observable<ProductDto> {
         let url_ = this.baseUrl + "/api/services/app/Product/Create";
         url_ = url_.replace(/[?&]$/, "");
