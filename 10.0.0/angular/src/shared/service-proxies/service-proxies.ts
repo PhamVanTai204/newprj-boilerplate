@@ -8,8 +8,8 @@
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
 
-import { mergeMap as _observableMergeMap, catchError as _observableCatch, catchError, map, observeOn } from 'rxjs/operators';
-import { Observable, throwError as _observableThrow, of as _observableOf, throwError } from 'rxjs';
+import { mergeMap as _observableMergeMap, catchError as _observableCatch, catchError, map, observeOn, mergeMap } from 'rxjs/operators';
+import { Observable, throwError as _observableThrow, of as _observableOf, throwError, of } from 'rxjs';
 import { Injectable, Inject, Optional, InjectionToken } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angular/common/http';
 
@@ -114,16 +114,66 @@ export class InvoiceService {
             userId,
             userName,
             totalAmount,
-            invoiceDate, // Chuyển Date về chuỗi ISO
+            invoiceDate,
             status,
             shippingAddress,
             invoiceItems
         };
 
-        return this.http.post<InvoiceDto>(`${this.INVOICE_API}/Create`, body).pipe(
-            catchError(this.handleError)
-        );
+        let url = `${this.INVOICE_API}/Create`;
+
+        let options: any = {
+            body: JSON.stringify(body),
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("post", url, options)
+            .pipe(
+                mergeMap((response: any) => this.processCreateInvoice(response)),
+                catchError((error) => this.handleError(error))
+            );
     }
+
+    private processCreateInvoice(response: HttpResponseBase): Observable<InvoiceDto> {
+        const status = response.status;
+        let responseBlob = response instanceof HttpResponse ? response.body : null;
+
+        if (status === 200 || status === 201) {
+            return blobToText(responseBlob).pipe(
+                mergeMap((_responseText: string) => {
+                    const result = _responseText ? JSON.parse(_responseText) : {};
+                    return of(result as InvoiceDto);
+                })
+            );
+        } else {
+            return throwError(() => new Error(`Lỗi API: ${status}`));
+        }
+    }
+
+    // Hàm chuyển đổi Blob sang text
+    private blobToText(blob: Blob | null): Observable<string> {
+        return new Observable<string>((observer) => {
+            if (!blob) {
+                observer.next("");
+                observer.complete();
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                observer.next(reader.result as string);
+                observer.complete();
+            };
+            reader.onerror = (error) => observer.error(error);
+            reader.readAsText(blob);
+        });
+    }
+
 
     // Xử lý lỗi API
     private handleError(error: any): Observable<never> {
@@ -610,6 +660,7 @@ export class CartService {
         return throwError(() => new Error(error.message || 'Server error'));
     }
 }
+
 export class UpdateStockQuantityProductDto implements IUpdateStockQuantityProductDto {
     constructor(
         public id: number,

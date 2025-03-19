@@ -18,15 +18,19 @@ using newprj.Entities;  // Đảm bảo nhập đúng namespace chứa class Pro
 using newprj.Products;
 using newprj.Products.Dtos;
 using NuGet.Protocol.Plugins;
-
+using Microsoft.Extensions.Configuration;
+using System.Data;           
+using Dapper;
+using Microsoft.Data.SqlClient;
 namespace newprj.Products
 {
     public class ProductAppService :
         AsyncCrudAppService<Product, ProductDto, int, PagedProductResultRequetstDto, CreateProductDto, UpdateProductDto>, IProductAppService
     {
-
-        public ProductAppService(IRepository<Product, int> productRepository) : base(productRepository)
+        private readonly string _connectionString;
+        public ProductAppService(IRepository<Product, int> productRepository, IConfiguration configuration) : base(productRepository)
         {
+            _connectionString = configuration.GetConnectionString("Default");
 
         }
         public async Task<bool> UpdateMultipleProductsAsync(List<UpdateProductQuantityDto> products)
@@ -49,7 +53,7 @@ namespace newprj.Products
                         throw new UserFriendlyException($"Số lượng sản phẩm ID {productDto.Id} không hợp lệ!");
 
                     product.StockQuantity = productDto.StockQuantity;
-                }
+                 }
             }
 
             await CurrentUnitOfWork.SaveChangesAsync(); // Lưu thay đổi một lần duy nhất
@@ -59,9 +63,8 @@ namespace newprj.Products
         {
             var allProducts = await Repository.GetAllListAsync();
 
-            var query = from product in allProducts
-                        where string.IsNullOrWhiteSpace(input.Keyword) || product.Name.Contains(input.Keyword)
-                        select product;
+            var query = Repository.GetAll()
+             .WhereIf(!string.IsNullOrWhiteSpace(input.Keyword), x => x.Name.Contains(input.Keyword) || x.masp.Contains(input.Keyword));
 
             // Đếm tổng số bản ghi sau khi lọc
             var totalCount = query.Count();
@@ -77,26 +80,27 @@ namespace newprj.Products
             return new PagedResultDto<ProductDto>(totalCount, productDtos);
         }
 
-        //public override async Task<PagedResultDto<ProductDto>> GetAllAsync(PagedProductResultRequetstDto input)
-        //{
-        //    // lấy toàn bộ dữ liệu từ repositoryv
-        //    var allProduct = await Repository.GetAllAsync();
-        //    //ánh sạ dữ liệu từ thực thể sang dto 
-        //    var productDtos = ObjectMapper.Map<List<ProductDto>>(allProduct);
-        //    return new PagedResultDto<ProductDto>(productDtos.Count, productDtos);
-        //}
         [AbpAuthorize(PermissionNames.Pages_Products_Create)]
-        public override Task<ProductDto> CreateAsync(CreateProductDto input)
+        public override async Task<ProductDto> CreateAsync(CreateProductDto input)
         {
+            // Kiểm tra xem mã sản phẩm đã tồn tại hay chưa
+            var existingProduct = await Repository.FirstOrDefaultAsync(p => p.masp == input.maSP);
+            if (existingProduct != null)
+            {
+                throw new UserFriendlyException("Mã sản phẩm đã tồn tại. Vui lòng chọn mã khác.");
+            }
 
-            return base.CreateAsync(input);
+            return await base.CreateAsync(input);
         }
+
 
         public async Task<PagedResultDto<ProductDto>> GetDataSearch(string keyWord)
         {
             var query = from product in await Repository.GetAllAsync()
                         where product.Name.Contains(keyWord)
-                        select product;
+
+                        select product 
+                        ;
             var productDtos = ObjectMapper.Map<List<ProductDto>>(query);
             return new PagedResultDto<ProductDto>(productDtos.Count, productDtos);
         }

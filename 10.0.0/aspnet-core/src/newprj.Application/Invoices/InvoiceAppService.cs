@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
+using Abp.EntityFrameworkCore.Repositories;
 using Abp.Linq.Extensions;
+using Abp.UI;
 using Microsoft.EntityFrameworkCore;
 using newprj.Entities;
 using newprj.Invoices.Dtos;
@@ -61,6 +63,47 @@ namespace newprj.Invoices
             var invoiceDto = ObjectMapper.Map<InvoiceDto>(invoice); 
             return invoiceDto;
         }
+        public override async Task<InvoiceDto> CreateAsync(CreateInvoiceDto input)
+        {
+            // Lấy danh sách ProductId từ InvoiceItems
+            var productIds = input.InvoiceItems.Select(i => i.ProductId).ToList();
+
+            // Lấy danh sách sản phẩm từ database
+            var products = await Repository.GetDbContext().Set<Product>()
+                .Where(p => productIds.Contains(p.Id))
+                .ToListAsync();
+
+            // Kiểm tra số lượng hàng trong kho
+            foreach (var item in input.InvoiceItems)
+            {
+                var product = products.FirstOrDefault(p => p.Id == item.ProductId);
+                if (product == null)
+                {
+                    throw new UserFriendlyException($"Sản phẩm với ID {item.ProductId} không tồn tại!");
+                }
+                if (product.StockQuantity < item.Quantity)
+                {
+                    throw new UserFriendlyException($"Sản phẩm {product.Name} không đủ số lượng! Chỉ còn {product.StockQuantity} trong kho.");
+                }
+            }
+
+            // Nếu tất cả sản phẩm đủ hàng, tiến hành trừ số lượng
+            foreach (var item in input.InvoiceItems)
+            {
+                var product = products.First(p => p.Id == item.ProductId);
+                product.StockQuantity -= item.Quantity;
+            }
+
+            // Cập nhật sản phẩm vào database
+            await Repository.GetDbContext().SaveChangesAsync();
+
+            // Tạo hóa đơn sau khi cập nhật thành công số lượng sản phẩm
+            var invoice = ObjectMapper.Map<Invoice>(input);
+            await Repository.InsertAsync(invoice);
+
+            return ObjectMapper.Map<InvoiceDto>(invoice);
+        }
+
         //lấy hóa đơn by UserId 
         public async Task<PagedResultDto<InvoiceDto>> GetInvoiceByUserID(long userId, int skipCount = 0, int maxResultCount = 10)
         {

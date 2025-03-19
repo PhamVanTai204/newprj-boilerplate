@@ -121,7 +121,7 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
       });
   }
   createProduct(): void {
-    this.showCreateOrEditProductDialog();
+    this.showCreateOrEditProductDialog(null, this.totalRecords);
   }
   editProduct(product: ProductDto): void {
     this.showCreateOrEditProductDialog(product.id);
@@ -167,13 +167,16 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
       }
     )
   }
-  showCreateOrEditProductDialog(id?: number): void {
+  showCreateOrEditProductDialog(id?: number, totalRecords?: number): void {
     let createOrEditProductDialog: BsModalRef;
     if (!id) {
       createOrEditProductDialog = this._modalService.show(
         CreateProductDialogComponent,
         {
           class: "modal-lg",
+          initialState: {
+            totalRecords: totalRecords
+          },
         }
       );
     } else {

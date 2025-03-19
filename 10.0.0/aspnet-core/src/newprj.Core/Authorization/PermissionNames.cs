@@ -30,7 +30,7 @@ public static class PermissionNames
     // Invoices
     public const string Pages_Invoices = "Pages.Invoices";
     public const string Pages_Invoices_Create = "Pages.Invoices.Create";
-    public const string Pages_Invoices_Update = "   ";
+    public const string Pages_Invoices_Update = "Pages.Invoices.Update";
     public const string Pages_Invoices_Admin = "Pages.Invoices.Admin";
 
 

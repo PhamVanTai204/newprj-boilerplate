@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component, EventEmitter, Injector, OnInit, Output } from '@angular/core';
 import { ProductsComponent } from '../products.component';
-import { CreateProductDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
+import { CreateProductDto, ProductDto, ProductDtoPagedResultDto, ProductServiceProxy } from '@shared/service-proxies/service-proxies';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '@shared/app-component-base';
 import { error, log } from 'console';
 import { CloudinaryImage } from '@node_modules/@cloudinary/url-gen';
+import { catchError, finalize, map } from 'rxjs/operators';
 declare const cloudinary: any;
 
 @Component({
@@ -13,14 +14,19 @@ declare const cloudinary: any;
   styleUrl: './create-product-dialog.component.scss'
 })
 export class CreateProductDialogComponent extends AppComponentBase implements OnInit {
-
+  keyword = "";
+  isActive: boolean | null;
   saving = false;
+  totalPages = 0; // Tổng số trang
+  skipCount: number;
   product: CreateProductDto = new CreateProductDto();
   img!: CloudinaryImage;
+  totalRecords: number;
   cloudName = "da5wgbt3m";
   uploadPreset = "tpgzin";
   myWidget;
-  defaultImage: string = 'https://via.placeholder.com/150';
+  products: ProductDto[] = [];
+
   @Output() onSave = new EventEmitter<any>();
 
   constructor(
@@ -54,6 +60,20 @@ export class CreateProductDialogComponent extends AppComponentBase implements On
         }
       }
     );
+    this.loadProducts()
+
+
+  }
+  loadProducts(): void {
+    this._productService.getAll(
+      "",  // Không lọc theo keyword
+      true,
+      "name desc",
+      0,    // Skip 0 để lấy từ đầu
+      100   // Giới hạn lấy 100 sản phẩm (tùy chỉnh theo nhu cầu)
+    ).subscribe((result: ProductDtoPagedResultDto) => {
+      console.log("Danh sách sản phẩm:", result.items);
+    });
   }
   openWidget() {
     this.myWidget.open();
@@ -84,6 +104,10 @@ export class CreateProductDialogComponent extends AppComponentBase implements On
       this.openWidget();
       return;
     }
+
+
+
+
     this._productService.create(this.product).subscribe({
 
       next: () => {

@@ -101,7 +101,6 @@ export class PaymentDialogComponent implements OnInit {
           },
           (error) => {
             console.error('Lỗi khi tạo hóa đơn:', error);
-            alert('Thanh toán thất bại!');
           }
         );
     } catch (error) {

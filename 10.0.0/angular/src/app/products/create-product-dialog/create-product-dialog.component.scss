@@ -18,7 +18,8 @@ h1 {
 
 /* Khung ảnh */
 .image-container {
-  flex: 0 0 auto;
+  width: 150px;
+  height: auto;
   /* Không co giãn, kích thước theo ảnh */
   border: 3px solid #00B2A9;
   border-radius: 10px;

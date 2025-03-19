@@ -351,7 +351,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 3px;
 }
 
 .quantity {
@@ -397,7 +397,7 @@ h1 {
   background-color: #00B2A9;
   color: white;
   font-size: 14px;
-  padding: 8px 15px;
+  padding: 8px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
