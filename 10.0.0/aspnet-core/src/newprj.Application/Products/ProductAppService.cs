@@ -22,6 +22,7 @@ using Microsoft.Extensions.Configuration;
 using System.Data;           
 using Dapper;
 using Microsoft.Data.SqlClient;
+using NuGet.Protocol;
 namespace newprj.Products
 {
     public class ProductAppService :
@@ -32,63 +33,70 @@ namespace newprj.Products
         {
             _connectionString = configuration.GetConnectionString("Default");
 
-        }
-        public async Task<bool> UpdateMultipleProductsAsync(List<UpdateProductQuantityDto> products)
+        }  
+          public override async Task<PagedResultDto<ProductDto>> GetAllAsync(PagedProductResultRequetstDto input)
         {
-            if (products == null || !products.Any())
-                throw new UserFriendlyException("Danh sách sản phẩm không hợp lệ!");
+            //kết nối tới db
+           using var connection = new SqlConnection(_connectionString);
+            ///tạo đối tượng dapper, đủ để chứa ds tham số khi gọi sp hoặc sql 
+            var paramater = new DynamicParameters();
+            paramater.Add("@KEYWORD", input.Keyword, DbType.String);
+            paramater.Add("@SORTING", input.Sorting, DbType.String);
+            paramater.Add("@SKIPCOUNT", input.SkipCount, DbType.Int32);
+            paramater.Add("@MAXRESULTCOUNT", input.MaxResultCount, DbType.Int32);
+            paramater.Add("@TOTALCOUNT", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            //output thì vẫn phải thêm với kiểu trên 
 
-            // Lấy danh sách ID sản phẩm cần cập nhật
-            var productIds = products.Select(p => p.Id).ToList();
+            // sau khi tạo biến thì gọi procedure 
+            var productDtos =  (await
+                connection.QueryAsync<ProductDto>("SP_GETALL_PRODUCTS", paramater, commandType: CommandType.StoredProcedure)).ToList();
+            // khi gọi procedure xong thì  sử lý biến nếu có 
+            // ở đây là ta cần lấy biến totalCount từ kết quả trả về
+            var totalCount = paramater.Get<int>("@TOTALCOUNT");
 
-            // Lấy tất cả sản phẩm từ database một lần
-            var productList = await Repository.GetAllListAsync(p => productIds.Contains(p.Id));
 
-            foreach (var product in productList)
+
+           return new PagedResultDto<ProductDto>(totalCount, productDtos);
+        }
+        public override async Task<ProductDto> GetAsync(EntityDto<int> input)
+        {
+            // tạo đổi tượng Dapper 
+            using var connection = new SqlConnection(_connectionString);
+            // tạo paramaters để chứa biến 
+            var paramaters = new DynamicParameters();
+            paramaters.Add("@PRD_ID", input.Id, DbType.Int32);
+
+            var product = await 
+                connection.QueryFirstOrDefaultAsync<ProductDto>("SP_GET_PRD_BYID", paramaters, commandType: CommandType.StoredProcedure);
+            // Kiểm tra nếu không tìm thấy sản phẩm
+            if (product == null)
             {
-                var productDto = products.FirstOrDefault(p => p.Id == product.Id);
-                if (productDto != null)
-                {
-                    if (productDto.StockQuantity < 0)
-                        throw new UserFriendlyException($"Số lượng sản phẩm ID {productDto.Id} không hợp lệ!");
-
-                    product.StockQuantity = productDto.StockQuantity;
-                 }
+                throw new UserFriendlyException("Sản phẩm không tồn tại!");
+            }
+            return ObjectMapper.Map<ProductDto>(product);
+            //return MapToEntityDto(product);
+            //return await base.GetAsync(input);
             }
 
-            await CurrentUnitOfWork.SaveChangesAsync(); // Lưu thay đổi một lần duy nhất
-            return true;
-        }
-        public override async Task<PagedResultDto<ProductDto>> GetAllAsync(PagedProductResultRequetstDto input)
-        {
-            var allProducts = await Repository.GetAllListAsync();
-
-            var query = Repository.GetAll()
-             .WhereIf(!string.IsNullOrWhiteSpace(input.Keyword), x => x.Name.Contains(input.Keyword) || x.masp.Contains(input.Keyword));
-
-            // Đếm tổng số bản ghi sau khi lọc
-            var totalCount = query.Count();
-
-            // Sắp xếp và phân trang
-            var sortedQuery = query.AsQueryable().OrderBy(input.Sorting ?? "Name asc")
-                                        .Skip(input.SkipCount)
-                                        .Take(input.MaxResultCount)
-                                        .ToList();
-
-            var productDtos = ObjectMapper.Map<List<ProductDto>>(sortedQuery);
-
-            return new PagedResultDto<ProductDto>(totalCount, productDtos);
-        }
-
-        [AbpAuthorize(PermissionNames.Pages_Products_Create)]
+            [AbpAuthorize(PermissionNames.Pages_Products_Create)]
         public override async Task<ProductDto> CreateAsync(CreateProductDto input)
         {
-            // Kiểm tra xem mã sản phẩm đã tồn tại hay chưa
-            var existingProduct = await Repository.FirstOrDefaultAsync(p => p.masp == input.maSP);
-            if (existingProduct != null)
+            // tạo đối tượng của Dapper, đủ để chứa danh sách tham số khi gọi SP hoặc sql 
+            using var connection = new SqlConnection(_connectionString);
+            var paramaters = new DynamicParameters();
+            paramaters.Add("@maSP", input.maSP, DbType.String);
+            paramaters.Add("@RESULT", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            
+           
+                // gọi procedure 
+            await connection.ExecuteAsync("SP_CHECK_MASP",  paramaters, commandType: CommandType.StoredProcedure);
+
+            if (paramaters.Get<int>("@RESULT") == 1)
             {
-                throw new UserFriendlyException("Mã sản phẩm đã tồn tại. Vui lòng chọn mã khác.");
+                throw new UserFriendlyException("mã sản phẩm đã tồn tại");
+
             }
+
 
             return await base.CreateAsync(input);
         }

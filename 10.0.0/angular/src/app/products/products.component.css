@@ -135,6 +135,11 @@ h1 {
   /* Căn giữa theo chiều dọc */
 }
 
+.khung_prdImg:hover {
+  cursor: pointer;
+  /* Đây là con trỏ bàn tay */
+}
+
 .khung_prdImg img {
   width: auto;
   height: 100%;

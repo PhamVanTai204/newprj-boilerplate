@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localizationDictionary culture="vi">
+	<texts>
+		<text name="HomePage" value="Trang chủ" />
+		<text name="About" value="Giới thiệu" />
+		<text name="WelcomeMessage" value="Chào mừng đến với newprj!" />
+		<text name="FormIsNotValidMessage" value="Biểu mẫu không hợp lệ. Vui lòng kiểm tra và sửa lỗi." />
+		<text name="TenantNameCanNotBeEmpty" value="Tên tenant không được để trống" />
+		<text name="InvalidUserNameOrPassword" value="Tên người dùng hoặc mật khẩu không hợp lệ" />
+		<text name="ThereIsNoTenantDefinedWithName{0}" value="Không có tenant nào được xác định với tên {0}" />
+		<text name="TenantIsNotActive" value="Tenant {0} không hoạt động." />
+		<text name="UserIsNotActiveAndCanNotLogin" value="Người dùng {0} không hoạt động và không thể đăng nhập." />
+		<text name="UserEmailIsNotConfirmedAndCanNotLogin">Địa chỉ email của bạn chưa được xác nhận. Bạn không thể đăng nhập.</text>
+		<text name="UserLockedOutMessage">Tài khoản của người dùng đã bị khóa. Vui lòng thử lại sau.</text>
+		<text name="PleaseEnterLoginInformation" value="Vui lòng nhập thông tin đăng nhập" />
+		<text name="TenancyName" value="Tên tenant" />
+		<text name="UserNameOrEmail" value="Tên người dùng hoặc email" />
+		<text name="Password" value="Mật khẩu" />
+		<text name="ResetPassword" value="Đặt lại mật khẩu" />
+		<text name="UpdatePassword" value="Cập nhật mật khẩu" />
+		<text name="RememberMe" value="Ghi nhớ đăng nhập" />
+		<text name="LogIn" value="Đăng nhập" />
+		<text name="LoginFailed" value="Đăng nhập thất bại!" />
+		<text name="NameSurname" value="Họ và tên" />
+		<text name="UserName" value="Tên người dùng" />
+		<text name="Name" value="Tên" />
+		<text name="Surname" value="Họ" />
+		<text name="EmailAddress" value="Địa chỉ email" />
+		<text name="Tenants" value="Các tenant" />
+		<text name="SavedSuccessfully" value="Lưu thành công" />
+		<text name="CreateNewTenant" value="Tạo tenant mới" />
+		<text name="AdminEmailAddress" value="Địa chỉ email quản trị" />
+		<text name="AdminPassword" value="Mật khẩu quản trị" />
+		<text name="Save" value="Lưu" />
+		<text name="Cancel" value="Hủy" />
+		<text name="TenantName_Regex_Description" value="Tên tenant phải có ít nhất 2 ký tự, bắt đầu bằng chữ cái và có thể chứa chữ cái, số, dấu gạch ngang hoặc gạch dưới." />
+		<text name="DefaultPasswordIs" value="Mật khẩu mặc định là {0}" />
+		<text name="CanBeEmptyToLoginAsHost" value="Có thể để trống để đăng nhập với tư cách host." />
+		<text name="Register" value="Đăng ký" />
+		<text name="OrLoginWith" value="Hoặc đăng nhập bằng" />
+		<text name="WaitingForActivationMessage" value="Tài khoản của bạn đang chờ được kích hoạt bởi quản trị viên hệ thống." />
+		<text name="TenantSelection" value="Chọn tenant" />
+		<text name="TenantSelection_Detail" value="Vui lòng chọn một trong các tenant sau." />
+		<text name="Logout" value="Đăng xuất" />
+		<text name="RegisterFormUserNameInvalidMessage">Vui lòng không nhập địa chỉ email làm tên người dùng.</text>
+		<text name="DatabaseConnectionString" value="Chuỗi kết nối cơ sở dữ liệu" />
+		<text name="Users" value="Người dùng" />
+		<text name="IsActive" value="Hoạt động" />
+		<text name="FullName" value="Họ và tên" />
+		<text name="CreateNewUser" value="Tạo người dùng mới" />
+		<text name="Yes" value="Có" />
+		<text name="No" value="Không" />
+		<text name="Optional" value="Tùy chọn" />
+		<text name="LeaveEmptyToSwitchToHost">Để trống để chuyển sang host</text>
+		<text name="CurrentTenant">Tenant hiện tại</text>
+		<text name="NotSelected">Chưa chọn</text>
+		<text name="Change">Thay đổi</text>
+		<text name="ChangeTenant">Thay đổi tenant</text>
+		<text name="MultiLevelMenu">Menu nhiều cấp</text>
+		<text name="Back">Quay lại</text>
+		<text name="SuccessfullyRegistered">Đăng ký thành công</text>
+		<text name="WaitingForEmailActivation">Email của bạn cần được kích hoạt</text>
+		<text name="Roles">Vai trò</text>
+		<text name="DisplayName">Tên hiển thị</text>
+		<text name="Edit">Chỉnh sửa</text>
+		<text name="Delete">Xóa</text>
+		<text name="CreateNewRole">Tạo vai trò mới</text>
+		<text name="RoleName">Tên vai trò</text>
+		<text name="Actions">Hành động" </text>
+		<text name="CouldNotCompleteLoginOperation">Không thể hoàn tất đăng nhập. Vui lòng thử lại sau.</text>
+		<text name="CouldNotValidateExternalUser">Không thể xác thực người dùng bên ngoài</text>
+		<text name="EditRole">Chỉnh sửa vai trò</text>
+		<text name="EditTenant">Chỉnh sửa tenant</text>
+		<text name="EditUser">Chỉnh sửa người dùng</text>
+		<text name="TenantIdIsNotActive{0}">TenantId {0} không hoạt động</text>
+		<text name="UnknownTenantId{0}">TenantId {0} không xác định</text>
+		<text name="ThisFieldIsRequired">Trường này là bắt buộc</text>
+		<text name="PleaseWait">Vui lòng đợi...</text>
+		<text name="Administration">Quản trị</text>
+		<text name="ClearAll">Xóa tất cả</text>
+		<text name="ClearOthers">Xóa các mục khác</text>
+		<text name="LabelOptions">Tùy chọn nhãn</text>
+		<text name="Permissions">Quyền hạn</text>
+		<text name="RoleDescription">Mô tả vai trò</text>
+		<text name="Refresh">Làm mới</text>
+		<text name="Create">Tạo </text>
+		<text name="UserDetails">Chi tiết người dùng</text>
+		<text name="UserRoles">Vai trò người dùng</text>
+		<text name="ConfirmPassword">Xác nhận mật khẩu</text>
+		<text name="Version">Phiên bản</text>
+		<text name="On">Bật</text>
+		<text name="Off">Tắt</text>
+		 
+
+	 
+
+		<text name="Products" value="Sản phẩm" />
+		<text name="CreateProduct" value="Tạo sản phẩm" />
+		<text name="UpdateProduct" value="Cập nhật sản phẩm" />
+		<text name="DeleteProduct" value="Xóa sản phẩm" />
+
+		<text name="Cart" value="Giỏ hàng" />
+		<text name="CreateCart" value="Tạo giỏ hàng" />
+		<text name="EditCart" value="Chỉnh sửa giỏ hàng" />
+		<text name="DeleteCart" value="Xóa giỏ hàng" />
+
+		<text name="CartItem" value="Mục trong giỏ hàng" />
+		<text name="CreateCartItem" value="Thêm mục vào giỏ hàng" />
+		<text name="EditCartItem" value="Chỉnh sửa mục trong giỏ hàng" />
+		<text name="DeleteCartItem" value="Xóa mục trong giỏ hàng" />
+
+		<text name="Invoices" value="Hóa đơn" />
+		<text name="CreateInvoice" value="Tạo hóa đơn" />
+		<text name="UpdateInvoice" value="Cập nhật hóa đơn" />
+		<text name="AdminInvoice" value="Quản lý hóa đơn" />
+
+	</texts>
+</localizationDictionary>

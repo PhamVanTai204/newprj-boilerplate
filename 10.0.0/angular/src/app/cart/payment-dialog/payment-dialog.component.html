@@ -10,26 +10,33 @@
             Địa chỉ nhận hàng <i class="fa-solid fa-location-dot"></i>
         </h3>
         <form #shippingForm="ngForm">
-            <div class="input-row">
-                <div class="input-group">
-                    <label for="userName">Tên:</label>
-                    <input type="text" id="userName" placeholder="Nhập tên" [(ngModel)]="userName" name="userName"
-                        required minlength="2" #name="ngModel" />
-                    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="error-message">
-                        <div *ngIf="name.errors?.['required']">Bạn chưa nhập tên.</div>
-                        <div *ngIf="name.errors?.['minlength']">Tên phải có ít nhất 2 ký tự.</div>
+            <form #form="ngForm">
+                <div class="input-row">
+                    <!-- Tên -->
+                    <div class="input-group">
+                        <label for="userName">Tên:</label>
+                        <input type="text" id="userName" placeholder="Nhập tên" [(ngModel)]="userName" name="userName"
+                            required minlength="2" #name="ngModel" />
+                    </div>
+
+                    <!-- Số điện thoại -->
+                    <div class="input-group">
+                        <label for="userPhone">Số điện thoại:</label>
+                        <input type="number" id="userPhone" placeholder="Nhập số điện thoại" [(ngModel)]="userPhone"
+                            name="userPhone" required pattern="[0-9]{10}" #phone="ngModel" />
                     </div>
                 </div>
-                <div class="input-group">
-                    <label for="userPhone">Số điện thoại:</label>
-                    <input type="number" id="userPhone" placeholder="Nhập số điện thoại" [(ngModel)]="userPhone"
-                        name="userPhone" required pattern="[0-9]{10}" #phone="ngModel" />
-                    <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="error-message">
-                        <div *ngIf="phone.errors?.['required']">Bạn chưa nhập số điện thoạt.</div>
-                        <div *ngIf="phone.errors?.['pattern']">Số điện thoại phải là 10 chữ số.</div>
+
+                <!-- Hiển thị lỗi khi có ít nhất một input không hợp lệ -->
+                <div *ngIf="form.invalid && (form.dirty || form.touched)" class="error-message">
+                    <div *ngIf="name.errors?.['required'] || phone.errors?.['required']">Bạn chưa nhập đủ thông tin.
                     </div>
+                    <div *ngIf="name.errors?.['minlength']">Tên phải có ít nhất 2 ký tự.</div>
+                    <div *ngIf="phone.errors?.['pattern']">Số điện thoại phải là 10 chữ số.</div>
                 </div>
-            </div>
+
+            </form>
+
             <div class="input-group">
                 <label for="userAddress">Địa chỉ:</label>
                 <input type="text" id="userAddress" placeholder="Nhập địa chỉ" [(ngModel)]="userAddress"

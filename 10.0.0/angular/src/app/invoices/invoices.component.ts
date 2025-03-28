@@ -145,7 +145,6 @@ export class InvoicesComponent extends PagedListingComponentBase<InvoiceDto> imp
         class: "modal-lg",
         initialState: {
           invoice,
-
         },
       }
     )
@@ -153,6 +152,8 @@ export class InvoicesComponent extends PagedListingComponentBase<InvoiceDto> imp
       this.list();
 
     });
+    console.log(invoice);
+
   }
 
 

@@ -228,3 +228,8 @@
     color: #b22222;
     /* Màu đỏ đậm */
 }
+
+.list-item td:hover {
+    cursor: pointer;
+    /* Đây là con trỏ bàn tay */
+}

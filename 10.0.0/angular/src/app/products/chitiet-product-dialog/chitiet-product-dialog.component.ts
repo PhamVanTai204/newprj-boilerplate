@@ -5,6 +5,8 @@ import { CartDto, CartItemDto, CartService, CreateCartItemDto, ProductDto, Produ
 import { EventEmitter } from '@angular/core';
 import { Observable } from '@node_modules/rxjs/dist/types';
 import { log } from 'console';
+import { AppConsts } from '@shared/AppConsts';
+import { PermissionCheckerService } from '@node_modules/abp-ng2-module';
 
 @Component({
   selector: 'app-chitiet-product-dialog',
@@ -14,7 +16,10 @@ import { log } from 'console';
 })
 export class ChitietProductDialogComponent extends AppComponentBase implements OnInit {
   cart: CartDto = new CartDto();
-
+  permissions = AppConsts.permissions;
+  isGranted(permissionName: string) {
+    return this._prermisstionsChecked.isGranted(permissionName)
+  }
   product: ProductDto = new ProductDto();
   cartItem: CreateCartItemDto = new CreateCartItemDto();
   id: number;
@@ -27,7 +32,9 @@ export class ChitietProductDialogComponent extends AppComponentBase implements O
     public _productService: ProductServiceProxy,
     public _cartService: CartService,
     public bsModalRef: BsModalRef,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private _prermisstionsChecked: PermissionCheckerService
+
   ) {
     super(injector);
   }

@@ -31,8 +31,8 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-product>
-                <tr>
-                    <td class="buttonID" (click)="showInvoiceDialog(product)">
+                <tr (click)="showInvoiceDialog(product)">
+                    <td class="buttonID">
                         #{{product.id}}
                     </td>
                     <td>{{product.invoiceDate}}</td>

@@ -115,6 +115,8 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> imp
       .subscribe((result: ProductDtoPagedResultDto) => {
         this.products = result.items.reverse();
         this.totalRecords = result.totalCount;
+        console.log(this.products, this.totalRecords);
+
         this.filteredLocationList = this.products;
         this.setLoading(false);
         this.cd.detectChanges();

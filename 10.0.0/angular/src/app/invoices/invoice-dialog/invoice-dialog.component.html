@@ -12,14 +12,17 @@
     </div>
     <div class="no-bootstrap">
         @if (isGranted(permissions.invoiceUpdate)) {
-        <div class="button-container">
-            <button class="circle-button" (click)="setActive(0)" [ngClass]="{'active': status === 0}">1</button>
-            <button class="circle-button" (click)="setActive(1)" [ngClass]="{'active': status === 1}">2</button>
-            <button class="circle-button" (click)="setActive(2)" [ngClass]="{'active': status === 2}">3</button>
-            <button class="circle-button" (click)="setActive(3)" [ngClass]="{'active': status === 3}">4</button>
-            <button class="circle-button" (click)="setActive(4)" [ngClass]="{'active': status === 4}">5</button>
-
+        <div class="status-container">
+            <span class="status-label-text">Chuyển trạng thái:</span>
+            <div class="button-container">
+                <button class="circle-button" (click)="setActive(0)" [ngClass]="{'active': status === 0}">1</button>
+                <button class="circle-button" (click)="setActive(1)" [ngClass]="{'active': status === 1}">2</button>
+                <button class="circle-button" (click)="setActive(2)" [ngClass]="{'active': status === 2}">3</button>
+                <button class="circle-button" (click)="setActive(3)" [ngClass]="{'active': status === 3}">4</button>
+                <button class="circle-button" (click)="setActive(4)" [ngClass]="{'active': status === 4}">5</button>
+            </div>
         </div>
+
         } @else {
         <div class="cancel-btn-container">
             <button class="cancel-btn" (click)="setActive(4)" [disabled]="status === 2 || status === 3 || status === 4"
@@ -62,7 +65,7 @@
                     <td>
                         <img [src]="item.urlImage" [alt]="item.name" width="100" class="shadow-4" />
                     </td>
-                    <td>{{ item.price | currency:'VND':true }}</td>
+                    <td>{{ item.price | currency:'VND':true }} </td>
                     <td>{{ item.quantity }}</td>
                     <td>{{(item.price * item.quantity)| currency:'VND' : true }}</td>
                 </tr>

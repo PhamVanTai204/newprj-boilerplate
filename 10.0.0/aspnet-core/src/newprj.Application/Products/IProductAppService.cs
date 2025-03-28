@@ -13,7 +13,6 @@ namespace newprj.Products
     {
         public Task<PagedResultDto<ProductDto>> GetDataSearch(string keyWord);
 
-        Task<bool> UpdateMultipleProductsAsync(List<UpdateProductQuantityDto> products);
-    }
+     }
 
 }

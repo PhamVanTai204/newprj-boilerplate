@@ -73,7 +73,6 @@ export class PaymentDialogComponent implements OnInit {
         throw new Error('Vui lòng nhập đầy đủ thông tin trước khi thanh toán!');
       }
 
-      debugger;
 
       // Gọi dịch vụ để tạo hóa đơn
       this._invoiceAppService
@@ -91,7 +90,7 @@ export class PaymentDialogComponent implements OnInit {
             console.log('Hóa đơn đã tạo:', response);
 
             // **Cập nhật số lượng sản phẩm sau khi tạo hóa đơn thành công**
-            this.updateStockQuantity();
+            // this.updateStockQuantity();
 
             alert('Thanh toán thành công!');
             this.bsModalRef.hide();

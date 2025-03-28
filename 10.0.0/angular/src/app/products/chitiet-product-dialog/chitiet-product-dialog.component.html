@@ -37,8 +37,11 @@
           <strong>Mã sản phẩm:</strong> {{ product?.maSP }}
         </p>
         @if (
-        screen==true
+        isGranted(permissions.invoiceAdin)
         ) {
+
+        }
+        @else {
         <div class="product-btn">
           <div class="quantity">
             <button class="quantity-btn" (click)="decrease()">-</button>
@@ -48,9 +51,6 @@
           <button class="checkout-btn" (click)="addProductToCart()">Thêm vào giỏ </button>
 
         </div>
-        }
-        @else {
-
         }
       </div>
     </div>
